@@ -1,5 +1,5 @@
-import { getAccessToken, handleAuth } from '@auth0/nextjs-auth0'
 import express, { Response, Request, NextFunction } from 'express'
+import { PrismaClient } from '@prisma/client'
 
 const app = express()
 app.use(express.json({ limit: '200mb' }))
@@ -11,19 +11,23 @@ app.use(
   }),
 )
 
-app.use(async (req: Request, res: Response, next: NextFunction) => {
+app.use(async (_: Request, res: Response, next: NextFunction) => {
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
   next()
 })
 
-app.get('/api/healthz', (_: Request, res: Response) => res.sendStatus(200))
+const apiV1 = app.all("/api/v1")
 
-app.get('/api/v1/test', async (req: Request, res: Response, next: NextFunction) => {
+apiV1.get('/', (_, res) => res.redirect('/')) // redirect after logged in
+
+
+apiV1.get('/healthz', (_: Request, res: Response) => res.sendStatus(200))
+
+apiV1.get('/test', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { accessToken } = await getAccessToken(req, res, {
-      scopes: process.env.AUTH0_SCOPE!.split(' '),
-    })
-    res.status(200).send(accessToken)
+    const prisma = new PrismaClient()
+    const users = await prisma.user.findMany()
+    return res.json(users)
   } catch (e) {
     console.error(e)
     next(e)
