@@ -16,10 +16,9 @@ app.use(async (_: Request, res: Response, next: NextFunction) => {
   next()
 })
 
-const apiV1 = app.all("/api/v1")
+const apiV1 = app.all('/api/v1')
 
 apiV1.get('/', (_, res) => res.redirect('/')) // redirect after logged in
-
 
 apiV1.get('/healthz', (_: Request, res: Response) => res.sendStatus(200))
 
