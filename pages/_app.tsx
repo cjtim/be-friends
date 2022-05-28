@@ -1,12 +1,18 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { UserProvider } from '@auth0/nextjs-auth0'
+import { ChakraProvider } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import Cookies from 'js-cookie'
+import { config } from 'config'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    console.log(document.cookie)
+    Cookies.set(config.cookies.token, 'test token')
+  }, [])
   return (
-    <UserProvider>
+    <ChakraProvider>
       <Component {...pageProps} />
-    </UserProvider>
+    </ChakraProvider>
   )
 }
 

@@ -1,26 +1,17 @@
-import { UserProfile, withPageAuthRequired } from '@auth0/nextjs-auth0'
-import { PrismaClient } from '@prisma/client'
-import { GetServerSidePropsContext, NextPage } from 'next'
+import { User } from 'interfaces/User'
+import { AuthGetServerSideProps } from 'libs/auth'
+
+import { NextPage } from 'next'
 import Image from 'next/image'
-import axios from '../../lib/axios'
 
-const User: NextPage<{ user: UserProfile; users: any[] }> = withPageAuthRequired(({ user, users }) => (
+const User: NextPage<{ user: User }> = ({ user }) => (
   <>
-    {JSON.stringify(users, null, 2)}
-    {user?.email} {user?.name} {user?.nickname} {user?.org_id}
-    {user?.picture && <Image src={user?.picture} width="100px" height={'100px'} alt="user profile picture" />}
+    {JSON.stringify(user, null, 2)}
+    {user?.profilePic} {user?.name}
+    {user?.profilePic && <Image src={user?.profilePic} width="100px" height={'100px'} alt="user profile picture" />}
   </>
-))
+)
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const prisma = new PrismaClient()
-  const users = await prisma.user.findMany()
-  await prisma.$disconnect()
-  return {
-    props: {
-      users,
-    },
-  }
-}
+export const getServerSideProps = AuthGetServerSideProps()
 
 export default User
