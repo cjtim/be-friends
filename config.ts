@@ -1,10 +1,12 @@
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8080'
+
 export const config = {
   cookies: {
     token: 'authToken',
   },
   login: {
-    GET_line: 'http://localhost:8080/auth/line',
-    GET_me: 'http://localhost:8080/auth/me',
+    GET_line: `${BACKEND_URL}/auth/line`,
+    GET_me: `${BACKEND_URL}/auth/me`,
   },
 }
 
