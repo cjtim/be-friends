@@ -6,8 +6,9 @@ import Image from 'next/image'
 
 const User: NextPage<{ user: User }> = ({ user }) => (
   <>
-    {JSON.stringify(user, null, 2)}
-    {user?.profilePic} {user?.name}
+    ID: {user.id}
+    IMAGE: {user.profilePic}
+    NAME: {user?.name}
     {user?.profilePic && <Image src={user?.profilePic} width="100px" height={'100px'} alt="user profile picture" />}
   </>
 )
