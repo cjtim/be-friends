@@ -5,8 +5,8 @@ export const config = {
     token: 'authToken',
   },
   login: {
-    GET_line: `${BACKEND_URL}/auth/line`,
-    GET_me: `${BACKEND_URL}/auth/me`,
+    GET_line: `${BACKEND_URL}/api/v1/auth/line`,
+    GET_me: `${BACKEND_URL}/api/v1/auth/me`,
   },
 }
 
