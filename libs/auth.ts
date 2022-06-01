@@ -36,7 +36,7 @@ export const AuthGetServerSideProps =
         })
         user = data
       } else {
-        throw Error("Unauthenticate")
+        throw Error('Unauthenticate')
       }
     } catch (e) {
       // If Token expire

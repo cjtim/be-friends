@@ -10,7 +10,8 @@ const LineLoginButton: React.FC<StackProps> = props => {
         opacity: '90%',
         cursor: 'pointer',
       }}
-      {...props}>
+      {...props}
+    >
       <NextImage src={'/logo/line_btn_base.png'} alt="line logo" width="44" height="44" />
       <Divider orientation="vertical" />
       <Text color="white" pl="22px" pr="44px" fontWeight={'semibold'}>
