@@ -1,4 +1,7 @@
 {
   "extends": ["prettier", "next", "next/core-web-vitals"],
-  "rules": {}
+  "rules": {
+    "no-unused-vars": "error",
+    "no-unused-labels": "error"
+  }
 }
