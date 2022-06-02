@@ -24,7 +24,7 @@ export const AuthGetServerSideProps =
     // Get token from user client cookies
     const jwt = ctx.req.cookies[config.cookies.token]
 
-    let user: User = { name: '', id: '' }
+    let user: User = { name: '', id: '', exp: 0 }
     try {
       if (jwt && jwt !== '') {
         // Server side call
@@ -42,6 +42,9 @@ export const AuthGetServerSideProps =
       // If Token expire
       // If Token Invalid
       // If Token not exist in cookies
+
+      // set redirect page
+      ctx.res.setHeader('set-cookie', [`${config.cookies.previousPage}=${ctx.resolvedUrl}; Path=/`])
       return {
         redirect: {
           permanent: false,
