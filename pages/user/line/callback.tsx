@@ -19,7 +19,7 @@ export const getServerSideProps = async (
     // Redirect to previous page
     return {
       redirect: {
-        destination: ctx.req.cookies[config.cookies.previousPage],
+        destination: ctx.req.cookies[config.cookies.previousPage] || '/',
         permanent: false,
       },
     }
