@@ -19,7 +19,8 @@ const TextLink: React.FC<Props> = ({ text, to, title }) => {
         color={pathname === to ? color : 'gray'}
         _hover={{
           color,
-        }}>
+        }}
+      >
         {text}
       </Text>
     </NextLink>

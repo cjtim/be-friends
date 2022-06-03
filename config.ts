@@ -20,5 +20,5 @@ export const internalPages = {
     logout: '/user/logout',
   },
   about: '/about',
-  findPets: '/find'
+  findPets: '/find',
 }
