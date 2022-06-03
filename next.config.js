@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
-    return [{ source: '/api/v1/(.*)', destination: '/api/v1' }]
+    return []
   },
   images: {
     domains: ['profile.line-scdn.net'],

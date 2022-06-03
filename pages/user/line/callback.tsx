@@ -15,7 +15,7 @@ export const getServerSideProps = async (
     const { data: jwt } = await axios.get<string>(config.login.GET_line_jwt, { params: { code } })
     const { data: user } = await axios.get<User>(config.login.GET_me, { headers: { Authorization: `Bearer ${jwt}` } })
     // Set token in cookies
-    ctx.res.setHeader('set-cookie', [`${config.cookies.token}=${jwt}; Max-Age=${user.exp * 1000}; Path=/`])
+    ctx.res.setHeader('set-cookie', [`${config.cookies.token}=${jwt}; Expires=${new Date(user.exp * 1000)}; Path=/`])
     // Redirect to previous page
     return {
       redirect: {

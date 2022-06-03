@@ -13,7 +13,10 @@ export const config = {
 }
 
 export const internalPages = {
-  login: {
-    line: '/user/login',
+  index: '/',
+  user: {
+    index: '/user',
+    login: '/user/login',
+    logout: '/user/logout',
   },
 }

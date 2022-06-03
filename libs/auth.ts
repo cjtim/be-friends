@@ -29,12 +29,7 @@ export const AuthGetServerSideProps =
       if (jwt && jwt !== '') {
         // Server side call
         // No client cookie passed, Need to manual input
-        const { data } = await axios.get<User>(config.login.GET_me, {
-          headers: {
-            Cookie: ctx.req.headers.cookie || '',
-          },
-        })
-        user = data
+        user = await getUser(ctx)
       } else {
         throw Error('Unauthenticate')
       }
@@ -63,4 +58,17 @@ export const AuthGetServerSideProps =
 export const getLoginLink = async () => {
   const { data } = await axios.get<string>(config.login.GET_line)
   return data
+}
+
+export const getUser = async (ctx: GetServerSidePropsContext): Promise<User> => {
+  try {
+    const { data } = await axios.get<User>(config.login.GET_me, {
+      headers: {
+        Cookie: ctx.req.headers.cookie || '',
+      },
+    })
+    return data
+  } catch (e) {
+    return {} as User
+  }
 }
