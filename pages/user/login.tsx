@@ -18,7 +18,7 @@ const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
   return (
     <PageLayout title="Login">
       <Navbar user={user} />
-      <Center top="50%">
+      <Center pt="40vh">
         <LineLoginButton onClick={onClick} />
       </Center>
     </PageLayout>
