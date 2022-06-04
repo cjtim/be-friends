@@ -5,7 +5,6 @@ import {
   Flex,
   HStack,
   Img,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -28,16 +27,15 @@ interface Props {
 const Navbar: React.FC<Props> = ({ user }) => {
   const { toggleColorMode } = useColorMode()
   const icon = useColorModeValue(<SunIcon />, <MoonIcon />)
-  // const color = useColorModeValue('black', 'white')
 
   return (
     <Center boxShadow="md">
       <Flex alignItems={'center'} justifyContent="space-between" w={['container.sm', 'container.xl']}>
-        <Box w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
-          <Link as={NextLink} href={internalPages.index}>
+        <NextLink href={internalPages.index}>
+          <Box w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
             <Logo />
-          </Link>
-        </Box>
+          </Box>
+        </NextLink>
 
         <Center w={['30vw', '30vw', '2xs']}>
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
@@ -71,8 +69,8 @@ const Navbar: React.FC<Props> = ({ user }) => {
             </Menu>
           ) : (
             <NextLink href={internalPages.user.login}>
-              <Button>
-                <Text>Login</Text>
+              <Button colorScheme={'brand'}>
+                <Text color="white">Login</Text>
               </Button>
             </NextLink>
           )}

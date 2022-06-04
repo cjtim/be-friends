@@ -110,7 +110,7 @@ const zIndices = {
 export default extendTheme({
   colors: {
     brand: {
-      500: '#CF5260',
+      500: '#00784A',
     },
   },
   fonts: {
