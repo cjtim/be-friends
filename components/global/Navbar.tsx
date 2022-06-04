@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Center,
-  Divider,
   Flex,
   HStack,
   Img,
@@ -11,6 +10,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -28,22 +28,33 @@ interface Props {
 const Navbar: React.FC<Props> = ({ user }) => {
   const { toggleColorMode } = useColorMode()
   const icon = useColorModeValue(<SunIcon />, <MoonIcon />)
-  const color = useColorModeValue('black', 'white')
+  // const color = useColorModeValue('black', 'white')
 
   return (
     <Center boxShadow="md">
-      <Flex alignItems={'center'} w="container.xl">
-        <Box w="2xs" cursor="pointer" title="Home page">
+      <Flex alignItems={'center'} justifyContent="space-between" w={['container.sm', 'container.xl']}>
+        <Box w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
           <Link as={NextLink} href={internalPages.index}>
             <Logo />
           </Link>
         </Box>
 
-        <HStack marginLeft={'auto'} spacing={4}>
-          <TextLink text="Home" to={internalPages.index} />
-          <TextLink text="Find Pets" to={internalPages.findPets} />
-          <TextLink text="About" to={internalPages.about} />
-          <Divider orientation="vertical" h="4vh" borderColor={color} />
+        <Center w={['30vw', '30vw', '2xs']}>
+          <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
+            <TextLink text="Home" to={internalPages.index} />
+            <TextLink text="Find Pets" to={internalPages.findPets} />
+            <TextLink text="About" to={internalPages.about} />
+          </HStack>
+        </Center>
+        {/* <Divider orientation="vertical" h="4vh" borderColor={color} /> */}
+
+        <HStack
+          w={['30vw', '30vw', '2xs']}
+          spacing={[0, 0, 4]}
+          shouldWrapChildren
+          flexDir={['column', 'column', 'row']}
+          justifyContent="flex-end"
+        >
           {user && user.id ? (
             <Menu>
               <MenuButton as={Box} cursor="pointer">
@@ -59,7 +70,11 @@ const Navbar: React.FC<Props> = ({ user }) => {
               </MenuList>
             </Menu>
           ) : (
-            <TextLink text="Login" to={internalPages.user.login} />
+            <NextLink href={internalPages.user.login}>
+              <Button>
+                <Text>Login</Text>
+              </Button>
+            </NextLink>
           )}
           <Button onClick={toggleColorMode}>{icon}</Button>
         </HStack>
