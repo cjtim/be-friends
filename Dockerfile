@@ -48,7 +48,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Next Image caching
-RUN yarn add sharp
+# RUN yarn add sharp
 
 USER nextjs
 
