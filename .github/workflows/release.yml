@@ -2,15 +2,10 @@
 name: Release
 # Controls when the action will run.
 on:
+  workflow_dispatch:
   push:
     tags:
       - "**"
-  workflow_dispatch:
-
-permissions:
-  contents: write
-  packages: write
-  repository-projects: write
 
 jobs:
   build:
