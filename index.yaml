@@ -3,23 +3,33 @@ entries:
   be-friends-fe:
   - apiVersion: v2
     appVersion: v1.0.6
-    created: "2022-06-04T09:49:11.884431049Z"
+    created: "2022-06-04T09:57:54.211828593Z"
     description: A Helm chart for Kubernetes
     digest: d24958328b8fc495408c78ffc2b0d609d44562e305148473d9809762e3a3612b
     name: be-friends-fe
     type: application
     urls:
-    - https://cjtim.github.io/be-friend/be-friends-fe-v1.0.6.tgz
+    - https://cjtim.github.io/be-friends/be-friends-fe-v1.0.6.tgz
     version: v1.0.6
   web:
   - apiVersion: v2
+    appVersion: v1.0.8
+    created: "2022-06-04T09:57:54.213404485Z"
+    description: A Helm chart for Kubernetes
+    digest: 1e517a98f8aef37463f3267cdf54df62aa17b44e247c389db9ca5fd07550d5e9
+    name: web
+    type: application
+    urls:
+    - https://cjtim.github.io/be-friends/web-v1.0.8.tgz
+    version: v1.0.8
+  - apiVersion: v2
     appVersion: v1.0.7
-    created: "2022-06-04T09:49:11.885583265Z"
+    created: "2022-06-04T09:57:54.212764547Z"
     description: A Helm chart for Kubernetes
     digest: 3b5ee2612c546aeb91f43642aaa8c0c7d694d905b934ee88b0a43070151ba3f0
     name: web
     type: application
     urls:
-    - https://cjtim.github.io/be-friend/web-v1.0.7.tgz
+    - https://cjtim.github.io/be-friends/web-v1.0.7.tgz
     version: v1.0.7
-generated: "2022-06-04T09:49:11.882549422Z"
+generated: "2022-06-04T09:57:54.210113492Z"
