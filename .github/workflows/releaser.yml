@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+env:
+  GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
 
 jobs:
   release:
@@ -23,9 +25,8 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Release
-        run: yarn semantic-release --plugins @semantic-release/git
+        run: yarn semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: View package.json

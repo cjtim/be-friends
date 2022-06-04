@@ -28,7 +28,6 @@
     "react-dom": "18.1.0"
   },
   "devDependencies": {
-    "@semantic-release/git": "^10.0.1",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "17.0.34",
     "@types/react": "18.0.9",
@@ -63,15 +62,6 @@
       "@semantic-release/npm",
       {
         "npmPublish": false
-      }
-    ],
-    [
-      "@semantic-release/git",
-      {
-        "assets": [
-          "package.json"
-        ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
   ]
