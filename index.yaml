@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  be-friends-fe:
+  - apiVersion: v2
+    appVersion: v1.0.6
+    created: "2022-06-04T09:29:22.326135221Z"
+    description: A Helm chart for Kubernetes
+    digest: d24958328b8fc495408c78ffc2b0d609d44562e305148473d9809762e3a3612b
+    name: be-friends-fe
+    type: application
+    urls:
+    - https://cjtim.github.io/be-friend/be-friends-fe-v1.0.6.tgz
+    version: v1.0.6
+generated: "2022-06-04T09:29:22.325375312Z"
