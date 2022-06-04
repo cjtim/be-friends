@@ -7,6 +7,10 @@ on:
     tags:
       - "**"
 
+env:
+  REPO_NAME: be-friend
+  PAGES_BRANCH: gh-pages
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,3 +46,49 @@ jobs:
             ghcr.io/${{ github.repository }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}:${{ github.ref_name }}
             ghcr.io/${{ github.repository }}:latest
+
+  helm-chart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.8.1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: ${{ env.REPO_NAME }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ env.PAGES_BRANCH }}
+          path: ${{ env.PAGES_BRANCH }}
+      
+      - run: tree .
+
+      - name: package charts
+        run: |
+          echo ${PWD}
+          cd ${{ env.REPO_NAME }}
+          echo "TAG: ${GITHUB_REF_NAME}"
+          sed -i "s/version:.*/version: ${GITHUB_REF_NAME}/" helm/Chart.yaml
+          sed -i "s/appVersion:.*/appVersion: \"${GITHUB_REF_NAME}\"/" helm/Chart.yaml
+
+          helm package helm --destination ../${{ env.PAGES_BRANCH }}
+          helm repo index ../${{ env.PAGES_BRANCH }} --url https://${{ github.repository_owner }}.github.io/${{ env.REPO_NAME }}
+
+      - name: push chart to ${{ env.PAGES_BRANCH }}
+        run: |
+          echo ${PWD}
+          cd ${{ env.PAGES_BRANCH }}
+          git config --local user.name "${{ github.repository_owner }}"
+          git config --local user.email "47479090+cjtim@users.noreply.github.com"
+          git remote set-url origin https://${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git add -A
+          git commit -m "Update helm chart ${GITHUB_REF_NAME}"
+          git push -u origin ${{ env.PAGES_BRANCH }}
