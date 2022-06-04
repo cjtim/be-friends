@@ -27,7 +27,7 @@ jobs:
             ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-14-x-${{ github.ref }}
+            ${{ runner.os }}-node-
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
