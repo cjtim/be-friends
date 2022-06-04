@@ -8,7 +8,7 @@ on:
       - "**"
 
 env:
-  REPO_NAME: be-friend
+  REPO_NAME: be-friends
   PAGES_BRANCH: gh-pages
 
 jobs:
