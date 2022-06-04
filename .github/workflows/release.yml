@@ -1,11 +1,16 @@
 # This is a basic workflow to help you get started with Actions
-name: build
+name: Release
 # Controls when the action will run.
 on:
   push:
-    branches: [master, main]
-  pull_request:
+    tags:
+      - "**"
   workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+  repository-projects: write
 
 jobs:
   build:
@@ -40,4 +45,5 @@ jobs:
           push: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
             ghcr.io/${{ github.repository }}:latest
