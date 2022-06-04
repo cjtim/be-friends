@@ -14,6 +14,7 @@ const nextConfig = {
   experimental: {
     outputStandalone: true,
   },
+  swcMinify: true,
 }
 
 module.exports = nextConfig
