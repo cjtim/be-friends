@@ -37,7 +37,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           file: Dockerfile
-          push: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
+          push: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}:${{ github.ref_name }}
