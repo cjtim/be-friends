@@ -3,10 +3,9 @@ import { User } from 'interfaces/User'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import axios from './axios'
 
-type option = {
-  // eslint-disable-next-line no-unused-vars
-  contexts: (_: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<any>> | GetServerSidePropsResult<any>
-}
+// eslint-disable-next-line no-unused-vars
+type option<T> = (_: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<T>> | GetServerSidePropsResult<T>
+type returnTypeNextContextResult<T> = Promise<GetServerSidePropsResult<T & { user: User }>>
 
 const appendUser = (result: any, user: User) => {
   return {
@@ -19,8 +18,8 @@ const appendUser = (result: any, user: User) => {
 }
 
 export const AuthGetServerSideProps =
-  <T>(opt?: option) =>
-  async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<T & { user: User }>> => {
+  <T>(opt?: option<T>) =>
+  async (ctx: GetServerSidePropsContext): returnTypeNextContextResult<T> => {
     // Get token from user client cookies
     const jwt = ctx.req.cookies[config.cookies.token]
 
@@ -29,7 +28,7 @@ export const AuthGetServerSideProps =
       if (jwt && jwt !== '') {
         // Server side call
         // No client cookie passed, Need to manual input
-        user = await getUser(ctx)
+        user = await getUser(ctx.req.headers.cookie)
       } else {
         throw Error('Unauthenticate')
       }
@@ -48,8 +47,8 @@ export const AuthGetServerSideProps =
       }
     }
 
-    if (typeof opt?.contexts === 'function') {
-      const result = await opt.contexts(ctx)
+    if (opt && typeof opt === 'function') {
+      const result = await opt(ctx)
       return appendUser(result, user)
     }
     return appendUser({}, user)
@@ -60,15 +59,11 @@ export const getLoginLink = async () => {
   return data
 }
 
-export const getUser = async (ctx: GetServerSidePropsContext): Promise<User> => {
-  try {
-    const { data } = await axios.get<User>(config.login.GET_me, {
-      headers: {
-        Cookie: ctx.req.headers.cookie || '',
-      },
-    })
-    return data
-  } catch (e) {
-    return {} as User
-  }
+export const getUser = async (cookie: string | undefined): Promise<User> => {
+  const { data } = await axios.get<User>(config.login.GET_me, {
+    headers: {
+      Cookie: cookie || '',
+    },
+  })
+  return data
 }

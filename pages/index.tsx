@@ -1,33 +1,21 @@
+import { Divider } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
-import { User } from 'interfaces/User'
-import { getUser } from 'libs/auth'
-import type { GetServerSidePropsContext, GetServerSidePropsResult, NextPage } from 'next'
+import Hero1 from 'components/home/Hero1'
+import type { NextPage } from 'next'
+import { BaseNextProps } from './_app'
 
-interface Props {
-  user?: User
-}
+interface Props extends BaseNextProps {}
 
 const Home: NextPage<Props> = ({ user }) => {
   return (
     <PageLayout title="Home Page">
       <Navbar user={user} />
+
+      <Hero1 />
+      <Divider />
     </PageLayout>
   )
-}
-
-export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> => {
-  try {
-    return {
-      props: {
-        user: await getUser(ctx),
-      },
-    }
-  } catch (e) {
-    return {
-      props: {},
-    }
-  }
 }
 
 export default Home

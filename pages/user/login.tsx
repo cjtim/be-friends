@@ -2,13 +2,12 @@ import { Center } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import LineLoginButton from 'components/login/LineLoginButton'
-import { User } from 'interfaces/User'
-import { getLoginLink, getUser } from 'libs/auth'
-import { GetServerSidePropsContext, NextPage } from 'next'
+import { getLoginLink } from 'libs/auth'
+import { NextPage } from 'next'
+import { BaseNextProps } from 'pages/_app'
 
-interface Props {
+interface Props extends BaseNextProps {
   loginUrl: string
-  user?: User
 }
 
 const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
@@ -25,11 +24,10 @@ const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
   )
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = async () => {
   return {
     props: {
       loginUrl: await getLoginLink(),
-      user: await getUser(ctx),
     },
   }
 }

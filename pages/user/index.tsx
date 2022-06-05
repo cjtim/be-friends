@@ -1,18 +1,18 @@
 import { Box, Stack, Text } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
-import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
 
 import { NextPage } from 'next'
 import NextImage from 'next/image'
+import { BaseNextProps } from 'pages/_app'
 
-const User: NextPage<{ user: User }> = ({ user }) => (
+const User: NextPage<BaseNextProps> = ({ user }) => (
   <PageLayout title="User Profile">
     <Navbar user={user} />
     <Stack>
-      <Text>ID: {user.id}</Text>
-      <Text>IMAGE: {user.picture_url}</Text>
+      <Text>ID: {user?.id}</Text>
+      <Text>IMAGE: {user?.picture_url}</Text>
       <Text>NAME: {user?.name}</Text>
       {user?.picture_url && (
         <Box position={'relative'}>
