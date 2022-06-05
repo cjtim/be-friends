@@ -6,6 +6,7 @@ export const config = {
     previousPage: 'previousPage',
   },
   login: {
+    GET_logout: `${BACKEND_URL}/api/v1/auth/logout`,
     GET_line: `${BACKEND_URL}/api/v1/auth/line`,
     GET_me: `${BACKEND_URL}/api/v1/auth/me`,
     GET_line_jwt: `${BACKEND_URL}/api/v1/auth/line/jwt`,
