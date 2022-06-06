@@ -1,3 +1,11 @@
 {
-  "homePageTitle": "Home"
+  "homePageTitle": "Home",
+  "navbar": {
+    "home": "Home",
+    "findPets": "Find Pets",
+    "about": "About",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login"
+  }
 }

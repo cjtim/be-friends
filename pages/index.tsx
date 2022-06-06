@@ -24,7 +24,7 @@ const Home: NextPage<Props> = ({ user }) => {
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'us', ['common'])),
+      ...(await serverSideTranslations(locale || 'us', ['common', 'index'])),
     },
   }
 }

@@ -1,3 +1,11 @@
 {
-  "homePageTitle": "หน้าแรก"
+  "homePageTitle": "หน้าแรก",
+  "navbar": {
+    "home": "หน้าแรก",
+    "findPets": "ค้นหาสัตว์",
+    "about": "เกี่ยวกับเรา",
+    "profile": "บัญชี",
+    "logout": "ออกจากระบบ",
+    "login": "เข้าสู่ระบบ"
+  }
 }
