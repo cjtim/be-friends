@@ -4,6 +4,9 @@ import theme from 'libs/theme'
 import { User } from 'interfaces/User'
 import { getUser } from 'libs/auth'
 import App from 'next/app'
+import { appWithTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticPropsContext } from 'next'
 
 export interface BaseNextProps {
   user?: User
@@ -22,8 +25,19 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext)
 
   // append user props to all component
-  appProps.pageProps.user = await getUser(appContext.ctx.req?.headers.cookie).catch(() => ({} as User))
-  return { ...appProps }
+  const user = await getUser(appContext.ctx.req?.headers.cookie).catch(() => ({} as User))
+
+  const newPageProps = { ...appProps.pageProps, user }
+  return { ...appProps, pageProps: newPageProps }
 }
 
-export default MyApp
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'us', ['common'])),
+      // Will be passed to the page component as props
+    },
+  }
+}
+
+export default appWithTranslation(MyApp)

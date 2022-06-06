@@ -1,19 +1,21 @@
 import { Button, Flex, Heading, HStack, Text } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 
 const Hero1: React.FC = () => {
+  const { t } = useTranslation('index')
   return (
     <Flex justifyContent={'center'} alignItems={'center'} flexDir="column" p={24}>
-      <Heading py={4}>น้องๆ กำลังรอการช่วยเหลือจากคุณ</Heading>
+      <Heading py={4}>{t('hero1.title')}</Heading>
 
       <Text py={4} w="xs">
-        Be Friends คือ Platfrom ที่ช่วยให้คุณจับคู่กับสัตว์เลี้ยงที่ต้องการความช่วยเหลือได้ง่ายขึ้น!
+        {t('hero1.subtitle')}
       </Text>
 
       <HStack py={4} spacing={4}>
         <Button colorScheme={'brand'}>
-          <Text color="white">หาเพื่อนคู่ใจ</Text>
+          <Text color="white">{t('hero1.mainButton')}</Text>
         </Button>
-        <Button>เป็นผู้สนับสนุนเรา</Button>
+        <Button>{t('hero1.secondaryButton')}</Button>
       </HStack>
     </Flex>
   )

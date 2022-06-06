@@ -19,6 +19,8 @@ import { User } from 'interfaces/User'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import Logo from './Logo'
 import TextLink from './TextLink'
+import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 interface Props {
   user?: User
@@ -26,7 +28,19 @@ interface Props {
 
 const Navbar: React.FC<Props> = ({ user }) => {
   const { toggleColorMode } = useColorMode()
+  const { pathname, asPath, query, locale, push } = useRouter()
   const icon = useColorModeValue(<SunIcon />, <MoonIcon />)
+  const lang = { en: '🇺🇸', th: '🇹🇭' }
+  const { t } = useTranslation('common')
+
+  const handleLangChange = () => {
+    switch (locale) {
+      case 'en':
+        return push({ pathname, query }, asPath, { locale: 'th' })
+      default:
+        return push({ pathname, query }, asPath, { locale: 'en' })
+    }
+  }
 
   return (
     <Center boxShadow="md">
@@ -39,9 +53,9 @@ const Navbar: React.FC<Props> = ({ user }) => {
 
         <Center w={['30vw', '30vw', '2xs']}>
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
-            <TextLink text="Home" to={internalPages.index} />
-            <TextLink text="Find Pets" to={internalPages.findPets} />
-            <TextLink text="About" to={internalPages.about} />
+            <TextLink text={t('navbar.home')} to={internalPages.index} />
+            <TextLink text={t('navbar.findPets')} to={internalPages.findPets} />
+            <TextLink text={t('navbar.about')} to={internalPages.about} />
           </HStack>
         </Center>
         {/* <Divider orientation="vertical" h="4vh" borderColor={color} /> */}
@@ -60,21 +74,22 @@ const Navbar: React.FC<Props> = ({ user }) => {
               </MenuButton>
               <MenuList>
                 <NextLink href={internalPages.user.index}>
-                  <MenuItem textDecoration="none">Profile</MenuItem>
+                  <MenuItem textDecoration="none">{t('profile')}</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.user.logout}>
-                  <MenuItem textDecoration="none">Logout</MenuItem>
+                  <MenuItem textDecoration="none">{t('logout')}</MenuItem>
                 </NextLink>
               </MenuList>
             </Menu>
           ) : (
             <NextLink href={internalPages.user.login}>
               <Button colorScheme={'brand'}>
-                <Text color="white">Login</Text>
+                <Text color="white">{t('login')}</Text>
               </Button>
             </NextLink>
           )}
           <Button onClick={toggleColorMode}>{icon}</Button>
+          <Button onClick={handleLangChange}>{locale === 'en' ? lang.th : lang.en}</Button>
         </HStack>
       </Flex>
     </Center>
