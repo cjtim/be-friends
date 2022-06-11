@@ -1,43 +1,47 @@
-import type { AppContext, AppProps } from 'next/app'
+import type { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from 'libs/theme'
 import { User } from 'interfaces/User'
-import { getUser } from 'libs/auth'
-import App from 'next/app'
 import { appWithTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticPropsContext } from 'next'
-
-export interface BaseNextProps {
+import { useEffect, useRef, useState } from 'react'
+import { config } from 'config'
+import Cookies from 'js-cookie'
+import axios from 'libs/axios'
+export interface BaseNextProps extends AppProps {
   user?: User
 }
 
-function MyApp({ Component, pageProps }: AppProps<BaseNextProps>) {
+function MyApp({ Component, pageProps }: BaseNextProps) {
+  const [user, setuser] = useState({} as User)
+  const firstLoad = useRef(false)
+  useEffect(() => {
+    if (!firstLoad.current) {
+      firstLoad.current = true
+      ;(async () => {
+        const jwt = Cookies.get(config.cookies.token)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
+        const { data: user } = await axios.get<User>(config.login.GET_me)
+        setuser(user)
+      })()
+    }
+  }, [])
+
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <Component {...pageProps} user={user} />
     </ChakraProvider>
   )
 }
 
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(appContext)
+// MyApp.getInitialProps = async (appContext: AppContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(appContext)
 
-  // append user props to all component
-  const user = await getUser(appContext.ctx.req?.headers.cookie).catch(() => ({} as User))
-
-  const newPageProps = { ...appProps.pageProps, user }
-  return { ...appProps, pageProps: newPageProps }
-}
-
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale || 'us', ['common'])),
-      // Will be passed to the page component as props
-    },
-  }
-}
+//   const newPageProps = { ...appProps.pageProps }
+//   return {
+//     ...appProps,
+//     pageProps: newPageProps,
+//   }
+// }
 
 export default appWithTranslation(MyApp)

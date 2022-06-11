@@ -4,6 +4,7 @@ import PageLayout from 'components/global/PageLayout'
 import { AuthGetServerSideProps } from 'libs/auth'
 
 import { NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import NextImage from 'next/image'
 import { BaseNextProps } from 'pages/_app'
 
@@ -29,6 +30,12 @@ const User: NextPage<BaseNextProps> = ({ user }) => (
   </PageLayout>
 )
 
-export const getServerSideProps = AuthGetServerSideProps()
+export const getServerSideProps = AuthGetServerSideProps(async ctx => {
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale || 'us', ['common'])),
+    },
+  }
+})
 
 export default User

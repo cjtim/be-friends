@@ -2,11 +2,11 @@ import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { BaseNextProps } from 'pages/_app'
+import { BaseNextProps } from './_app'
 
-const FindPage: NextPage<BaseNextProps> = ({ user }) => {
+const AboutPage: NextPage<BaseNextProps> = ({ user }) => {
   return (
-    <PageLayout title="Find friends">
+    <PageLayout title="About us">
       <Navbar user={user} />
     </PageLayout>
   )
@@ -15,10 +15,10 @@ const FindPage: NextPage<BaseNextProps> = ({ user }) => {
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'us', ['common', 'index'])),
+      ...(await serverSideTranslations(locale || 'us', ['common'])),
       // Will be passed to the page component as props
     },
   }
 }
 
-export default FindPage
+export default AboutPage

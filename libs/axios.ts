@@ -1,7 +1,8 @@
-import axios from 'axios'
+import Oaxios from 'axios'
 import { BACKEND_URL } from 'config'
 
-export default axios.create({
+const axios = Oaxios.create({
   baseURL: BACKEND_URL,
-  withCredentials: true,
 })
+
+export default axios

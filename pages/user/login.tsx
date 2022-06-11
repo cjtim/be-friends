@@ -4,6 +4,7 @@ import PageLayout from 'components/global/PageLayout'
 import LineLoginButton from 'components/login/LineLoginButton'
 import { getLoginLink } from 'libs/auth'
 import { GetServerSidePropsContext, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BaseNextProps } from 'pages/_app'
 
 interface Props extends BaseNextProps {
@@ -27,6 +28,7 @@ const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
+      ...(await serverSideTranslations(ctx.locale || 'us', ['common'])),
       loginUrl: await getLoginLink(ctx.req.headers.host || 'localhost:3000'),
     },
   }
