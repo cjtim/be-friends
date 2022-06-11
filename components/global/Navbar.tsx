@@ -1,4 +1,6 @@
 import {
+  Avatar,
+  AvatarBadge,
   Box,
   Button,
   Center,
@@ -70,21 +72,27 @@ const Navbar: React.FC<Props> = ({ user }) => {
           {user && user.id ? (
             <Menu>
               <MenuButton as={Box} cursor="pointer">
-                <Img src={user.picture_url || ''} borderRadius={'full'} width="12" />
+                {user.picture_url ? (
+                  <Img src={user.picture_url || ''} borderRadius={'full'} width="12" />
+                ) : (
+                  <Avatar borderRadius={'full'} width="12">
+                    <AvatarBadge boxSize="1.25em" bg="green.500" />
+                  </Avatar>
+                )}
               </MenuButton>
               <MenuList>
                 <NextLink href={internalPages.user.index}>
-                  <MenuItem textDecoration="none">{t('profile')}</MenuItem>
+                  <MenuItem textDecoration="none">{t('navbar.profile')}</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.user.logout}>
-                  <MenuItem textDecoration="none">{t('logout')}</MenuItem>
+                  <MenuItem textDecoration="none">{t('navbar.logout')}</MenuItem>
                 </NextLink>
               </MenuList>
             </Menu>
           ) : (
             <NextLink href={internalPages.user.login}>
               <Button colorScheme={'brand'}>
-                <Text color="white">{t('login')}</Text>
+                <Text color="white">{t('navbar.login')}</Text>
               </Button>
             </NextLink>
           )}

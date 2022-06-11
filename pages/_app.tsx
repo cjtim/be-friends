@@ -19,9 +19,11 @@ function MyApp({ Component, pageProps }: BaseNextProps) {
       firstLoad.current = true
       ;(async () => {
         const jwt = Cookies.get(config.cookies.token)
-        axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
-        const { data: user } = await axios.get<User>(config.login.GET_me)
-        setuser(user)
+        if (jwt && jwt !== '') {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
+          const { data: user } = await axios.get<User>(config.login.GET_me)
+          setuser(user)
+        }
       })()
     }
   }, [])

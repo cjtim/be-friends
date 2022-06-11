@@ -1,4 +1,4 @@
-import { config } from 'config'
+import { config, internalPages } from 'config'
 import { User } from 'interfaces/User'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import axios from './axios'
@@ -33,17 +33,17 @@ export const AuthGetServerSideProps =
         throw Error('Unauthenticate')
       }
     } catch (e) {
+      console.error(e)
       // If Token expire
       // If Token Invalid
       // If Token not exist in cookies
 
       // set redirect page
       ctx.res.setHeader('set-cookie', [`${config.cookies.previousPage}=${ctx.resolvedUrl}; Path=/`])
-      console.log(ctx)
       return {
         redirect: {
           permanent: false,
-          destination: await getLoginLink(ctx.req.headers.host || 'localhost:3000'),
+          destination: internalPages.user.login,
         },
       }
     }

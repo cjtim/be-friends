@@ -6,3 +6,8 @@ export interface User {
   picture_url?: string
   exp: number // new Date(exp * 1000)
 }
+
+export interface UserLogin {
+  email: string
+  password: string
+}

@@ -10,6 +10,8 @@ export const config = {
     GET_line: `/api/v1/auth/line`,
     GET_me: `/api/v1/auth/me`,
     GET_line_jwt: `/api/v1/auth/line/jwt`,
+    POST_line_register: `/api/v1/auth/register`,
+    POST_line_login: `/api/v1/auth/login`,
   },
 }
 
