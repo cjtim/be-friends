@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8080'
+export const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8080'
 
 export const config = {
   cookies: {
@@ -6,10 +6,10 @@ export const config = {
     previousPage: 'previousPage',
   },
   login: {
-    GET_logout: `${BACKEND_URL}/api/v1/auth/logout`,
-    GET_line: `${BACKEND_URL}/api/v1/auth/line`,
-    GET_me: `${BACKEND_URL}/api/v1/auth/me`,
-    GET_line_jwt: `${BACKEND_URL}/api/v1/auth/line/jwt`,
+    GET_logout: `/api/v1/auth/logout`,
+    GET_line: `/api/v1/auth/line`,
+    GET_me: `/api/v1/auth/me`,
+    GET_line_jwt: `/api/v1/auth/line/jwt`,
   },
 }
 
