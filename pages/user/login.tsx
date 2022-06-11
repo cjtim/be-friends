@@ -3,7 +3,7 @@ import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import LineLoginButton from 'components/login/LineLoginButton'
 import { getLoginLink } from 'libs/auth'
-import { NextPage } from 'next'
+import { GetServerSidePropsContext, NextPage } from 'next'
 import { BaseNextProps } from 'pages/_app'
 
 interface Props extends BaseNextProps {
@@ -24,10 +24,10 @@ const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
-      loginUrl: await getLoginLink(),
+      loginUrl: await getLoginLink(ctx.req.headers.host || 'localhost:3000'),
     },
   }
 }

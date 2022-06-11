@@ -39,10 +39,11 @@ export const AuthGetServerSideProps =
 
       // set redirect page
       ctx.res.setHeader('set-cookie', [`${config.cookies.previousPage}=${ctx.resolvedUrl}; Path=/`])
+      console.log(ctx)
       return {
         redirect: {
           permanent: false,
-          destination: await getLoginLink(),
+          destination: await getLoginLink(ctx.req.headers.host || 'localhost:3000'),
         },
       }
     }
@@ -54,8 +55,8 @@ export const AuthGetServerSideProps =
     return appendUser({}, user)
   }
 
-export const getLoginLink = async () => {
-  const { data } = await axios.get<string>(config.login.GET_line)
+export const getLoginLink = async (host: string) => {
+  const { data } = await axios.get<string>(config.login.GET_line, { params: { host } })
   return data
 }
 
