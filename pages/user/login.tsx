@@ -10,10 +10,10 @@ import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { BaseNextProps } from 'pages/_app'
+import { UserProps } from 'pages/_app'
 import { SubmitHandler } from 'react-hook-form'
 
-interface Props extends BaseNextProps {
+interface Props extends UserProps {
   loginUrl: string
 }
 

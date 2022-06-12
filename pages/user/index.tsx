@@ -6,9 +6,9 @@ import { AuthGetServerSideProps } from 'libs/auth'
 import { NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import NextImage from 'next/image'
-import { BaseNextProps } from 'pages/_app'
+import { UserProps } from 'pages/_app'
 
-const User: NextPage<BaseNextProps> = ({ user }) => (
+const User: NextPage<UserProps> = ({ user }) => (
   <PageLayout title="User Profile">
     <Navbar user={user} />
     <Stack>

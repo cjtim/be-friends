@@ -2,9 +2,9 @@ import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { BaseNextProps } from './_app'
+import { UserProps } from './_app'
 
-const AboutPage: NextPage<BaseNextProps> = ({ user }) => {
+const AboutPage: NextPage<UserProps> = ({ user }) => {
   return (
     <PageLayout title="About us">
       <Navbar user={user} />
