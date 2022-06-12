@@ -13,18 +13,18 @@ const TextLink: React.FC<Props> = ({ text, to, title }) => {
   const { pathname } = useRouter()
   const color = useColorModeValue('black', 'white')
   return (
-    <NextLink href={to} title={title}>
-      <Text
-        fontWeight="semibold"
-        cursor="pointer"
-        color={pathname === to ? color : 'gray'}
-        _hover={{
-          color,
-        }}
-      >
+    <Text
+      fontWeight="semibold"
+      cursor="pointer"
+      color={pathname === to ? color : 'gray'}
+      _hover={{
+        color,
+      }}
+    >
+      <NextLink href={to} title={title}>
         {text}
-      </Text>
-    </NextLink>
+      </NextLink>
+    </Text>
   )
 }
 
