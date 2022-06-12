@@ -36,7 +36,7 @@ const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
   return (
     <PageLayout title="Login">
       <Navbar user={user} />
-      <Center>
+      <Center pt="20vh">
         <LoginCard onClickLineLogin={onClick} onSubmitLogin={onSubmitLogin} />
       </Center>
     </PageLayout>

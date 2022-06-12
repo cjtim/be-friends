@@ -7,26 +7,42 @@ import { useEffect, useRef, useState } from 'react'
 import { config } from 'config'
 import Cookies from 'js-cookie'
 import axios from 'libs/axios'
-export interface BaseNextProps extends AppProps {
-  user?: User
+import { useRouter } from 'next/router'
+export interface UserProps {
+  user: User | undefined
 }
 
-function MyApp({ Component, pageProps }: BaseNextProps) {
-  const [user, setuser] = useState({} as User)
-  const firstLoad = useRef(false)
+function MyApp({ Component, pageProps }: AppProps<UserProps>) {
+  const router = useRouter() // Next.JS router
+  const [user, setuser] = useState<User | undefined>(undefined) // save user payload
+  const firstLoad = useRef(false) // ensure first load
+
+  // Get user from cookie
+  // Set header to Axios
+  // Cleanup if logout
+  const getUser = async () => {
+    const jwt = Cookies.get(config.cookies.token)
+    if (jwt && jwt !== '') {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
+      const { data: user } = await axios.get<User>(config.login.GET_me)
+      setuser(user)
+    } else {
+      Cookies.remove(config.cookies.token)
+      setuser(undefined)
+    }
+  }
+
   useEffect(() => {
     if (!firstLoad.current) {
-      firstLoad.current = true
-      ;(async () => {
-        const jwt = Cookies.get(config.cookies.token)
-        if (jwt && jwt !== '') {
-          axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
-          const { data: user } = await axios.get<User>(config.login.GET_me)
-          setuser(user)
-        }
-      })()
+      firstLoad.current = false
+      getUser() // fetch user on first load
+      // Register
+      router.events.on('routeChangeStart', () => {
+        // fetch user every time they change page
+        getUser()
+      })
     }
-  }, [])
+  }, [router.events])
 
   return (
     <ChakraProvider theme={theme}>

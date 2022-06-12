@@ -17,16 +17,14 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { internalPages } from 'config'
-import { User } from 'interfaces/User'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import Logo from './Logo'
 import TextLink from './TextLink'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { UserProps } from 'pages/_app'
 
-interface Props {
-  user?: User
-}
+interface Props extends UserProps {}
 
 const Navbar: React.FC<Props> = ({ user }) => {
   const { toggleColorMode } = useColorMode()
@@ -69,12 +67,17 @@ const Navbar: React.FC<Props> = ({ user }) => {
           flexDir={['column', 'column', 'row']}
           justifyContent="flex-end"
         >
-          {user && user.id ? (
+          {user === undefined ? (
+            <NextLink href={internalPages.user.login}>
+              <Button colorScheme={'brand'}>
+                <Text color="white">{t('navbar.login')}</Text>
+              </Button>
+            </NextLink>
+          ) : (
             <Menu>
               <MenuButton as={Box} cursor="pointer">
-                {user.picture_url ? (
-                  <Img src={user.picture_url || ''} borderRadius={'full'} width="12" />
-                ) : (
+                {user && user.picture_url && <Img src={user.picture_url || ''} borderRadius={'full'} width="12" />}
+                {user && !user.picture_url && (
                   <Avatar borderRadius={'full'} width="12">
                     <AvatarBadge boxSize="1.25em" bg="green.500" />
                   </Avatar>
@@ -89,13 +92,8 @@ const Navbar: React.FC<Props> = ({ user }) => {
                 </NextLink>
               </MenuList>
             </Menu>
-          ) : (
-            <NextLink href={internalPages.user.login}>
-              <Button colorScheme={'brand'}>
-                <Text color="white">{t('navbar.login')}</Text>
-              </Button>
-            </NextLink>
           )}
+
           <Button onClick={toggleColorMode}>{icon}</Button>
           <Button onClick={handleLangChange}>{locale === 'en' ? lang.th : lang.en}</Button>
         </HStack>
