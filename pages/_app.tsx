@@ -12,7 +12,7 @@ export interface UserProps {
   user: User | undefined
 }
 
-function MyApp({ Component, pageProps }: AppProps<UserProps>) {
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter() // Next.JS router
   const [user, setuser] = useState<User | undefined>(undefined) // save user payload
   const firstLoad = useRef(false) // ensure first load

@@ -2,9 +2,9 @@ import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { BaseNextProps } from 'pages/_app'
+import { UserProps } from 'pages/_app'
 
-const FindPage: NextPage<BaseNextProps> = ({ user }) => {
+const FindPage: NextPage<UserProps> = ({ user }) => {
   return (
     <PageLayout title="Find friends">
       <Navbar user={user} />
