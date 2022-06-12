@@ -21,6 +21,7 @@ export const internalPages = {
     index: '/user',
     login: '/user/login',
     logout: '/user/logout',
+    register: '/user/register',
   },
   about: '/about',
   findPets: '/find',

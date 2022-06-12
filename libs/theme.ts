@@ -122,8 +122,8 @@ export default extendTheme({
     },
   },
   fonts: {
-    body: 'system-ui, sans-serif',
-    heading: 'Georgia, serif',
+    body: 'Prompt, system-ui, sans-serif',
+    heading: 'Prompt, Georgia, serif',
     mono: 'Menlo, monospace',
   },
   fontSizes: {

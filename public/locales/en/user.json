@@ -1,7 +1,10 @@
 {
+  "id": "ID",
   "email": "Email",
   "password": "Password",
+  "confirm_password": "Confirm password",
   "register": "Register",
   "login2": "Log in with LINE",
-  "login": "Login"
+  "login": "Login",
+  "tag": "Tag"
 }
