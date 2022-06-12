@@ -2,6 +2,7 @@ import { useColorModeValue } from '@chakra-ui/react'
 import LogoImg from 'public/logo/logo_vector.svg'
 import NextImage from 'next/image'
 
+// eslint-disable-next-line no-undef
 const Logo: React.FC = () => {
   const logoColor = useColorModeValue(
     'invert(34%) sepia(41%) saturate(1170%) hue-rotate(112deg) brightness(93%) contrast(101%)',

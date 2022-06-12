@@ -8,13 +8,14 @@ interface Props {
   title?: string
 }
 
+// eslint-disable-next-line no-undef
 const TextLink: React.FC<Props> = ({ text, to, title }) => {
   const { pathname } = useRouter()
   const color = useColorModeValue('black', 'white')
   return (
     <NextLink href={to} title={title}>
       <Text
-        fontWeight={'semibold'}
+        fontWeight="semibold"
         cursor="pointer"
         color={pathname === to ? color : 'gray'}
         _hover={{

@@ -4,13 +4,11 @@ import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 
-const FindPage: NextPage<UserProps> = ({ user }) => {
-  return (
-    <PageLayout title="Find friends">
-      <Navbar user={user} />
-    </PageLayout>
-  )
-}
+const FindPage: NextPage<UserProps> = ({ user }) => (
+  <PageLayout title="Find friends">
+    <Navbar user={user} />
+  </PageLayout>
+)
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {

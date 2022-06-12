@@ -1,3 +1,4 @@
+/* eslint-disable react/no-invalid-html-attribute */
 // pages/_document.js
 
 import { ColorModeScript } from '@chakra-ui/react'

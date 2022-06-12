@@ -20,6 +20,7 @@ interface Props extends BoxProps {
   onSubmitLogin: SubmitHandler<UserLogin>
 }
 
+// eslint-disable-next-line no-undef
 const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxProps }) => {
   const {
     register,
@@ -29,7 +30,7 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
   const { t } = useTranslation('user')
 
   return (
-    <Box w="sm" h="sm" borderRadius={'xl'} borderColor="black" border={'1px'} {...boxProps}>
+    <Box w="sm" h="sm" borderRadius="xl" borderColor="black" border="1px" {...boxProps}>
       <form onSubmit={handleSubmit(onSubmitLogin)}>
         <Center gap={4} flexDir="column" p={4}>
           <FormControl isInvalid={Boolean(errors.email)} isRequired>
@@ -60,8 +61,8 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
           </FormControl>
 
           <Flex gap={4}>
-            <Button colorScheme={'brand'}>{t('register')}</Button>
-            <Button colorScheme={'brand'} variant="outline" isLoading={isSubmitting} type="submit">
+            <Button colorScheme="brand">{t('register')}</Button>
+            <Button colorScheme="brand" variant="outline" isLoading={isSubmitting} type="submit">
               {t('login')}
             </Button>
           </Flex>
