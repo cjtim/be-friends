@@ -22,4 +22,7 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
   },
+  globals: {
+    React: true,
+  },
 }

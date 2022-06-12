@@ -7,6 +7,8 @@ import {
   Flex,
   HStack,
   Img,
+  LinkBox,
+  LinkOverlay,
   Menu,
   MenuButton,
   MenuItem,
@@ -23,6 +25,7 @@ import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
 import TextLink from './TextLink'
 import Logo from './Logo'
+import ButtonLink from './ButtonLink'
 
 interface Props extends UserProps {}
 
@@ -46,11 +49,13 @@ const Navbar: React.FC<Props> = ({ user }) => {
   return (
     <Center boxShadow="md">
       <Flex alignItems="center" justifyContent="space-between" w={['container.sm', 'container.xl']}>
-        <NextLink href={internalPages.index}>
-          <Box w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
-            <Logo />
-          </Box>
-        </NextLink>
+        <LinkBox w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
+          <NextLink href={internalPages.index} passHref>
+            <LinkOverlay>
+              <Logo key="logo" />
+            </LinkOverlay>
+          </NextLink>
+        </LinkBox>
 
         <Center w={['30vw', '30vw', '2xs']}>
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
@@ -69,11 +74,11 @@ const Navbar: React.FC<Props> = ({ user }) => {
           justifyContent="flex-end"
         >
           {user === undefined ? (
-            <NextLink href={internalPages.user.login}>
+            <ButtonLink href={internalPages.user.login}>
               <Button colorScheme="brand">
                 <Text color="white">{t('navbar.login')}</Text>
               </Button>
-            </NextLink>
+            </ButtonLink>
           ) : (
             <Menu>
               <MenuButton as={Box} cursor="pointer">
@@ -85,10 +90,10 @@ const Navbar: React.FC<Props> = ({ user }) => {
                 )}
               </MenuButton>
               <MenuList>
-                <NextLink href={internalPages.user.index}>
+                <NextLink href={internalPages.user.index} passHref>
                   <MenuItem textDecoration="none">{t('navbar.profile')}</MenuItem>
                 </NextLink>
-                <NextLink href={internalPages.user.logout}>
+                <NextLink href={internalPages.user.logout} passHref>
                   <MenuItem textDecoration="none">{t('navbar.logout')}</MenuItem>
                 </NextLink>
               </MenuList>
