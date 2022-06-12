@@ -47,7 +47,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
   }
 
   return (
-    <Center boxShadow="md">
+    <Center as="nav" boxShadow="md">
       <Flex alignItems="center" justifyContent="space-between" w={['container.sm', 'container.xl']}>
         <LinkBox w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
           <NextLink href={internalPages.index} passHref>

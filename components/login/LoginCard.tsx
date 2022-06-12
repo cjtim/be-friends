@@ -10,6 +10,8 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react'
+import ButtonLink from 'components/global/ButtonLink'
+import { internalPages } from 'config'
 import { UserLogin } from 'interfaces/User'
 import { useTranslation } from 'next-i18next'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -51,6 +53,7 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
             <Input
               id="password"
               placeholder={t('password')}
+              type="password"
               {...register('password', {
                 required: 'This is required',
                 minLength: { value: 1, message: 'Minimum length should be 1' },
@@ -61,7 +64,9 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
           </FormControl>
 
           <Flex gap={4}>
-            <Button colorScheme="brand">{t('register')}</Button>
+            <ButtonLink href={internalPages.user.register}>
+              <Button colorScheme="brand">{t('register')}</Button>
+            </ButtonLink>
             <Button colorScheme="brand" variant="outline" isLoading={isSubmitting} type="submit">
               {t('login')}
             </Button>
