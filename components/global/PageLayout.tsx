@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Head from 'next/head'
 
 interface Props {

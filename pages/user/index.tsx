@@ -16,7 +16,7 @@ const User: NextPage<UserProps> = ({ user }) => (
       <Text>IMAGE: {user?.picture_url}</Text>
       <Text>NAME: {user?.name}</Text>
       {user?.picture_url && (
-        <Box position={'relative'}>
+        <Box position="relative">
           <NextImage
             src={user?.picture_url}
             width="100px"
@@ -30,12 +30,10 @@ const User: NextPage<UserProps> = ({ user }) => (
   </PageLayout>
 )
 
-export const getServerSideProps = AuthGetServerSideProps(async ctx => {
-  return {
-    props: {
-      ...(await serverSideTranslations(ctx.locale || 'us', ['common'])),
-    },
-  }
-})
+export const getServerSideProps = AuthGetServerSideProps(async ctx => ({
+  props: {
+    ...(await serverSideTranslations(ctx.locale || 'us', ['common'])),
+  },
+}))
 
 export default User

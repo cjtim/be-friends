@@ -3,9 +3,8 @@ import { User } from 'interfaces/User'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, GetServerSidePropsResult, NextPage, Redirect } from 'next'
 
-const UserLineCallback: NextPage = () => {
-  return <></>
-}
+// eslint-disable-next-line react/jsx-no-useless-fragment
+const UserLineCallback: NextPage = () => <></>
 
 export const getServerSideProps = async (
   ctx: GetServerSidePropsContext,

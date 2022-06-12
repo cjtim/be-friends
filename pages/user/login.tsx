@@ -17,21 +17,18 @@ interface Props extends UserProps {
   loginUrl: string
 }
 
-const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
+const UserLoginPage: NextPage<Props> = ({ loginUrl, user }) => {
   const router = useRouter()
   const onClick = async () => {
     window.location.href = loginUrl
   }
   const onSubmitLogin: SubmitHandler<UserLogin> = async values => {
-    try {
-      const { data: jwt } = await axios.post<string>(config.login.POST_line_login, values)
-      const { data: user } = await axios.get<User>(config.login.GET_me, { headers: { Authorization: `Bearer ${jwt}` } })
-      console.log(jwt)
-      Cookies.set(config.cookies.token, jwt, { expires: new Date(user.exp * 1000), path: '/' })
-      router.push('/')
-    } catch (e) {
-      console.error(e)
-    }
+    const { data: jwt } = await axios.post<string>(config.login.POST_line_login, values)
+    const { data: userPayload } = await axios.get<User>(config.login.GET_me, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+    Cookies.set(config.cookies.token, jwt, { expires: new Date(userPayload.exp * 1000), path: '/' })
+    router.push('/')
   }
   return (
     <PageLayout title="Login">
@@ -43,13 +40,11 @@ const UserLogin: NextPage<Props> = ({ loginUrl, user }) => {
   )
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'user'])),
-      loginUrl: await getLoginLink(ctx.req.headers.host || 'localhost:3000'),
-    },
-  }
-}
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => ({
+  props: {
+    ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'user'])),
+    loginUrl: await getLoginLink(ctx.req.headers.host || 'localhost:3000'),
+  },
+})
 
-export default UserLogin
+export default UserLoginPage

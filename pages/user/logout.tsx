@@ -2,6 +2,7 @@ import { config } from 'config'
 import axios from 'libs/axios'
 import { NextPage, GetServerSidePropsContext, GetServerSidePropsResult, Redirect } from 'next'
 
+// eslint-disable-next-line react/jsx-no-useless-fragment
 const UserLogout: NextPage = () => <></>
 
 export const getServerSideProps = async (

@@ -18,14 +18,15 @@ import {
 import NextLink from 'next/link'
 import { internalPages } from 'config'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import Logo from './Logo'
-import TextLink from './TextLink'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
+import TextLink from './TextLink'
+import Logo from './Logo'
 
 interface Props extends UserProps {}
 
+// eslint-disable-next-line no-undef
 const Navbar: React.FC<Props> = ({ user }) => {
   const { toggleColorMode } = useColorMode()
   const { pathname, asPath, query, locale, push } = useRouter()
@@ -44,7 +45,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
 
   return (
     <Center boxShadow="md">
-      <Flex alignItems={'center'} justifyContent="space-between" w={['container.sm', 'container.xl']}>
+      <Flex alignItems="center" justifyContent="space-between" w={['container.sm', 'container.xl']}>
         <NextLink href={internalPages.index}>
           <Box w={['30vw', '30vw', '2xs']} cursor="pointer" title="Home page">
             <Logo />
@@ -69,16 +70,16 @@ const Navbar: React.FC<Props> = ({ user }) => {
         >
           {user === undefined ? (
             <NextLink href={internalPages.user.login}>
-              <Button colorScheme={'brand'}>
+              <Button colorScheme="brand">
                 <Text color="white">{t('navbar.login')}</Text>
               </Button>
             </NextLink>
           ) : (
             <Menu>
               <MenuButton as={Box} cursor="pointer">
-                {user && user.picture_url && <Img src={user.picture_url || ''} borderRadius={'full'} width="12" />}
+                {user && user.picture_url && <Img src={user.picture_url || ''} borderRadius="full" width="12" />}
                 {user && !user.picture_url && (
-                  <Avatar borderRadius={'full'} width="12">
+                  <Avatar borderRadius="full" width="12">
                     <AvatarBadge boxSize="1.25em" bg="green.500" />
                   </Avatar>
                 )}

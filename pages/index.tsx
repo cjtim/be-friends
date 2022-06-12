@@ -4,8 +4,8 @@ import PageLayout from 'components/global/PageLayout'
 import Hero1 from 'components/home/Hero1'
 import type { GetStaticPropsContext, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
-import { UserProps } from './_app'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { UserProps } from './_app'
 
 interface Props extends UserProps {}
 
