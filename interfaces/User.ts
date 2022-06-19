@@ -1,3 +1,5 @@
+import { Tag } from './Tag'
+
 export interface User {
   id: string
   name: string
@@ -5,6 +7,8 @@ export interface User {
   line_uid?: string
   picture_url?: string
   exp: number // new Date(exp * 1000)
+
+  tags?: Tag[]
 }
 
 export interface UserLogin {
