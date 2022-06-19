@@ -33,7 +33,7 @@ const UserInfo: React.FC<Props> = ({ user }) => {
         <Text>{t('email')}</Text>
       </GridItem>
       <GridItem colSpan={3}>
-        <Text>{user?.email}</Text>
+        <Text>{user?.email || '-'}</Text>
       </GridItem>
 
       <GridItem colSpan={1}>
