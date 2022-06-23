@@ -9,30 +9,19 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 
 const data: typeof GGMap.defaultProps = {
-  markers: [
-    {
-      lat: 13.78366267529092,
-      lng: 100.53947827076848,
-      id: 'test',
-      title: 'น้องขุนทอง',
-      content: (
-        <GGMAPInfo id="test" title="น้องขุนทอง">
-          Test
-        </GGMAPInfo>
-      ),
-    },
-    {
+  markers: Array(200)
+    .fill(null)
+    .map((_, idx) => ({
       lat: 16.41958300934828,
-      lng: 100.75256909753664,
-      id: 'test2',
-      title: 'น้องทองม่วง',
+      lng: 100.75256909753664 + idx,
+      id: `test${idx}`,
+      title: `test${idx}`,
       content: (
-        <GGMAPInfo id="test2" title="น้องทองม่วง">
+        <GGMAPInfo id={`test${idx}`} title={`test${idx}`}>
           Test2
         </GGMAPInfo>
       ),
-    },
-  ],
+    })),
 }
 
 const FindPage: NextPage<UserProps> = ({ user }) => (
