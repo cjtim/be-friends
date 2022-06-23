@@ -1,6 +1,9 @@
 export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'
 
 export const config = {
+  google: {
+    mapApiKey: process.env.NEXT_PUBLIC_GG_MAP_API || '',
+  },
   cookies: {
     token: 'authToken',
     previousPage: 'previousPage',
