@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import GGMap from 'components/ggmap/GGMap'
 import GGMAPInfo from 'components/ggmap/GGMAPInfo'
 import Navbar from 'components/global/Navbar'
@@ -13,7 +13,7 @@ const data: typeof GGMap.defaultProps = {
     .fill(null)
     .map((_, idx) => ({
       lat: 16.41958300934828,
-      lng: 100.75256909753664 + idx,
+      lng: 100.75256909753664 + idx + 10,
       id: `test${idx}`,
       title: `test${idx}`,
       content: (
@@ -28,14 +28,19 @@ const FindPage: NextPage<UserProps> = ({ user }) => (
   <PageLayout title="Find friends">
     <Navbar user={user} />
 
-    <Box w="100vw" h="100vh">
-      {data.markers && <GGMap markers={data.markers} />}
-    </Box>
-
-    <PetMiniDetailCard />
-    <PetMiniDetailCard />
-    <PetMiniDetailCard />
-    <PetMiniDetailCard />
+    <Flex w="100vw" h="100vh">
+      <Box w="20%" overflowY="scroll">
+        {data.markers?.map(marker => (
+          <PetMiniDetailCard
+            key={marker.id}
+            title={marker.title}
+            id={marker.id}
+            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKr5wT7rfkjkGvNeqgXjBmarC5ZNoZs-H2uMpML8O7Q4F9W-IlUQibBT6IPqyvX45NOgw&usqp=CAU"
+          />
+        ))}
+      </Box>
+      <Box w="79%">{data.markers && <GGMap markers={data.markers} />}</Box>
+    </Flex>
   </PageLayout>
 )
 

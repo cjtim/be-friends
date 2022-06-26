@@ -29,8 +29,17 @@ const Map: React.FC<Props> = ({ markers }) => {
       const { lat, lng, id: idDOM, title } = marker
       const location = { lat, lng }
 
-      const rawElement = window.document.createElement('div')
-      rawElement.setAttribute('id', idDOM)
+      const infowindow = new window.google.maps.InfoWindow({
+        content: `
+        <div id="marker-content-${idDOM}" class="chakra-text">
+        <h1>${title}</h1>
+        ${idDOM}
+          <button id="marker-content-btn-${idDOM}" onclick="getElementById('${idDOM}').click()">
+          More info
+          </button>
+        </div>
+        `,
+      })
 
       const ggmarker = new window.google.maps.Marker({
         position: location,
@@ -39,7 +48,11 @@ const Map: React.FC<Props> = ({ markers }) => {
       })
 
       ggmarker.addListener('click', () => {
-        window.document.getElementById(idDOM)?.click()
+        infowindow.open({
+          anchor: ggmarker,
+          map,
+          shouldFocus: false,
+        })
       })
     })
   }, [markers])
@@ -63,10 +76,6 @@ const render = (markers: Props['markers']) => (status: Status) => {
   }
 }
 
-const GGMap: React.FC<Props> = ({ markers }) => (
-  <Box w="100vw" h="100vh">
-    <Wrapper apiKey={config.google.mapApiKey} render={render(markers)} />
-  </Box>
-)
+const GGMap: React.FC<Props> = ({ markers }) => <Wrapper apiKey={config.google.mapApiKey} render={render(markers)} />
 
 export default GGMap
