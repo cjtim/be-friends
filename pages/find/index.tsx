@@ -5,6 +5,7 @@ import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 import PetMiniDetailCard from 'components/PetsMap/PetMiniDetailCard'
+import { useTranslation } from 'next-i18next'
 
 const data: typeof PetsMap.defaultProps = {
   markers: Array(50)
@@ -33,18 +34,20 @@ const data: typeof PetsMap.defaultProps = {
     })),
 }
 
-const FindPage: NextPage<UserProps> = ({ user }) => (
-  <PageLayout title="Find friends">
-    <Navbar user={user} />
-
-    {data.markers && <PetsMap markers={data.markers} />}
-  </PageLayout>
-)
+const FindPage: NextPage<UserProps> = ({ user }) => {
+  const { t } = useTranslation('common')
+  return (
+    <PageLayout title={t('navbar.findPets')}>
+      <Navbar user={user} />
+      {data.markers && <PetsMap markers={data.markers} />}
+    </PageLayout>
+  )
+}
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'us', ['common', 'index'])),
+      ...(await serverSideTranslations(locale || 'us', ['common', 'index', 'pet'])),
       // Will be passed to the page component as props
     },
   }

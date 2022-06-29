@@ -1,8 +1,11 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-new */
-import { Box, Flex, Spinner } from '@chakra-ui/react'
+import { BellIcon } from '@chakra-ui/icons'
+import { Box, Button, Center, Flex, Spinner } from '@chakra-ui/react'
 import { Status, Wrapper } from '@googlemaps/react-wrapper'
-import { config } from 'config'
+import ButtonLink from 'components/global/ButtonLink'
+import { config, internalPages } from 'config'
+import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
 interface Props {
@@ -16,6 +19,7 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ markers }) => {
+  const { t } = useTranslation('pet')
   const [onClicks, setOnClicks] = useState<(() => void)[]>()
   const id = 'map'
 
@@ -57,6 +61,13 @@ const Map: React.FC<Props> = ({ markers }) => {
   return (
     <Flex w="100vw" h="90vh">
       <Box w="20%" overflowY="scroll">
+        <Center py={2}>
+          <ButtonLink href={internalPages.pets.new} isExternal>
+            <Button colorScheme="brand" color="white" leftIcon={<BellIcon />}>
+              {t('report')}
+            </Button>
+          </ButtonLink>
+        </Center>
         {onClicks && markers?.map((marker, idx) => <marker.SideContent key={marker.title} onClick={onClicks[idx]} />)}
       </Box>
       <Box id={id} w="79%" />

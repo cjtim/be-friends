@@ -61,6 +61,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
             <TextLink text={t('navbar.home')} to={internalPages.index} />
             <TextLink text={t('navbar.findPets')} to={internalPages.findPets} />
+            <TextLink text={t('navbar.shelters')} to={internalPages.shelters.index} />
             <TextLink text={t('navbar.about')} to={internalPages.about} />
           </HStack>
         </Center>

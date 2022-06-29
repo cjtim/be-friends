@@ -1,15 +1,16 @@
-import { LinkBox, LinkOverlay } from '@chakra-ui/react'
+import { LinkBox, LinkBoxProps, LinkOverlay } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-interface Props {
+interface Props extends LinkBoxProps {
   href: string
   children: React.ReactNode
+  isExternal?: boolean
 }
 
-const ButtonLink: React.FC<Props> = ({ href, children }) => (
-  <LinkBox>
+const ButtonLink: React.FC<Props> = ({ href, isExternal, children, ...boxProps }) => (
+  <LinkBox {...boxProps}>
     <NextLink href={href} passHref>
-      <LinkOverlay>{children}</LinkOverlay>
+      <LinkOverlay isExternal={isExternal}>{children}</LinkOverlay>
     </NextLink>
   </LinkBox>
 )

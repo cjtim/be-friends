@@ -5,15 +5,20 @@ import UserInfo from 'components/login/UserInfo'
 import { AuthGetServerSideProps } from 'libs/auth'
 
 import { NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 
-const User: NextPage<UserProps> = ({ user }) => (
-  <PageLayout title="User Profile">
-    <Navbar user={user} />
-    <Center h="80vh">{user && <UserInfo user={user} />}</Center>
-  </PageLayout>
-)
+const User: NextPage<UserProps> = ({ user }) => {
+  const { t } = useTranslation('common')
+
+  return (
+    <PageLayout title={t('navbar.profile')}>
+      <Navbar user={user} />
+      <Center h="80vh">{user && <UserInfo user={user} />}</Center>
+    </PageLayout>
+  )
+}
 
 export const getServerSideProps = AuthGetServerSideProps(async ctx => ({
   props: {
