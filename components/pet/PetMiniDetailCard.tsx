@@ -1,15 +1,16 @@
-import { Badge, Box, Image } from '@chakra-ui/react'
+import { Badge, Box, Flex, Image } from '@chakra-ui/react'
 
 interface Props {
   id: string
   title: string
   image: string
   imageAlt?: string
+  onClick: () => void
 }
 
-const PetMiniDetailCard: React.FC<Props> = ({ id, title, image, imageAlt }) => (
-  <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-    <Image src={image} alt={imageAlt} w="2xs" onClick={() => document?.getElementById(id)?.click()} />
+const PetMiniDetailCard: React.FC<Props> = ({ title, image, imageAlt, onClick }) => (
+  <Flex maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" onClick={onClick}>
+    <Image src={image} alt={imageAlt} w="24" h="24" />
 
     <Box p="6">
       <Box display="flex" alignItems="baseline">
@@ -25,7 +26,7 @@ const PetMiniDetailCard: React.FC<Props> = ({ id, title, image, imageAlt }) => (
         {title}
       </Box>
     </Box>
-  </Box>
+  </Flex>
 )
 
 export default PetMiniDetailCard

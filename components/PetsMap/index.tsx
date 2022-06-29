@@ -1,9 +1,10 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-new */
-import { Box, Spinner } from '@chakra-ui/react'
+import { Box, Flex, Spinner } from '@chakra-ui/react'
 import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import { config } from 'config'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import PetMiniDetailCard from 'components/pet/PetMiniDetailCard'
 
 interface Props {
   markers: {
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ markers }) => {
+  const [onClicks, setOnClicks] = useState<(() => void)[]>()
   const id = 'map'
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const Map: React.FC<Props> = ({ markers }) => {
       center: bangkok,
     })
 
-    markers.forEach(marker => {
+    const finishMarkers = markers.map(marker => {
       const { lat, lng, id: idDOM, title } = marker
       const location = { lat, lng }
 
@@ -51,17 +53,32 @@ const Map: React.FC<Props> = ({ markers }) => {
         infowindow.open({
           anchor: ggmarker,
           map,
-          shouldFocus: false,
+          shouldFocus: true,
         })
       })
+
+      return ggmarker
     })
+    const onClickFns = finishMarkers.map(marker => () => window.google.maps.event.trigger(marker, 'click'))
+    setOnClicks(onClickFns)
   }, [markers])
 
   return (
-    <Box w="100%" h="100%">
-      {markers && markers.map(marker => marker.content)}
-      <Box id={id} w="100%" h="100%" />
-    </Box>
+    <Flex w="100vw" h="100vh">
+      <Box w="20%" overflowY="scroll">
+        {onClicks &&
+          markers?.map((marker, idx) => (
+            <PetMiniDetailCard
+              key={marker.id}
+              title={marker.title}
+              id={marker.id}
+              onClick={onClicks[idx]}
+              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKr5wT7rfkjkGvNeqgXjBmarC5ZNoZs-H2uMpML8O7Q4F9W-IlUQibBT6IPqyvX45NOgw&usqp=CAU"
+            />
+          ))}
+      </Box>
+      <Box id={id} w="79%" h="100%" />
+    </Flex>
   )
 }
 
@@ -76,6 +93,6 @@ const render = (markers: Props['markers']) => (status: Status) => {
   }
 }
 
-const GGMap: React.FC<Props> = ({ markers }) => <Wrapper apiKey={config.google.mapApiKey} render={render(markers)} />
+const PetsMap: React.FC<Props> = ({ markers }) => <Wrapper apiKey={config.google.mapApiKey} render={render(markers)} />
 
-export default GGMap
+export default PetsMap
