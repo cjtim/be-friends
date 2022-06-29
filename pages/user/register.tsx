@@ -43,6 +43,7 @@ const RegisterPage: NextPage<Props> = ({ loginUrl, user }) => {
     </PageLayout>
   )
 }
+
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => ({
   props: {
     ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'user'])),
