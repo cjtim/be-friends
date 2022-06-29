@@ -4,7 +4,7 @@ import PageLayout from 'components/global/PageLayout'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
-import PetMiniDetailCard from 'components/pet/PetMiniDetailCard'
+import PetMiniDetailCard from 'components/PetsMap/PetMiniDetailCard'
 
 const data: typeof PetsMap.defaultProps = {
   markers: Array(50)
@@ -25,7 +25,7 @@ const data: typeof PetsMap.defaultProps = {
       MarkerContent: `
       <div class="chakra-text">
       <h1>test${idx}</h1>
-      <button>
+      <button onclick=" window.open('/pets/${idx}','_blank')">
         More info
       </button>
       </div>
