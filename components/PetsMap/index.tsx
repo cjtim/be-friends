@@ -4,15 +4,14 @@ import { Box, Flex, Spinner } from '@chakra-ui/react'
 import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import { config } from 'config'
 import { useEffect, useState } from 'react'
-import PetMiniDetailCard from 'components/pet/PetMiniDetailCard'
 
 interface Props {
   markers: {
     lat: number
     lng: number
-    id: string
     title: string
-    content: React.ReactNode
+    SideContent: React.FC<{ onClick: () => void }>
+    MarkerContent: string
   }[]
 }
 
@@ -28,19 +27,11 @@ const Map: React.FC<Props> = ({ markers }) => {
     })
 
     const finishMarkers = markers.map(marker => {
-      const { lat, lng, id: idDOM, title } = marker
+      const { lat, lng, MarkerContent, title } = marker
       const location = { lat, lng }
 
       const infowindow = new window.google.maps.InfoWindow({
-        content: `
-        <div id="marker-content-${idDOM}" class="chakra-text">
-        <h1>${title}</h1>
-        ${idDOM}
-          <button id="marker-content-btn-${idDOM}" onclick="getElementById('${idDOM}').click()">
-          More info
-          </button>
-        </div>
-        `,
+        content: MarkerContent,
       })
 
       const ggmarker = new window.google.maps.Marker({
@@ -66,16 +57,7 @@ const Map: React.FC<Props> = ({ markers }) => {
   return (
     <Flex w="100vw" h="90vh">
       <Box w="20%" overflowY="scroll">
-        {onClicks &&
-          markers?.map((marker, idx) => (
-            <PetMiniDetailCard
-              key={marker.id}
-              title={marker.title}
-              id={marker.id}
-              onClick={onClicks[idx]}
-              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKr5wT7rfkjkGvNeqgXjBmarC5ZNoZs-H2uMpML8O7Q4F9W-IlUQibBT6IPqyvX45NOgw&usqp=CAU"
-            />
-          ))}
+        {onClicks && markers?.map((marker, idx) => <marker.SideContent key={marker.title} onClick={onClicks[idx]} />)}
       </Box>
       <Box id={id} w="79%" />
     </Flex>

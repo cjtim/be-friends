@@ -1,10 +1,10 @@
 import PetsMap from 'components/PetsMap'
-import GGMAPInfo from 'components/PetsMap/GGMAPInfo'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
+import PetMiniDetailCard from 'components/pet/PetMiniDetailCard'
 
 const data: typeof PetsMap.defaultProps = {
   markers: Array(50)
@@ -12,13 +12,24 @@ const data: typeof PetsMap.defaultProps = {
     .map((_, idx) => ({
       lat: 16.41958300934828,
       lng: 100.75256909753664 + idx + 10,
-      id: `test${idx}`,
       title: `test${idx}`,
-      content: (
-        <GGMAPInfo id={`test${idx}`} title={`test${idx}`}>
-          Test2
-        </GGMAPInfo>
+      SideContent: ({ onClick }) => (
+        <PetMiniDetailCard
+          id={`test${idx}`}
+          image="https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png"
+          title={`test${idx}`}
+          onClick={onClick}
+          imageAlt={`test${idx}`}
+        />
       ),
+      MarkerContent: `
+      <div class="chakra-text">
+      <h1>test${idx}</h1>
+      <button>
+        More info
+      </button>
+      </div>
+      `,
     })),
 }
 
