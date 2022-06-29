@@ -21,6 +21,7 @@ module.exports = {
     'react/function-component-definition': 0,
     'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
+    'no-param-reassign': 0,
   },
   globals: {
     React: true,

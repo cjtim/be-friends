@@ -33,17 +33,19 @@ const UserInfo: React.FC<Props> = ({ user }) => {
         <Text>{t('email')}</Text>
       </GridItem>
       <GridItem colSpan={3}>
-        <Text>{user?.email}</Text>
+        <Text>{user?.email || '-'}</Text>
       </GridItem>
 
       <GridItem colSpan={1}>
         <Text>{t('tag')}</Text>
       </GridItem>
       <GridItem colSpan={3}>
-        <Tag size={['sm', 'md']} borderRadius="full" variant="solid" colorScheme="green">
-          <TagLabel>Green</TagLabel>
-          <TagCloseButton />
-        </Tag>
+        {user?.tags?.map(tag => (
+          <Tag key={tag.id} size={['sm', 'md']} borderRadius="full" variant="outline" colorScheme="green" mr={1} mt={1}>
+            <TagLabel>{tag.name}</TagLabel>
+            <TagCloseButton />
+          </Tag>
+        ))}
       </GridItem>
     </Grid>
   )
