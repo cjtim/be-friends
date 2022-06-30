@@ -91,7 +91,7 @@ const RegisterCard: React.FC<Props> = ({ onSubmitRegister, onClickLineLogin, ...
             <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
           </FormControl>
 
-          <Button colorScheme="brand" isLoading={isSubmitting} type="submit">
+          <Button variant="brandSolid" isLoading={isSubmitting} type="submit">
             {t('register')}
           </Button>
           <Divider />
