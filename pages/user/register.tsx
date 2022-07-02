@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'
 import { getLoginLink } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
@@ -18,6 +19,7 @@ interface Props extends UserProps {
 }
 
 const RegisterPage: NextPage<Props> = ({ loginUrl, user }) => {
+  const { t } = useTranslation('user')
   const router = useRouter()
   const onClick = async () => {
     window.location.href = loginUrl
@@ -32,7 +34,7 @@ const RegisterPage: NextPage<Props> = ({ loginUrl, user }) => {
   }
 
   return (
-    <PageLayout title="">
+    <PageLayout title={t('register')}>
       <Navbar user={user} />
 
       <Center h="80vh">

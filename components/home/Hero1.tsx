@@ -21,7 +21,7 @@ const Hero1: React.FC = () => {
           </Button>
         </ButtonLink>
 
-        <ButtonLink href={internalPages.findPets}>
+        <ButtonLink href={internalPages.shelters.index}>
           <Button>{t('hero1.secondaryButton')}</Button>
         </ButtonLink>
       </HStack>

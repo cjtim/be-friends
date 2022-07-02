@@ -1,53 +1,53 @@
-import { Box, Flex } from '@chakra-ui/react'
-import GGMap from 'components/ggmap/GGMap'
-import GGMAPInfo from 'components/ggmap/GGMAPInfo'
+import PetsMap from 'components/PetsMap'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
-import PetMiniDetailCard from 'components/pet/PetMiniDetailCard'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
+import PetMiniDetailCard from 'components/PetsMap/PetMiniDetailCard'
+import { useTranslation } from 'next-i18next'
 
-const data: typeof GGMap.defaultProps = {
-  markers: Array(200)
+const data: typeof PetsMap.defaultProps = {
+  markers: Array(50)
     .fill(null)
     .map((_, idx) => ({
       lat: 16.41958300934828,
       lng: 100.75256909753664 + idx + 10,
-      id: `test${idx}`,
       title: `test${idx}`,
-      content: (
-        <GGMAPInfo id={`test${idx}`} title={`test${idx}`}>
-          Test2
-        </GGMAPInfo>
+      SideContent: ({ onClick }) => (
+        <PetMiniDetailCard
+          id={`test${idx}`}
+          image="https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png"
+          title={`test${idx}`}
+          onClick={onClick}
+          imageAlt={`test${idx}`}
+        />
       ),
+      MarkerContent: `
+      <div class="chakra-text">
+      <h1>test${idx}</h1>
+      <button onclick=" window.open('/pets/${idx}','_blank')">
+        More info
+      </button>
+      </div>
+      `,
     })),
 }
 
-const FindPage: NextPage<UserProps> = ({ user }) => (
-  <PageLayout title="Find friends">
-    <Navbar user={user} />
-
-    <Flex w="100vw" h="100vh">
-      <Box w="20%" overflowY="scroll">
-        {data.markers?.map(marker => (
-          <PetMiniDetailCard
-            key={marker.id}
-            title={marker.title}
-            id={marker.id}
-            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKr5wT7rfkjkGvNeqgXjBmarC5ZNoZs-H2uMpML8O7Q4F9W-IlUQibBT6IPqyvX45NOgw&usqp=CAU"
-          />
-        ))}
-      </Box>
-      <Box w="79%">{data.markers && <GGMap markers={data.markers} />}</Box>
-    </Flex>
-  </PageLayout>
-)
+const FindPage: NextPage<UserProps> = ({ user }) => {
+  const { t } = useTranslation('common')
+  return (
+    <PageLayout title={t('navbar.findPets')}>
+      <Navbar user={user} />
+      {data.markers && <PetsMap markers={data.markers} />}
+    </PageLayout>
+  )
+}
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'us', ['common', 'index'])),
+      ...(await serverSideTranslations(locale || 'us', ['common', 'index', 'pet'])),
       // Will be passed to the page component as props
     },
   }

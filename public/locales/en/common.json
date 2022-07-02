@@ -3,6 +3,7 @@
   "navbar": {
     "home": "Home",
     "findPets": "Find Pets",
+    "shelters": "Shelters",
     "about": "About",
     "profile": "Profile",
     "logout": "Logout",

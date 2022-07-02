@@ -28,4 +28,11 @@ export const internalPages = {
   },
   about: '/about',
   findPets: '/find',
+  shelters: {
+    index: '/shelters',
+  },
+  pets: {
+    index: '/pets',
+    new: '/pets/new',
+  },
 }
