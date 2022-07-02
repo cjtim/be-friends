@@ -1,6 +1,9 @@
-export interface Pet {
+import { TimestampColumns } from './common'
+
+export interface Pet extends TimestampColumns {
+  id: number
   name: string
-  description: string
-  updated_at: Date
-  created_at: Date
+  description?: string
+  lat: number
+  lng: number
 }

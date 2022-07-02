@@ -16,6 +16,9 @@ export const config = {
     POST_line_register: `/api/v1/auth/register`,
     POST_line_login: `/api/v1/auth/login`,
   },
+  pet: {
+    GET_list: '/api/v1/pet',
+  },
 }
 
 export const internalPages = {

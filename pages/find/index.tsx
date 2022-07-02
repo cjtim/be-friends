@@ -6,49 +6,54 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 import PetMiniDetailCard from 'components/PetsMap/PetMiniDetailCard'
 import { useTranslation } from 'next-i18next'
+import { Pet } from 'interfaces/Pet'
+import axios from 'libs/axios'
+import { config } from 'config'
 
-const data: typeof PetsMap.defaultProps = {
-  markers: Array(50)
-    .fill(null)
-    .map((_, idx) => ({
-      lat: 16.41958300934828,
-      lng: 100.75256909753664 + idx + 10,
-      title: `test${idx}`,
+interface Props extends UserProps {
+  rawPets: Pet[]
+}
+
+const FindPage: NextPage<Props> = ({ user, rawPets }) => {
+  const data: typeof PetsMap.defaultProps = {
+    markers: rawPets.map(pet => ({
+      ...pet,
+      // eslint-disable-next-line react/no-unstable-nested-components
       SideContent: ({ onClick }) => (
         <PetMiniDetailCard
-          id={`test${idx}`}
+          id={`${pet.id}`}
           image="https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png"
-          title={`test${idx}`}
+          title={pet.name}
           onClick={onClick}
-          imageAlt={`test${idx}`}
+          imageAlt={pet.name}
         />
       ),
       MarkerContent: `
       <div class="chakra-text">
-      <h1>test${idx}</h1>
-      <button onclick=" window.open('/pets/${idx}','_blank')">
+      <h1>${pet.name}</h1>
+      <button onclick=" window.open('/pets/${pet.id}','_blank')">
         More info
       </button>
       </div>
       `,
     })),
-}
-
-const FindPage: NextPage<UserProps> = ({ user }) => {
+  }
   const { t } = useTranslation('common')
   return (
     <PageLayout title={t('navbar.findPets')}>
       <Navbar user={user} />
-      {data.markers && <PetsMap markers={data.markers} />}
+      {data && data.markers && <PetsMap markers={data.markers} />}
     </PageLayout>
   )
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  const { data: rawPets } = await axios.get<Pet[]>(config.pet.GET_list)
   return {
     props: {
       ...(await serverSideTranslations(locale || 'us', ['common', 'index', 'pet'])),
       // Will be passed to the page component as props
+      rawPets,
     },
   }
 }
