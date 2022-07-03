@@ -5,17 +5,17 @@ import { Box, Button, Center, Flex, Spinner } from '@chakra-ui/react'
 import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import ButtonLink from 'components/global/ButtonLink'
 import { config, internalPages } from 'config'
+import { Pet } from 'interfaces/Pet'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
+interface Marker extends Pet {
+  SideContent: React.FC<{ onClick: () => void }>
+  MarkerContent: string
+}
+
 interface Props {
-  markers: {
-    lat: number
-    lng: number
-    title: string
-    SideContent: React.FC<{ onClick: () => void }>
-    MarkerContent: string
-  }[]
+  markers: Marker[]
 }
 
 const Map: React.FC<Props> = ({ markers }) => {
@@ -30,30 +30,32 @@ const Map: React.FC<Props> = ({ markers }) => {
       center: bangkok,
     })
 
-    const finishMarkers = markers.map(marker => {
-      const { lat, lng, MarkerContent, title } = marker
-      const location = { lat, lng }
+    const finishMarkers = markers
+      .filter(marker => marker?.lat && marker?.lng)
+      .map(marker => {
+        const { lat, lng, MarkerContent, name } = marker
+        const location = { lat, lng }
 
-      const infowindow = new window.google.maps.InfoWindow({
-        content: MarkerContent,
-      })
-
-      const ggmarker = new window.google.maps.Marker({
-        position: location,
-        map,
-        title,
-      })
-
-      ggmarker.addListener('click', () => {
-        infowindow.open({
-          anchor: ggmarker,
-          map,
-          shouldFocus: true,
+        const infowindow = new window.google.maps.InfoWindow({
+          content: MarkerContent,
         })
-      })
 
-      return ggmarker
-    })
+        const ggmarker = new window.google.maps.Marker({
+          position: location as any, // already filted undefined
+          map,
+          title: name,
+        })
+
+        ggmarker.addListener('click', () => {
+          infowindow.open({
+            anchor: ggmarker,
+            map,
+            shouldFocus: true,
+          })
+        })
+
+        return ggmarker
+      })
     const onClickFns = finishMarkers.map(marker => () => window.google.maps.event.trigger(marker, 'click'))
     setOnClicks(onClickFns)
   }, [markers])
@@ -68,7 +70,7 @@ const Map: React.FC<Props> = ({ markers }) => {
             </Button>
           </ButtonLink>
         </Center>
-        {onClicks && markers?.map((marker, idx) => <marker.SideContent key={marker.title} onClick={onClicks[idx]} />)}
+        {onClicks && markers?.map((marker, idx) => <marker.SideContent key={marker.name} onClick={onClicks[idx]} />)}
       </Box>
       <Box id={id} w="79%" />
     </Flex>
