@@ -10,3 +10,12 @@ export interface Pet extends TimestampColumns {
     picture_url: string
   }[]
 }
+
+export interface PetRegister {
+  name: string
+  description?: string
+  lat: number
+  lng: number
+  images?: File[]
+  tag_ids?: number[]
+}
