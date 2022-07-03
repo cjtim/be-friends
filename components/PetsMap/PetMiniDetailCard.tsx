@@ -3,12 +3,13 @@ import { Badge, Box, Flex, Image, Stack } from '@chakra-ui/react'
 interface Props {
   id: string
   title: string
+  description?: string
   image: string
   imageAlt?: string
   onClick: () => void
 }
 
-const PetMiniDetailCard: React.FC<Props> = ({ title, image, imageAlt, onClick }) => (
+const PetMiniDetailCard: React.FC<Props> = ({ title, description, image, imageAlt, onClick }) => (
   <Flex maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" onClick={onClick}>
     <Image src={image} alt={imageAlt} w="24" h="24" />
 
@@ -22,7 +23,7 @@ const PetMiniDetailCard: React.FC<Props> = ({ title, image, imageAlt, onClick })
         </Box>
       </Flex>
       <Box color="gray.500" fontWeight="semibold" letterSpacing="wide" fontSize="xs" textTransform="uppercase" ml="2">
-        2 beds &bull; 3 baths
+        {description}
       </Box>
     </Stack>
   </Flex>

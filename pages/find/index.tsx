@@ -27,19 +27,23 @@ const FindPage: NextPage<Props> = ({ user, rawPets }) => {
             'https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png'
           }
           title={pet.name}
+          description={pet?.description}
           onClick={onClick}
           imageAlt={pet.name}
         />
       ),
       MarkerContent: `
       <div>
-      <h1>${pet.name}</h1>
-      <br/>
-      <a>${pet?.description || ''}</a>
-      <br/>
-      <button onclick=" window.open('/pets/${pet.id}','_blank')">
-        More info
-      </button>
+        <header>
+          <h1>${pet.name}</h1>
+        </header>
+        <img src="${pet.picture_urls[0] && pet.picture_urls[0].picture_url}" width="100" height="auto"/>
+        <br/>
+        <a>${pet?.description || ''}</a>
+        <br/>
+        <button onclick=" window.open('/pets/${pet.id}','_blank')">
+          More info
+        </button>
       </div>
       `,
     })),
