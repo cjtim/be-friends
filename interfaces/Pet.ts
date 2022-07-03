@@ -6,4 +6,7 @@ export interface Pet extends TimestampColumns {
   description?: string
   lat: number
   lng: number
+  picture_urls: {
+    picture_url: string
+  }[]
 }

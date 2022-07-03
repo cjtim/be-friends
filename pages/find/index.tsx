@@ -22,15 +22,21 @@ const FindPage: NextPage<Props> = ({ user, rawPets }) => {
       SideContent: ({ onClick }) => (
         <PetMiniDetailCard
           id={`${pet.id}`}
-          image="https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png"
+          image={
+            (pet.picture_urls[0] && pet.picture_urls[0].picture_url) ||
+            'https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png'
+          }
           title={pet.name}
           onClick={onClick}
           imageAlt={pet.name}
         />
       ),
       MarkerContent: `
-      <div class="chakra-text">
+      <div>
       <h1>${pet.name}</h1>
+      <br/>
+      <a>${pet?.description || ''}</a>
+      <br/>
       <button onclick=" window.open('/pets/${pet.id}','_blank')">
         More info
       </button>
