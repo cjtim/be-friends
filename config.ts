@@ -3,6 +3,9 @@ export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localh
 export const config = {
   google: {
     mapApiKey: process.env.NEXT_PUBLIC_GG_MAP_API || '',
+    bucketName: '',
+    storageApiKey: '',
+    projectId: '',
   },
   cookies: {
     token: 'authToken',

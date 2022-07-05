@@ -5,21 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "commit": "cz",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "npm run lint --fix",
+    "lint:fix": "next lint --fix ./**/*.{ts,js,jsx,tsx}",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
-    "prepare": "husky install",
+    "lint-staged": "next lint --fix && npm run format",
     "postinstall": "husky install",
     "generate": "prisma generate",
     "migrate": "prisma migrate",
     "semantic-release": "semantic-release"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts,js,jsx,tsx}": [
-      "yarn lint --fix",
-      "yarn format"
-    ]
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.1",
@@ -53,6 +48,7 @@
     "@types/react-dom": "18.0.4",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
+    "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
