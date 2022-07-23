@@ -13,7 +13,7 @@ const Table = <T extends object>({ data, columns }: Props<T>) => {
   })
 
   return (
-    <TableContainer>
+    <TableContainer borderRadius="lg" border="1px" borderColor="gray.200">
       <ChakraTable {...getTableProps()} variant="simple">
         <Thead>
           {headerGroups.map(headerGroup => (

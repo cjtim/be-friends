@@ -1,3 +1,4 @@
+import { Center, Container, Heading } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 
@@ -20,7 +21,13 @@ const SheltersPage: NextPage<Props> = ({ user, shelters }) => {
   return (
     <PageLayout title={t('navbar.shelters')}>
       <Navbar user={user} />
-      <ShelterTableList shelters={shelters} />
+
+      <Container minW="container.lg">
+        <Center py={2}>
+          <Heading>Shelters</Heading>
+        </Center>
+        <ShelterTableList shelters={shelters} />
+      </Container>
     </PageLayout>
   )
 }
@@ -31,15 +38,15 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
       ...(await serverSideTranslations(locale || 'us', ['common', 'index', 'pet'])),
       shelters: Array(50)
         .fill(null)
-        .map((i, idx) => ({
-          name: `Shelter${idx}`,
+        .map((_i, idx) => ({
+          name: `Shelter${idx + 1}`,
           address: `Samsennai${idx}`,
           contacts: {
             line: '',
             messenger: `fb.me/${idx}`,
           },
         })),
-    } as Props,
+    } as unknown as Props,
   }
 }
 
