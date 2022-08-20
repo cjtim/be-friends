@@ -21,6 +21,8 @@ export const config = {
   },
   pet: {
     GET_list: '/api/v1/pet',
+    POST_create: '/api/v1/pet',
+    POST_img: '/api/v1/pet/img',
   },
 }
 

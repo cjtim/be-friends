@@ -19,3 +19,8 @@ export interface PetRegister {
   images?: File[]
   tag_ids?: number[]
 }
+
+// [post] /api/v1/pet/img
+export interface PetImageResponse {
+  downloadURL: string
+}
