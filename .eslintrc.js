@@ -25,5 +25,6 @@ module.exports = {
   },
   globals: {
     React: true,
+    google: true,
   },
 }

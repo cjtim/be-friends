@@ -1,3 +1,10 @@
 {
-  "report": "Report New Pet"
+  "report": "Report New Pet",
+  "register": {
+    "name": "Name",
+    "register": "Create new Pet",
+    "description": "Description",
+    "location": "Location (Drag pin to last found location)",
+    "images": "Images"
+  }
 }
