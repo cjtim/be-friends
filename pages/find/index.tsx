@@ -19,20 +19,7 @@ const FindPage: NextPage<Props> = ({ user, pets }) => {
     markers: pets.map(pet => ({
       ...pet,
       // eslint-disable-next-line react/no-unstable-nested-components
-      SideContent: ({ onClick }) => (
-        <PetMiniDetailCard
-          id={`${pet.id}`}
-          image={
-            (pet?.picture_urls && pet?.picture_urls[0] && pet?.picture_urls[0]?.picture_url) ||
-            'https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png'
-          }
-          title={pet.name}
-          description={pet?.description}
-          onClick={onClick}
-          status={pet.status}
-          imageAlt={pet.name}
-        />
-      ),
+      SideContent: ({ onClick }) => <PetMiniDetailCard {...pet} onClick={onClick} />,
       MarkerContent: `
       <div>
         <header>
