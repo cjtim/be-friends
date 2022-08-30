@@ -12,8 +12,8 @@ export interface User extends TimestampColumns {
   is_org: boolean
   is_admin: boolean
 
-  lat: number
-  lng: number
+  lat?: number
+  lng?: number
 
   exp: number // new Date(exp * 1000)
 }

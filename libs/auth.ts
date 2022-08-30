@@ -23,7 +23,15 @@ export const AuthGetServerSideProps =
     // Get token from user client cookies
     const jwt = ctx.req.cookies[config.cookies.token]
 
-    let user: User = { name: '', id: '', exp: 0 }
+    let user: User = {
+      name: '',
+      id: '',
+      exp: 0,
+      is_admin: false,
+      is_org: false,
+      created_at: new Date(),
+      updated_at: new Date(),
+    }
     try {
       if (jwt && jwt !== '') {
         // Server side call
