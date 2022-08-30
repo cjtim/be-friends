@@ -1,4 +1,4 @@
-import { extendTheme, theme } from '@chakra-ui/react'
+import { ComponentStyleConfig, extendTheme, theme } from '@chakra-ui/react'
 
 const breakpoints = {
   sm: '30em',
@@ -122,8 +122,8 @@ export default extendTheme({
     },
   },
   fonts: {
-    body: 'Prompt, system-ui, sans-serif',
-    heading: 'Prompt, Georgia, serif',
+    body: 'Inter, system-ui, sans-serif',
+    heading: 'Inter, Georgia, serif',
     mono: 'Menlo, monospace',
   },
   fontSizes: {
@@ -182,4 +182,20 @@ export default extendTheme({
   sizes,
   borderRadius,
   zIndices,
+  components: {
+    Button: {
+      variants: {
+        brandSolid: {
+          colorScheme: 'brand',
+          color: 'white',
+          bg: 'brand.500',
+        },
+        brandOutline: {
+          colorScheme: 'brand',
+          border: '1px solid',
+          borderColor: 'brand.500',
+        },
+      },
+    } as ComponentStyleConfig,
+  },
 })

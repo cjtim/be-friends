@@ -13,7 +13,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Text,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -76,9 +75,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
         >
           {user === undefined ? (
             <ButtonLink href={internalPages.user.login}>
-              <Button colorScheme="brand">
-                <Text color="white">{t('navbar.login')}</Text>
-              </Button>
+              <Button variant="brandSolid">{t('navbar.login')}</Button>
             </ButtonLink>
           ) : (
             <Menu>

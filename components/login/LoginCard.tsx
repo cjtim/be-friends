@@ -65,9 +65,9 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
 
           <Flex gap={4}>
             <ButtonLink href={internalPages.user.register}>
-              <Button colorScheme="brand">{t('register')}</Button>
+              <Button variant="brandSolid">{t('register')}</Button>
             </ButtonLink>
-            <Button colorScheme="brand" variant="outline" isLoading={isSubmitting} type="submit">
+            <Button variant="brandOutline" isLoading={isSubmitting} type="submit">
               {t('login')}
             </Button>
           </Flex>

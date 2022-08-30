@@ -11,7 +11,7 @@ import axios from 'libs/axios'
 import { useRouter } from 'next/router'
 
 export interface UserProps {
-  user: User | undefined
+  user?: User | undefined
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
