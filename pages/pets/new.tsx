@@ -28,7 +28,7 @@ const PetNewPage: NextPage<UserProps> = ({ user }) => {
       }
       await Promise.all(downloadURLPromises)
     }
-    router.push(`/pet/${pet.id}`)
+    router.push(`/pets/${pet.id}`)
   }
   return (
     <PageLayout title="New pet">
