@@ -22,7 +22,11 @@ const PetHome: NextPage<UserProps & Props> = ({ pets }) => (
 )
 
 export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSidePropsContext) => {
-  const { data: pets } = await axios.get<Pet[]>(config.pet.GET_list)
+  const { data: pets } = await axios.get<Pet[]>(config.pet.GET_list, {
+    headers: {
+      Cookie: ctx.req.headers.cookie || '',
+    },
+  })
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),

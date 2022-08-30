@@ -1,5 +1,4 @@
 import { TimestampColumns } from './common'
-import { Tag } from './Tag'
 
 export interface User extends TimestampColumns {
   id: string

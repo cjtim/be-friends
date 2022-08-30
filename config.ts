@@ -25,6 +25,20 @@ export const config = {
     POST_create: '/api/v1/pet',
     POST_img: '/api/v1/pet/img',
   },
+  shelter: {
+    GET_list: '/api/v1/shelter',
+    GET_details: '/api/v1/shelter/:id',
+  },
+  like: {
+    GET_list: `/api/v1/like`,
+    POST_add: `/api/v1/like/:pet_id`,
+    DELETE_delete: `/api/v1/like/:pet_id`,
+  },
+  interest: {
+    GET_list: `/api/v1/interest`,
+    POST_add: `/api/v1/interest/:pet_id`,
+    DELETE_delete: `/api/v1/interest/:pet_id`,
+  },
 }
 
 export const internalPages = {
@@ -34,6 +48,8 @@ export const internalPages = {
     login: '/user/login',
     logout: '/user/logout',
     register: '/user/register',
+    liked: '/user/liked',
+    interested: '/user/interested',
   },
   about: '/about',
   findPets: '/find',

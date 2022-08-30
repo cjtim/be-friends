@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import PageLayout from 'components/global/PageLayout'
 import { config } from 'config'
-import { Pet } from 'interfaces/Pet'
+import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
@@ -9,21 +9,21 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 
 interface Props {
-  pet: Pet
+  shelter: User
 }
 
-const PetDetails: NextPage<UserProps & Props> = ({ pet }) => (
-  <PageLayout title={`Pet ${pet?.name}`}>
+const ShelterDetails: NextPage<UserProps & Props> = ({ shelter }) => (
+  <PageLayout title={`Shelter ${shelter?.name}`}>
     <Flex>
-      Name: {pet?.name}
-      {JSON.stringify(pet)}
+      Name: {shelter?.name}
+      {JSON.stringify(shelter)}
     </Flex>
   </PageLayout>
 )
 
 export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSidePropsContext) => {
-  const petId: string = (ctx.query && (ctx.query.pet_id as string)) || '0'
-  const { data: pet } = await axios.get<Pet>(config.pet.GET_details.replace(':pet_id', petId), {
+  const shelterId: string = (ctx.query && (ctx.query.pet_id as string)) || '0'
+  const { data: shelter } = await axios.get<User>(config.shelter.GET_list.replace(':id', shelterId), {
     headers: {
       Cookie: ctx.req.headers.cookie || '',
     },
@@ -31,9 +31,9 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
-      pet,
+      shelter,
     },
   }
 })
 
-export default PetDetails
+export default ShelterDetails

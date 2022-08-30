@@ -1,9 +1,11 @@
 import { Center, Container, Heading } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
+import { config } from 'config'
 
-import { Shelter } from 'interfaces/Shelter'
-import { GetStaticPropsContext, NextPage } from 'next'
+import { User } from 'interfaces/User'
+import axios from 'libs/axios'
+import { GetServerSidePropsContext, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dynamic from 'next/dynamic'
@@ -12,7 +14,7 @@ import { UserProps } from 'pages/_app'
 const ShelterTableList = dynamic(() => import('components/shelters/TableList'))
 
 interface Props extends UserProps {
-  shelters: Shelter[]
+  shelters: User[]
 }
 
 const SheltersPage: NextPage<Props> = ({ user, shelters }) => {
@@ -32,21 +34,13 @@ const SheltersPage: NextPage<Props> = ({ user, shelters }) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const { data: shelters } = await axios.get<User[]>(config.shelter.GET_list)
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'us', ['common', 'index', 'pet'])),
-      shelters: Array(50)
-        .fill(null)
-        .map((_i, idx) => ({
-          name: `Shelter${idx + 1}`,
-          address: `Samsennai${idx}`,
-          contacts: {
-            line: '',
-            messenger: `fb.me/${idx}`,
-          },
-        })),
-    } as unknown as Props,
+      ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
+      shelters: shelters || [],
+    },
   }
 }
 
