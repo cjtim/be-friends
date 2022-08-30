@@ -14,6 +14,7 @@ const nextConfig = {
     outputStandalone: true,
   },
   swcMinify: true,
+  generateEtags: false
 }
 
 module.exports = nextConfig
