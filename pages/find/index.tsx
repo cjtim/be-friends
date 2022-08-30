@@ -1,7 +1,7 @@
 import PetsMap from 'components/PetsMap'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
-import { GetStaticPropsContext, NextPage } from 'next'
+import { GetServerSidePropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 import PetMiniDetailCard from 'components/PetsMap/PetMiniDetailCard'
@@ -11,12 +11,12 @@ import axios from 'libs/axios'
 import { config } from 'config'
 
 interface Props extends UserProps {
-  rawPets: Pet[]
+  pets: Pet[]
 }
 
-const FindPage: NextPage<Props> = ({ user, rawPets }) => {
+const FindPage: NextPage<Props> = ({ user, pets }) => {
   const data: typeof PetsMap.defaultProps = {
-    markers: rawPets.map(pet => ({
+    markers: pets.map(pet => ({
       ...pet,
       // eslint-disable-next-line react/no-unstable-nested-components
       SideContent: ({ onClick }) => (
@@ -60,13 +60,12 @@ const FindPage: NextPage<Props> = ({ user, rawPets }) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const { data: rawPets } = await axios.get<Pet[]>(config.pet.GET_list)
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const { data: pets } = await axios.get<Pet[]>(config.pet.GET_list)
   return {
     props: {
-      ...(await serverSideTranslations(locale || 'us', ['common', 'index', 'pet'])),
-      // Will be passed to the page component as props
-      rawPets: rawPets || [],
+      ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
+      pets: pets || [],
     },
   }
 }

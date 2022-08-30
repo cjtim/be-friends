@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import userReducer from 'slices/user'
+import petReducer from 'slices/pet'
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    pet: petReducer,
   },
 })
 

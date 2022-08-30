@@ -23,7 +23,7 @@ const PetDetails: NextPage<UserProps & Props> = ({ pet }) => (
 
 export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSidePropsContext) => {
   const petId: string = (ctx.query && (ctx.query.pet_id as string)) || '0'
-  const { data: pet } = await axios.get<Pet[]>(config.pet.GET_details.replace(':pet_id', petId))
+  const { data: pet } = await axios.get<Pet>(config.pet.GET_details.replace(':pet_id', petId))
   ctx.res.setHeader('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
   return {
     props: {
