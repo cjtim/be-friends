@@ -1,4 +1,4 @@
-import { Avatar, AvatarBadge, Center, Grid, GridItem, Img, Tag, TagCloseButton, TagLabel, Text } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, Center, Grid, GridItem, Img, Text } from '@chakra-ui/react'
 import { User } from 'interfaces/User'
 import { useTranslation } from 'next-i18next'
 
@@ -37,16 +37,37 @@ const UserInfo: React.FC<Props> = ({ user }) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <Text>{t('tag')}</Text>
+        <Text>Description</Text>
       </GridItem>
       <GridItem colSpan={3}>
+        <Text>{user?.description || '-'}</Text>
+      </GridItem>
+
+      <GridItem colSpan={1}>
+        <Text>Phone</Text>
+      </GridItem>
+      <GridItem colSpan={3}>
+        <Text>{user?.phone || '-'}</Text>
+      </GridItem>
+
+      <GridItem colSpan={1}>
+        <Text>Role</Text>
+      </GridItem>
+      <GridItem colSpan={3}>
+        <Text>{user?.is_org ? 'Shelter' : 'User'}</Text>
+      </GridItem>
+
+      <GridItem colSpan={1}>
+        <Text>{t('tag')}</Text>
+      </GridItem>
+      {/* <GridItem colSpan={3}>
         {user?.tags?.map(tag => (
           <Tag key={tag.id} size={['sm', 'md']} borderRadius="full" variant="outline" colorScheme="green" mr={1} mt={1}>
             <TagLabel>{tag.name}</TagLabel>
             <TagCloseButton />
           </Tag>
         ))}
-      </GridItem>
+      </GridItem> */}
     </Grid>
   )
 }

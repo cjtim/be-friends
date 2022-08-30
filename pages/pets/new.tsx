@@ -5,6 +5,7 @@ import PageLayout from 'components/global/PageLayout'
 import PetRegisterCard from 'components/pets/RegisterCard'
 import { config } from 'config'
 import { Pet, PetImageResponse, PetRegister } from 'interfaces/Pet'
+import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -39,10 +40,10 @@ const PetNewPage: NextPage<UserProps> = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => ({
+export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSidePropsContext) => ({
   props: {
     ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
   },
-})
+}))
 
 export default PetNewPage

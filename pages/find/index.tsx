@@ -23,12 +23,13 @@ const FindPage: NextPage<Props> = ({ user, rawPets }) => {
         <PetMiniDetailCard
           id={`${pet.id}`}
           image={
-            (pet.picture_urls[0] && pet.picture_urls[0].picture_url) ||
+            (pet?.picture_urls && pet?.picture_urls[0] && pet?.picture_urls[0]?.picture_url) ||
             'https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png'
           }
           title={pet.name}
           description={pet?.description}
           onClick={onClick}
+          status={pet.status}
           imageAlt={pet.name}
         />
       ),
@@ -37,7 +38,9 @@ const FindPage: NextPage<Props> = ({ user, rawPets }) => {
         <header>
           <h1>${pet.name}</h1>
         </header>
-        <img src="${pet.picture_urls[0] && pet.picture_urls[0].picture_url}" width="100" height="auto"/>
+        <img src="${
+          pet?.picture_urls && pet?.picture_urls[0] && pet?.picture_urls[0]?.picture_url
+        }" width="100" height="auto"/>
         <br/>
         <a>${pet?.description || ''}</a>
         <br/>

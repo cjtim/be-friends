@@ -1,14 +1,21 @@
+import { TimestampColumns } from './common'
 import { Tag } from './Tag'
 
-export interface User {
+export interface User extends TimestampColumns {
   id: string
   name: string
   email?: string
   line_uid?: string
+  description?: string
   picture_url?: string
-  exp: number // new Date(exp * 1000)
+  phone?: string
+  is_org: boolean
+  is_admin: boolean
 
-  tags?: Tag[]
+  lat: number
+  lng: number
+
+  exp: number // new Date(exp * 1000)
 }
 
 export interface UserLogin {

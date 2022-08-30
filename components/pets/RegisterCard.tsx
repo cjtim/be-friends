@@ -14,7 +14,12 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => 
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-  } = useForm<PetRegister>()
+  } = useForm<PetRegister>({
+    defaultValues: {
+      lat: 13.75,
+      lng: 100.5,
+    },
+  })
   const { t } = useTranslation('pet')
 
   const onSelectLocation = (lat: number, lng: number) => {
@@ -42,18 +47,11 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => 
             {/* Description */}
             <FormControl isInvalid={Boolean(errors.description)}>
               <FormLabel htmlFor="description">{t('register.description')}</FormLabel>
-              <Input
-                id="description"
-                placeholder={t('register.description')}
-                {...register('description', {
-                  required: 'This is required',
-                  minLength: { value: 1, message: 'Minimum length should be 1' },
-                })}
-              />
+              <Input id="description" placeholder={t('register.description')} {...register('description')} />
               <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
             </FormControl>
             {/* Image */}
-            <FormControl isInvalid={Boolean(errors.images)}>
+            <FormControl isInvalid={Boolean(errors.images)} isRequired>
               <FormLabel htmlFor="images">{t('register.images')}</FormLabel>
               <Input
                 id="images"
