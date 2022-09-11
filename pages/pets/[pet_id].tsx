@@ -1,4 +1,6 @@
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex, Heading, Stack, Tag, Text } from '@chakra-ui/react'
+import Gallery from 'components/global/Gallery'
+import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { config } from 'config'
 import { Pet } from 'interfaces/Pet'
@@ -12,11 +14,41 @@ interface Props {
   pet: Pet
 }
 
-const PetDetails: NextPage<UserProps & Props> = ({ pet }) => (
+const PetDetails: NextPage<UserProps & Props> = ({ user, pet }) => (
   <PageLayout title={`Pet ${pet?.name}`}>
-    <Flex>
-      Name: {pet?.name}
-      {JSON.stringify(pet)}
+    <Navbar user={user} />
+    <Flex borderRadius="2xl">
+      <Box boxSize="2lg" mt={2}>
+        <Gallery
+          imgs={pet?.picture_urls?.map(img => ({
+            original: img.picture_url,
+            thumbnail: img.picture_url,
+          }))}
+        />
+      </Box>
+      <Flex p={4}>
+        <Stack>
+          <Flex alignItems="center" gap={4}>
+            <Heading>{pet.name} </Heading>
+            <Tag textTransform="uppercase">{pet.status}</Tag>
+          </Flex>
+          <Text>Description: {pet.description}</Text>
+          <Text>
+            <>Founded when: {pet.created_at}</>
+          </Text>
+          <iframe
+            title="pet-location"
+            style={{
+              border: 0,
+            }}
+            width="600"
+            height="450"
+            loading="lazy"
+            allowFullScreen
+            src="https://www.google.com/maps/embed/v1/place?q=18.4151646%2C99.1747807&key="
+          />
+        </Stack>
+      </Flex>
     </Flex>
   </PageLayout>
 )

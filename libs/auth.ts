@@ -3,19 +3,26 @@ import { User } from 'interfaces/User'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import axios from './axios'
 
+export const getUser = async (cookie: string | undefined): Promise<User> => {
+  const { data } = await axios.get<User>(config.login.GET_me, {
+    headers: {
+      Cookie: cookie || '',
+    },
+  })
+  return data
+}
+
 // eslint-disable-next-line no-unused-vars
 type option<T> = (_: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<T>> | GetServerSidePropsResult<T>
 type returnTypeNextContextResult<T> = Promise<GetServerSidePropsResult<T & { user: User }>>
 
-const appendUser = (result: any, user: User) => {
-  return {
-    ...result,
-    props: {
-      ...result.props,
-      user,
-    },
-  }
-}
+const appendUser = (result: any, user: User) => ({
+  ...result,
+  props: {
+    ...result.props,
+    user,
+  },
+})
 
 export const AuthGetServerSideProps =
   <T>(opt?: option<T>) =>
@@ -65,14 +72,5 @@ export const AuthGetServerSideProps =
 
 export const getLoginLink = async (host: string) => {
   const { data } = await axios.get<string>(config.login.GET_line, { params: { host } })
-  return data
-}
-
-export const getUser = async (cookie: string | undefined): Promise<User> => {
-  const { data } = await axios.get<User>(config.login.GET_me, {
-    headers: {
-      Cookie: cookie || '',
-    },
-  })
   return data
 }

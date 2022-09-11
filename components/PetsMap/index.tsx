@@ -30,33 +30,34 @@ const Map: React.FC<Props> = ({ markers }) => {
       center: bangkok,
     })
 
-    const finishMarkers = markers
-      .filter(marker => marker?.lat && marker?.lng)
-      .map(marker => {
-        const { lat, lng, MarkerContent, name } = marker
-        const location = { lat, lng }
+    const finishMarkers = markers.map(marker => {
+      if (!(marker?.lat && marker?.lng)) {
+        return undefined
+      }
+      const { lat, lng, MarkerContent, name } = marker
+      const location = { lat, lng }
 
-        const infowindow = new window.google.maps.InfoWindow({
-          content: MarkerContent,
-        })
-
-        const ggmarker = new window.google.maps.Marker({
-          position: location as any, // already filted undefined
-          map,
-          title: name,
-        })
-
-        ggmarker.addListener('click', () => {
-          infowindow.open({
-            anchor: ggmarker,
-            map,
-            shouldFocus: true,
-          })
-        })
-
-        return ggmarker
+      const infowindow = new window.google.maps.InfoWindow({
+        content: MarkerContent,
       })
-    const onClickFns = finishMarkers.map(marker => () => window.google.maps.event.trigger(marker, 'click'))
+
+      const ggmarker = new window.google.maps.Marker({
+        position: location as any, // already filted undefined
+        map,
+        title: name,
+      })
+
+      ggmarker.addListener('click', () => {
+        infowindow.open({
+          anchor: ggmarker,
+          map,
+          shouldFocus: true,
+        })
+      })
+
+      return ggmarker
+    })
+    const onClickFns = finishMarkers.map(marker => () => marker && window.google.maps.event.trigger(marker, 'click'))
     setOnClicks(onClickFns)
   }, [markers])
 
