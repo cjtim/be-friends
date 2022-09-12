@@ -5,7 +5,6 @@ import PageLayout from 'components/global/PageLayout'
 import PetRegisterCard from 'components/pets/RegisterCard'
 import { config } from 'config'
 import { Pet, PetImageResponse, PetRegister } from 'interfaces/Pet'
-import { Tag } from 'interfaces/Tag'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
@@ -15,13 +14,14 @@ import { UserProps } from 'pages/_app'
 import { SubmitHandler } from 'react-hook-form'
 
 interface Props {
-  tags: Tag[]
+  pet: Pet
 }
 
-const PetNewPage: NextPage<UserProps & Props> = ({ user, tags }) => {
+const PetUpdate: NextPage<UserProps & Props> = ({ user, pet }) => {
   const router = useRouter()
   const onSubmit: SubmitHandler<PetRegister> = async data => {
-    const { data: pet } = await axios.post<Pet>(config.pet.POST_create, data)
+    // TODO: PUT update
+    await axios.post<Pet>(config.pet.POST_create, data)
     if (data.images) {
       const downloadURLPromises: Promise<AxiosResponse<PetImageResponse, any>>[] = []
       // eslint-disable-next-line no-restricted-syntax
@@ -39,21 +39,25 @@ const PetNewPage: NextPage<UserProps & Props> = ({ user, tags }) => {
     <PageLayout title="New pet">
       <Navbar user={user} />
       <Center>
-        <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} />
+        <PetRegisterCard onSubmitRegister={onSubmit} />
       </Center>
     </PageLayout>
   )
 }
 
 export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSidePropsContext) => {
-  const { data: tags } = await axios.get<Tag[]>(config.tag.GET_list)
-
+  const petId: string = (ctx.query && (ctx.query.pet_id as string)) || '0'
+  const { data: pet } = await axios.get<Pet>(config.pet.GET_details.replace(':pet_id', petId), {
+    headers: {
+      Cookie: ctx.req.headers.cookie || '',
+    },
+  })
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
-      tags: tags || [],
+      pet,
     },
   }
 })
 
-export default PetNewPage
+export default PetUpdate

@@ -22,6 +22,7 @@ export interface PetRegister {
   lng: number
   images?: File[]
   tag_ids?: number[]
+  status: string
 }
 
 // [post] /api/v1/pet/img

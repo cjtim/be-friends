@@ -3,12 +3,16 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Box, FormControl, FormLabel, Input, FormErrorMessage, Button, BoxProps, Flex } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import SelectLocationMap from 'components/global/SelectLocationMap'
+import { Select } from 'chakra-react-select'
+import { Tag } from 'interfaces/Tag'
+import { statues, Status } from 'interfaces/status'
 
 interface Props extends BoxProps {
   onSubmitRegister: SubmitHandler<PetRegister>
+  tags: Tag[]
 }
 
-const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
+const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps }) => {
   const {
     register,
     handleSubmit,
@@ -18,6 +22,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => 
     defaultValues: {
       lat: 13.75,
       lng: 100.5,
+      status: Status.NEW,
     },
   })
   const { t } = useTranslation('pet')
@@ -65,7 +70,40 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => 
                   maxLength: { value: 5, message: 'Maximum files is 5' },
                 })}
               />
-              <FormErrorMessage>{errors.images && errors.images[0] && errors.images[0].message}</FormErrorMessage>
+              <FormErrorMessage>
+                {errors.images && errors.images.length && errors.images.map(e => e.message).join(', ')}
+              </FormErrorMessage>
+            </FormControl>
+            {/* Tags */}
+            <FormControl isInvalid={Boolean(errors.tag_ids)} isRequired>
+              <FormLabel htmlFor="tag_ids">{t('register.tag_ids')}</FormLabel>
+              <Select
+                isMulti
+                options={tags.map(({ id: value, name: label }) => ({ label, value }))}
+                {...register('tag_ids')}
+                onChange={values =>
+                  setValue(
+                    'tag_ids',
+                    values.map(v => v.value),
+                  )
+                }
+              />
+              <FormErrorMessage>
+                {errors.tag_ids && errors.tag_ids.length && errors.tag_ids.map(e => e.message).join(', ')}
+              </FormErrorMessage>
+            </FormControl>
+            {/* Status */}
+            <FormControl isInvalid={Boolean(errors.status)} isRequired>
+              <FormLabel htmlFor="status">{t('register.status')}</FormLabel>
+              <Select
+                options={statues.map(s => ({ label: s, value: s }))}
+                defaultValue={{ label: Status.NEW, value: Status.NEW }}
+                {...register('status', {
+                  required: 'Please input status of pet',
+                })}
+                onChange={val => setValue('status', val?.value || Status.NEW)}
+              />
+              <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
             </FormControl>
 
             <Button colorScheme="brand" isLoading={isSubmitting} type="submit" mt={4}>
