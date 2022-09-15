@@ -14,16 +14,11 @@ import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
 import { SubmitHandler } from 'react-hook-form'
 
-interface Props extends UserProps {
-  loginUrl: string
-}
+interface Props extends UserProps {}
 
-const RegisterPage: NextPage<Props> = ({ loginUrl, user }) => {
+const RegisterPage: NextPage<Props> = ({ user }) => {
   const { t } = useTranslation('user')
   const router = useRouter()
-  const onClick = async () => {
-    window.location.href = loginUrl
-  }
   const onSubmitRegister: SubmitHandler<UserRegister> = async values => {
     const { data: jwt } = await axios.post<string>(config.login.POST_line_register, values)
     const { data: userPayload } = await axios.get<User>(config.login.GET_me, {
@@ -38,7 +33,7 @@ const RegisterPage: NextPage<Props> = ({ loginUrl, user }) => {
       <Navbar user={user} />
 
       <Center h="80vh">
-        <RegisterCard onClickLineLogin={onClick} onSubmitRegister={onSubmitRegister} />
+        <RegisterCard onSubmitRegister={onSubmitRegister} />
       </Center>
     </PageLayout>
   )
