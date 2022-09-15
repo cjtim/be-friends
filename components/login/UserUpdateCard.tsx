@@ -1,40 +1,30 @@
-import {
-  Center,
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  Button,
-  BoxProps,
-  Stack,
-  Text,
-} from '@chakra-ui/react'
-import { UserRegister } from 'interfaces/User'
-import { useTranslation } from 'next-i18next'
+import { Center, FormControl, FormLabel, Input, FormErrorMessage, Button, Stack, Text } from '@chakra-ui/react'
+import { User } from 'interfaces/User'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface Props extends BoxProps {
-  onSubmitRegister: SubmitHandler<UserRegister>
+interface Props {
+  onSubmitRegister: SubmitHandler<User>
+  user: User
 }
 
-const RegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
+const UserUpdateCard: React.FC<Props> = ({ onSubmitRegister, user, ...boxProps }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<UserRegister>()
-  const { t } = useTranslation('user')
-
+  } = useForm<User>({
+    defaultValues: user,
+  })
   return (
     <Stack w="sm" borderRadius="xl" borderColor="black" border="1px" alignItems="center" p={4} {...boxProps}>
-      <Text fontWeight="bold">ลงทะเบียนสถานสงเคราะห์</Text>
+      <Text fontWeight="bold">แก้ไขข้อมูล</Text>
       <form onSubmit={handleSubmit(onSubmitRegister)}>
         <Center gap={4} flexDir="column" p={4}>
           <FormControl isInvalid={Boolean(errors.name)} isRequired>
-            <FormLabel htmlFor="name">{t('name')}</FormLabel>
+            <FormLabel htmlFor="name">ชื่อผู้ใช้งาน</FormLabel>
             <Input
               id="name"
-              placeholder={t('name')}
+              placeholder="ชื่อผู้ใช้งาน"
               {...register('name', {
                 required: 'This is required',
                 minLength: { value: 1, message: 'Minimum length should be 1' },
@@ -43,24 +33,19 @@ const RegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
             <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={Boolean(errors.email)} isRequired>
-            <FormLabel htmlFor="email">{t('email')}</FormLabel>
-            <Input
-              id="email"
-              placeholder={t('email')}
-              {...register('email', {
-                required: 'This is required',
-                minLength: { value: 3, message: 'Minimum length should be 3' },
-                pattern: {
-                  value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                  message: 'Email should be valid pattern',
-                },
-              })}
-            />
-            <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+          <FormControl isInvalid={Boolean(errors.description)}>
+            <FormLabel htmlFor="description">คำอธิบาย</FormLabel>
+            <Input id="description" placeholder="คำอธิบาย" {...register('description')} />
+            <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={Boolean(errors.password)} isRequired>
+          <FormControl isInvalid={Boolean(errors.phone)}>
+            <FormLabel htmlFor="phone">เบอร์โทรศัพท์</FormLabel>
+            <Input id="phone" placeholder="เบอร์โทรศัพท์" {...register('phone')} />
+            <FormErrorMessage>{errors.phone && errors.phone.message}</FormErrorMessage>
+          </FormControl>
+
+          {/* <FormControl isInvalid={Boolean(errors.password)} isRequired>
             <FormLabel htmlFor="password">{t('password')}</FormLabel>
             <Input
               id="password"
@@ -73,9 +58,9 @@ const RegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
             />
 
             <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
 
-          <FormControl isInvalid={Boolean(errors.password)} isRequired>
+          {/* <FormControl isInvalid={Boolean(errors.password)} isRequired>
             <FormLabel htmlFor="confirm_password">{t('confirm_password')}</FormLabel>
             <Input
               id="confirm_password"
@@ -88,10 +73,10 @@ const RegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
             />
 
             <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
 
           <Button variant="brandSolid" isLoading={isSubmitting} type="submit">
-            {t('register')}
+            แก้ไขข้อมูล
           </Button>
         </Center>
       </form>
@@ -99,4 +84,4 @@ const RegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
   )
 }
 
-export default RegisterCard
+export default UserUpdateCard

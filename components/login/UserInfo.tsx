@@ -1,4 +1,5 @@
-import { Avatar, AvatarBadge, Center, Grid, GridItem, Img, Text } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, Button, Center, Flex, Grid, GridItem, Img, Text } from '@chakra-ui/react'
+import ButtonLink from 'components/global/ButtonLink'
 import { User } from 'interfaces/User'
 import { useTranslation } from 'next-i18next'
 
@@ -19,6 +20,16 @@ const UserInfo: React.FC<Props> = ({ user }) => {
             </Avatar>
           )}
           <Text fontSize="2xl">{user?.name}</Text>
+          <Flex gap={4}>
+            <ButtonLink href="/user/update">
+              <Button>เเก้ไขข้อมูล</Button>
+            </ButtonLink>
+            <ButtonLink href="/user/password">
+              <Button colorScheme="red" variant="outline">
+                เปลี่ยนรหัสผ่าน
+              </Button>
+            </ButtonLink>
+          </Flex>
         </Center>
       </GridItem>
 

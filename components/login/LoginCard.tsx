@@ -9,6 +9,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Text,
 } from '@chakra-ui/react'
 import ButtonLink from 'components/global/ButtonLink'
 import { internalPages } from 'config'
@@ -32,9 +33,14 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
   const { t } = useTranslation('user')
 
   return (
-    <Box w="sm" h="sm" borderRadius="xl" borderColor="black" border="1px" {...boxProps}>
+    <Box w="sm" h="md" borderRadius="xl" borderColor="black" border="1px" {...boxProps}>
       <form onSubmit={handleSubmit(onSubmitLogin)}>
         <Center gap={4} flexDir="column" p={4}>
+          <Text fontWeight="bold">เข้าสู่ระบบผู้ใช้ทั่วไป</Text>
+          <LineLoginButton w="2xs" onClick={onClickLineLogin} />
+          <Divider />
+
+          <Text fontWeight="bold">เจ้าหน้าที่สถานสงเคราะห์สัตว์</Text>
           <FormControl isInvalid={Boolean(errors.email)} isRequired>
             <FormLabel htmlFor="Email">{t('email')}</FormLabel>
             <Input
@@ -71,9 +77,6 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
               {t('login')}
             </Button>
           </Flex>
-          <Divider />
-
-          <LineLoginButton w="2xs" onClick={onClickLineLogin} />
         </Center>
       </form>
     </Box>

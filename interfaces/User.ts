@@ -26,3 +26,9 @@ export interface UserRegister extends UserLogin {
   name: string
   confirm_password: string
 }
+
+export interface UserChangePassword {
+  currentPassword: string
+  newPassword: string
+  confirmPassword: string
+}
