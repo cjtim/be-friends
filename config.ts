@@ -30,7 +30,7 @@ export const config = {
     GET_details: '/api/v1/shelter/:id',
   },
   like: {
-    GET_list: `/api/v1/like`,
+    GET_list: '/api/v1/like',
     POST_add: `/api/v1/like/:pet_id`,
     DELETE_delete: `/api/v1/like/:pet_id`,
   },
@@ -38,6 +38,9 @@ export const config = {
     GET_list: `/api/v1/interest`,
     POST_add: `/api/v1/interest/:pet_id`,
     DELETE_delete: `/api/v1/interest/:pet_id`,
+  },
+  tag: {
+    GET_list: `/api/v1/tag`,
   },
 }
 
