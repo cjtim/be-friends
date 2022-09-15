@@ -5,6 +5,7 @@ import PageLayout from 'components/global/PageLayout'
 import PetRegisterCard from 'components/pets/RegisterCard'
 import { config } from 'config'
 import { Pet, PetImageResponse, PetRegister } from 'interfaces/Pet'
+import { Tag } from 'interfaces/Tag'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
@@ -15,9 +16,10 @@ import { SubmitHandler } from 'react-hook-form'
 
 interface Props {
   pet: Pet
+  tags: Tag[]
 }
 
-const PetUpdate: NextPage<UserProps & Props> = ({ user, pet }) => {
+const PetUpdate: NextPage<UserProps & Props> = ({ user, pet, tags }) => {
   const router = useRouter()
   const onSubmit: SubmitHandler<PetRegister> = async data => {
     // TODO: PUT update
@@ -39,7 +41,7 @@ const PetUpdate: NextPage<UserProps & Props> = ({ user, pet }) => {
     <PageLayout title="New pet">
       <Navbar user={user} />
       <Center>
-        <PetRegisterCard onSubmitRegister={onSubmit} />
+        <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} />
       </Center>
     </PageLayout>
   )
@@ -52,10 +54,12 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
       Cookie: ctx.req.headers.cookie || '',
     },
   })
+  const { data: tags } = await axios.get<Tag[]>(config.tag.GET_list)
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
       pet,
+      tags: tags || [],
     },
   }
 })
