@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import type { AppProps } from 'next/app'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Progress } from '@chakra-ui/react'
 import theme from 'libs/theme'
 import { User } from 'interfaces/User'
 import { appWithTranslation } from 'next-i18next'
@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter() // Next.JS router
   const [user, setuser] = useState<User | undefined>(undefined) // save user payload
   const firstLoad = useRef(false) // ensure first load
+  const [loading, setLoading] = useState<boolean>(false)
 
   // Get user from cookie
   // Set header to Axios
@@ -45,12 +46,20 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.on('routeChangeStart', () => {
         // fetch user every time they change page
         getUser()
+        setLoading(true)
+      })
+      router.events.on('routeChangeComplete', () => {
+        setLoading(false)
+      })
+      router.events.on('routeChangeError', () => {
+        setLoading(false)
       })
     }
   }, [router.events])
 
   return (
     <ChakraProvider theme={theme}>
+      {loading && <Progress size="xs" isIndeterminate />}
       <Component {...pageProps} user={user} />
     </ChakraProvider>
   )
