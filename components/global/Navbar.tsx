@@ -91,6 +91,9 @@ const Navbar: React.FC<Props> = ({ user }) => {
                 <NextLink href={internalPages.user.index} passHref>
                   <MenuItem textDecoration="none">{t('navbar.profile')}</MenuItem>
                 </NextLink>
+                <NextLink href={internalPages.pets.myPet} passHref>
+                  <MenuItem textDecoration="none">สัตว์เลี้ยงของฉัน</MenuItem>
+                </NextLink>
                 <NextLink href={internalPages.user.liked} passHref>
                   <MenuItem textDecoration="none">ถูกใจ</MenuItem>
                 </NextLink>

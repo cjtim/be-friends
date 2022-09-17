@@ -21,6 +21,7 @@ export const config = {
   },
   pet: {
     GET_list: '/api/v1/pet',
+    GET_my: '/api/v1/pet/my',
     GET_details: '/api/v1/pet/:pet_id',
     POST_create: '/api/v1/pet',
     POST_img: '/api/v1/pet/img',
@@ -62,5 +63,6 @@ export const internalPages = {
   pets: {
     index: '/pets',
     new: '/pets/new',
+    myPet: '/pets/my',
   },
 }
