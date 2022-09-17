@@ -2,6 +2,7 @@ import { Box, Button, Flex, Heading, Stack, Tag, Text, Tooltip } from '@chakra-u
 import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
+import StaticMap from 'components/global/StaticMap'
 import { config } from 'config'
 import { Pet } from 'interfaces/Pet'
 import { AuthGetServerSideProps } from 'libs/auth'
@@ -48,44 +49,34 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet }) => {
             }))}
           />
         </Box>
-        <Flex p={4} marginLeft="auto">
-          <Stack>
-            <Flex alignItems="center" gap={4}>
-              <Heading>{pet.name} </Heading>
-              <Tag textTransform="uppercase">{pet.status}</Tag>
-              <Flex marginLeft="auto" gap={4}>
-                <Button colorScheme="blue" onClick={onClickLike}>
-                  {isLiked ? 'Unlike' : 'Like'}
-                </Button>
-                <Button colorScheme="yellow" onClick={onClickInterested}>
-                  {isInterested ? 'Uninterested' : 'Interested'}
-                </Button>
-              </Flex>
+        <Stack p={4} w="60vw">
+          <Flex alignItems="center" gap={4}>
+            <Heading>{pet.name} </Heading>
+            <Tag textTransform="uppercase">{pet.status}</Tag>
+            <Flex marginLeft="auto" gap={4}>
+              <Button colorScheme="blue" onClick={onClickLike}>
+                {isLiked ? 'Unlike' : 'Like'}
+              </Button>
+              <Button colorScheme="yellow" onClick={onClickInterested}>
+                {isInterested ? 'Uninterested' : 'Interested'}
+              </Button>
             </Flex>
-            <Text>Description: {pet.description}</Text>
-            <Flex gap={2}>
-              {pet.tags.map(tag => (
-                <Tooltip label={tag.description} key={tag.id}>
-                  <Tag>{tag.name}</Tag>
-                </Tooltip>
-              ))}
-            </Flex>
-            <Text>
-              <>Founded when: {pet.created_at}</>
-            </Text>
-            <iframe
-              title="pet-location"
-              style={{
-                border: 0,
-              }}
-              width="600"
-              height="450"
-              loading="lazy"
-              allowFullScreen
-              src="https://www.google.com/maps/embed/v1/place?q=18.4151646%2C99.1747807&key="
-            />
-          </Stack>
-        </Flex>
+          </Flex>
+          <Text>Description: {pet.description}</Text>
+          <Flex gap={2}>
+            {pet.tags.map(tag => (
+              <Tooltip label={tag.description} key={tag.id}>
+                <Tag>{tag.name}</Tag>
+              </Tooltip>
+            ))}
+          </Flex>
+          <Text>
+            <>Founded when: {pet.created_at}</>
+          </Text>
+          <Flex w="100%" h="100%">
+            <StaticMap lat={pet.lat} lng={pet.lng} />
+          </Flex>
+        </Stack>
       </Flex>
     </PageLayout>
   )

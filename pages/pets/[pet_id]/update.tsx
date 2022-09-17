@@ -22,8 +22,9 @@ interface Props {
 const PetUpdate: NextPage<UserProps & Props> = ({ user, pet, tags }) => {
   const router = useRouter()
   const onSubmit: SubmitHandler<PetRegister> = async data => {
-    // TODO: PUT update
-    await axios.post<Pet>(config.pet.POST_create, data)
+    await axios.put<Pet>(config.pet.PUT_update, data)
+
+    // TODO: able to delete existing image
     if (data.images) {
       const downloadURLPromises: Promise<AxiosResponse<PetImageResponse, any>>[] = []
       // eslint-disable-next-line no-restricted-syntax
@@ -38,10 +39,10 @@ const PetUpdate: NextPage<UserProps & Props> = ({ user, pet, tags }) => {
     router.push(`/pets/${pet.id}`)
   }
   return (
-    <PageLayout title="New pet">
+    <PageLayout title={`Update pet - ${pet.name}`}>
       <Navbar user={user} />
       <Center>
-        <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} />
+        <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} defaultValues={pet} isUpdate />
       </Center>
     </PageLayout>
   )

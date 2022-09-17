@@ -24,6 +24,7 @@ export const config = {
     GET_my: '/api/v1/pet/my',
     GET_details: '/api/v1/pet/:pet_id',
     POST_create: '/api/v1/pet',
+    PUT_update: '/api/v1/pet',
     POST_img: '/api/v1/pet/img',
   },
   shelter: {

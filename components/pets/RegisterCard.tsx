@@ -1,6 +1,6 @@
-import { PetRegister } from 'interfaces/Pet'
+import { Pet, PetRegister } from 'interfaces/Pet'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Box, FormControl, FormLabel, Input, FormErrorMessage, Button, BoxProps, Flex } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Input, FormErrorMessage, Button, BoxProps, Flex, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import SelectLocationMap from 'components/global/SelectLocationMap'
 import { Select } from 'chakra-react-select'
@@ -10,9 +10,11 @@ import { statues, Status } from 'interfaces/status'
 interface Props extends BoxProps {
   onSubmitRegister: SubmitHandler<PetRegister>
   tags: Tag[]
+  defaultValues: Partial<Pet>
+  isUpdate?: boolean
 }
 
-const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps }) => {
+const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValues, isUpdate, ...boxProps }) => {
   const {
     register,
     handleSubmit,
@@ -20,9 +22,11 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
     setValue,
   } = useForm<PetRegister>({
     defaultValues: {
-      lat: 13.75,
-      lng: 100.5,
-      status: Status.NEW,
+      ...defaultValues,
+      lat: defaultValues?.lat || 13.75,
+      lng: defaultValues?.lng || 100.5,
+      status: defaultValues?.status || Status.NEW,
+      tag_ids: defaultValues?.tags?.map(tag => tag.id) || [],
     },
   })
   const { t } = useTranslation('pet')
@@ -33,10 +37,10 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
   }
 
   return (
-    <Box w="4xl" borderRadius="xl" borderColor="black" border="1px" {...boxProps}>
+    <Box w="5xl" borderRadius="xl" borderColor="black" border="1px" {...boxProps}>
       <form onSubmit={handleSubmit(onSubmitRegister)}>
-        <Flex p={4} gap={2}>
-          <Box>
+        <Flex p={4} gap={4}>
+          <Stack gap={1} w="xl">
             <FormControl isInvalid={Boolean(errors.name)} isRequired>
               <FormLabel htmlFor="name">{t('register.name')}</FormLabel>
               <Input
@@ -56,7 +60,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
               <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
             </FormControl>
             {/* Image */}
-            <FormControl isInvalid={Boolean(errors.images)} isRequired>
+            <FormControl isInvalid={Boolean(errors.images)} isRequired={!isUpdate}>
               <FormLabel htmlFor="images">{t('register.images')}</FormLabel>
               <Input
                 id="images"
@@ -64,9 +68,8 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
                 multiple
                 placeholder={t('register.images')}
                 {...register('images', {
-                  required: 'This is required',
-                  minLength: { value: 1, message: 'Minimum length should be 1' },
-                  max: { value: 5, message: 'Maximum files is 5' },
+                  required: !isUpdate && 'This is required',
+                  minLength: { value: isUpdate ? 0 : 1, message: 'Minimum length should be 1' },
                   maxLength: { value: 5, message: 'Maximum files is 5' },
                 })}
               />
@@ -75,12 +78,13 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
               </FormErrorMessage>
             </FormControl>
             {/* Tags */}
-            <FormControl isInvalid={Boolean(errors.tag_ids)} isRequired>
+            <FormControl isInvalid={Boolean(errors.tag_ids)}>
               <FormLabel htmlFor="tag_ids">{t('register.tag_ids')}</FormLabel>
               <Select
                 isMulti
-                options={tags.map(({ id: value, name: label }) => ({ label, value }))}
                 {...register('tag_ids')}
+                options={tags.map(({ id: value, name: label }) => ({ label, value }))}
+                defaultValue={defaultValues.tags?.map(tag => ({ value: tag.id, label: tag.name }))}
                 onChange={values =>
                   setValue(
                     'tag_ids',
@@ -97,7 +101,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
               <FormLabel htmlFor="status">{t('register.status')}</FormLabel>
               <Select
                 options={statues.map(s => ({ label: s, value: s }))}
-                defaultValue={{ label: Status.NEW, value: Status.NEW }}
+                defaultValue={{ label: defaultValues.status, value: defaultValues.status }}
                 {...register('status', {
                   required: 'Please input status of pet',
                 })}
@@ -109,12 +113,15 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, ...boxProps 
             <Button colorScheme="brand" isLoading={isSubmitting} type="submit" mt={4}>
               {t('register.register')}
             </Button>
-          </Box>
+          </Stack>
 
           <FormControl isInvalid={Boolean(errors.lng || errors.lat)} isRequired>
             <FormLabel htmlFor="lat">{t('register.location')}</FormLabel>
             <Flex w="100%" h="sm">
-              <SelectLocationMap onChange={onSelectLocation} />
+              <SelectLocationMap
+                onChange={onSelectLocation}
+                defaultLocation={{ lat: defaultValues?.lat || 13.75, lng: defaultValues?.lng || 100.5 }}
+              />
             </Flex>
             <FormErrorMessage>
               {(errors.lng && errors.lng.message) || (errors.lat && errors.lat.message)}
