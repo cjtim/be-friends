@@ -9,9 +9,11 @@ export interface Pet extends TimestampColumns {
   lng: number
   user_id: string
   status: Status
-  picture_urls?: {
+  picture_urls: {
     picture_url: string
   }[]
+  liked: string[]
+  interested: string[]
 }
 
 // For frontend form
