@@ -25,13 +25,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   const getUser = async () => {
     const jwt = Cookies.get(config.cookies.token)
     if (jwt && jwt !== '') {
-      axios.defaults.headers.common.Authorization = `Bearer ${jwt}`
-      const { data: userPayload } = await axios.get<User>(config.login.GET_me)
-      setuser(userPayload)
-    } else {
-      Cookies.remove(config.cookies.token)
-      setuser(undefined)
+      try {
+        axios.defaults.headers.common.Authorization = `Bearer ${jwt}`
+        const { data: userPayload } = await axios.get<User>(config.login.GET_me)
+        setuser(userPayload)
+        return
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
     }
+    Cookies.remove(config.cookies.token)
+    setuser(undefined)
   }
 
   useEffect(() => {

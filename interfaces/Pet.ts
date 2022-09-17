@@ -1,5 +1,6 @@
 import { TimestampColumns } from './common'
 import { Status } from './status'
+import { Tag } from './Tag'
 
 export interface Pet extends TimestampColumns {
   id: number
@@ -14,6 +15,7 @@ export interface Pet extends TimestampColumns {
   }[]
   liked: string[]
   interested: string[]
+  tags: Tag[]
 }
 
 // For frontend form

@@ -22,6 +22,7 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
     'no-param-reassign': 0,
+    'react/no-unstable-nested-components': 0,
   },
   globals: {
     React: true,

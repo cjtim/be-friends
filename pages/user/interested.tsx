@@ -1,6 +1,6 @@
-import { Flex } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
+import PetsTable from 'components/pets/PetsTable'
 import { config } from 'config'
 import { Interested } from 'interfaces/interested'
 import { AuthGetServerSideProps } from 'libs/auth'
@@ -16,7 +16,8 @@ interface Props {
 const UserInterestedPage: NextPage<UserProps & Props> = ({ user, pets }) => (
   <PageLayout title="Interested pets">
     <Navbar user={user} />
-    <Flex>{JSON.stringify(pets)}</Flex>
+
+    <PetsTable pets={pets} />
   </PageLayout>
 )
 

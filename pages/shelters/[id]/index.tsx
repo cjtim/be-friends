@@ -2,8 +2,8 @@ import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import ButtonLink from 'components/global/ButtonLink'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
-import Table from 'components/global/Table'
 import TextLink from 'components/global/TextLink'
+import PetsTable from 'components/pets/PetsTable'
 import { config } from 'config'
 import { Pet } from 'interfaces/Pet'
 import { User } from 'interfaces/User'
@@ -40,23 +40,7 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets }) =>
       </Stack>
     </Stack>
 
-    <Stack>
-      {pets ? (
-        <Table
-          data={pets}
-          columns={[
-            {
-              accessor: 'name',
-            },
-            {
-              accessor: 'description',
-            },
-          ]}
-        />
-      ) : (
-        'Empty pets'
-      )}
-    </Stack>
+    <Stack>{pets ? <PetsTable pets={pets} /> : 'Empty pets'}</Stack>
   </PageLayout>
 )
 

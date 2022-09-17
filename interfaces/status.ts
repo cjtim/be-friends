@@ -6,4 +6,4 @@ export enum Status {
   ADOPED = 'adoped',
 }
 
-export const statues = [Status.NEW, Status.ADOPED, Status.ADOPED]
+export const statues = [Status.NEW, Status.PENDING, Status.ADOPED]

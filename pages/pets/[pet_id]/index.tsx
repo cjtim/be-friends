@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Stack, Tag, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
 import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
@@ -63,6 +63,13 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet }) => {
               </Flex>
             </Flex>
             <Text>Description: {pet.description}</Text>
+            <Flex gap={2}>
+              {pet.tags.map(tag => (
+                <Tooltip label={tag.description} key={tag.id}>
+                  <Tag>{tag.name}</Tag>
+                </Tooltip>
+              ))}
+            </Flex>
             <Text>
               <>Founded when: {pet.created_at}</>
             </Text>
