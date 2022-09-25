@@ -10,7 +10,7 @@ import { statues, Status } from 'interfaces/status'
 interface Props extends BoxProps {
   onSubmitRegister: SubmitHandler<PetRegister>
   tags: Tag[]
-  defaultValues: Partial<Pet>
+  defaultValues?: Partial<Pet>
   isUpdate?: boolean
 }
 
@@ -84,7 +84,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValue
                 isMulti
                 {...register('tag_ids')}
                 options={tags.map(({ id: value, name: label }) => ({ label, value }))}
-                defaultValue={defaultValues.tags?.map(tag => ({ value: tag.id, label: tag.name }))}
+                defaultValue={defaultValues?.tags?.map(tag => ({ value: tag.id, label: tag.name }))}
                 onChange={values =>
                   setValue(
                     'tag_ids',
@@ -97,21 +97,26 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValue
               </FormErrorMessage>
             </FormControl>
             {/* Status */}
-            <FormControl isInvalid={Boolean(errors.status)} isRequired>
-              <FormLabel htmlFor="status">{t('register.status')}</FormLabel>
-              <Select
-                options={statues.map(s => ({ label: s, value: s }))}
-                defaultValue={{ label: defaultValues.status, value: defaultValues.status }}
-                {...register('status', {
-                  required: 'Please input status of pet',
-                })}
-                onChange={val => setValue('status', val?.value || Status.NEW)}
-              />
-              <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
-            </FormControl>
+            {isUpdate && (
+              <FormControl isInvalid={Boolean(errors.status)} isRequired>
+                <FormLabel htmlFor="status">{t('register.status')}</FormLabel>
+                <Select
+                  options={statues.map(s => ({ label: s, value: s }))}
+                  defaultValue={{
+                    label: defaultValues?.status || Status.NEW,
+                    value: defaultValues?.status || Status.NEW,
+                  }}
+                  {...register('status', {
+                    required: 'Please input status of pet',
+                  })}
+                  onChange={val => setValue('status', val?.value || Status.NEW)}
+                />
+                <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
+              </FormControl>
+            )}
 
             <Button colorScheme="brand" isLoading={isSubmitting} type="submit" mt={4}>
-              {t('register.register')}
+              {isUpdate ? 'แก้ไขข้อมูล' : 'ลงทะเบียนสัตว์'}
             </Button>
           </Stack>
 

@@ -1,12 +1,16 @@
-import { Box, Button, Flex, Heading, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
+import { StarIcon } from '@chakra-ui/icons'
+import { Avatar, Box, Button, Divider, Flex, Heading, Img, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
 import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import StaticMap from 'components/global/StaticMap'
+import PetStatusTag from 'components/pets/PetStatusTag'
 import { config } from 'config'
 import { Pet } from 'interfaces/Pet'
+import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
+import { ParseDateTime } from 'libs/date'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
@@ -14,12 +18,14 @@ import { UserProps } from 'pages/_app'
 
 interface Props {
   pet: Pet
+  shelter: User
 }
 
-const PetDetails: NextPage<UserProps & Props> = ({ user, pet }) => {
+const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter }) => {
   const router = useRouter()
   const isLiked = pet?.liked?.find(userId => userId === user?.id)
   const isInterested = pet?.interested?.find(userId => userId === user?.id)
+  const createdAt = ParseDateTime(pet.created_at)
   const onClickLike = async () => {
     if (isLiked) {
       await axios.delete(config.like.DELETE_delete.replace(':pet_id', pet.id.toString()))
@@ -52,17 +58,19 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet }) => {
         <Stack p={4} w="60vw">
           <Flex alignItems="center" gap={4}>
             <Heading>{pet.name} </Heading>
-            <Tag textTransform="uppercase">{pet.status}</Tag>
+            <PetStatusTag status={pet.status} />
             <Flex marginLeft="auto" gap={4}>
-              <Button colorScheme="blue" onClick={onClickLike}>
-                {isLiked ? 'Unlike' : 'Like'}
+              <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
+                {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
               </Button>
-              <Button colorScheme="yellow" onClick={onClickInterested}>
-                {isInterested ? 'Uninterested' : 'Interested'}
-              </Button>
+              <Tooltip label="เมื่อรับอุปการะแล้วจะไม่สามารถยกเลิกได้" hasArrow>
+                <Button colorScheme="yellow" onClick={onClickInterested} isDisabled={Boolean(isInterested)}>
+                  {isInterested ? 'อยู่ในกระบวนการพิจารณาการอุปการะ' : 'สนใจรับอุปการะ'}
+                </Button>
+              </Tooltip>
             </Flex>
           </Flex>
-          <Text>Description: {pet.description}</Text>
+
           <Flex gap={2}>
             {pet.tags.map(tag => (
               <Tooltip label={tag.description} key={tag.id}>
@@ -70,9 +78,26 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet }) => {
               </Tooltip>
             ))}
           </Flex>
-          <Text>
-            <>Founded when: {pet.created_at}</>
-          </Text>
+
+          <Divider />
+
+          <Flex gap={2} alignItems="center">
+            {shelter && shelter.picture_url ? (
+              <Img src={shelter.picture_url || ''} borderRadius="full" width="12" />
+            ) : (
+              <Avatar borderRadius="full" width="12" />
+            )}
+            <Text fontWeight="bold">{shelter.name}</Text>
+          </Flex>
+          <Divider />
+          <Stack>
+            <Text fontWeight="bold">รายละเอียด: </Text>
+            <Text>{pet.description || '-'}</Text>
+          </Stack>
+          <Divider />
+
+          <Text>พบเมื่อ {createdAt}</Text>
+
           <Flex w="100%" h="100%">
             <StaticMap lat={pet.lat} lng={pet.lng} />
           </Flex>
@@ -89,10 +114,16 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
       Cookie: ctx.req.headers.cookie || '',
     },
   })
+  const { data: shelter } = await axios.get<Pet>(config.shelter.GET_details.replace(':id', pet.user_id), {
+    headers: {
+      Cookie: ctx.req.headers.cookie || '',
+    },
+  })
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
       pet,
+      shelter,
     },
   }
 })

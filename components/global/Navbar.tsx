@@ -19,7 +19,6 @@ import {
 import NextLink from 'next/link'
 import { internalPages } from 'config'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
 import TextLink from './TextLink'
@@ -34,7 +33,6 @@ const Navbar: React.FC<Props> = ({ user }) => {
   const { pathname, asPath, query, locale, push } = useRouter()
   const icon = useColorModeValue(<SunIcon />, <MoonIcon />)
   const lang = { en: '🇺🇸', th: '🇹🇭' }
-  const { t } = useTranslation('common')
 
   const handleLangChange = () => {
     switch (locale) {
@@ -58,10 +56,10 @@ const Navbar: React.FC<Props> = ({ user }) => {
 
         <Center w={['30vw', '30vw', '2xs']}>
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
-            <TextLink text={t('navbar.home')} to={internalPages.index} />
-            <TextLink text={t('navbar.findPets')} to={internalPages.findPets} />
-            <TextLink text={t('navbar.shelters')} to={internalPages.shelters.index} />
-            <TextLink text={t('navbar.about')} to={internalPages.about} />
+            <TextLink text="หน้าแรก" to={internalPages.index} />
+            <TextLink text="ค้นหาเพื่อนคู่ใจ" to={internalPages.findPets} />
+            <TextLink text="ศูนย์พักพิงสัตว์" to={internalPages.shelters.index} />
+            <TextLink text="เกี่ยวกับเรา" to={internalPages.about} />
           </HStack>
         </Center>
         {/* <Divider orientation="vertical" h="4vh" borderColor={color} /> */}
@@ -75,7 +73,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
         >
           {user === undefined ? (
             <ButtonLink href={internalPages.user.login}>
-              <Button variant="brandSolid">{t('navbar.login')}</Button>
+              <Button variant="brandSolid">เข้าสู่ระบบ</Button>
             </ButtonLink>
           ) : (
             <Menu>
@@ -89,7 +87,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
               </MenuButton>
               <MenuList>
                 <NextLink href={internalPages.user.index} passHref>
-                  <MenuItem textDecoration="none">{t('navbar.profile')}</MenuItem>
+                  <MenuItem textDecoration="none">บัญชีของฉัน</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.pets.myPet} passHref>
                   <MenuItem textDecoration="none">สัตว์เลี้ยงของฉัน</MenuItem>
@@ -101,7 +99,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
                   <MenuItem textDecoration="none">รับเลี้ยง</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.user.logout} passHref>
-                  <MenuItem textDecoration="none">{t('navbar.logout')}</MenuItem>
+                  <MenuItem textDecoration="none">ออกจากระบบ</MenuItem>
                 </NextLink>
               </MenuList>
             </Menu>

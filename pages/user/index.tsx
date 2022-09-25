@@ -6,7 +6,6 @@ import { AuthGetServerSideProps } from 'libs/auth'
 
 import { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { UserProps } from 'pages/_app'
 
 const User: NextPage<UserProps> = ({ user }) => {
@@ -20,10 +19,6 @@ const User: NextPage<UserProps> = ({ user }) => {
   )
 }
 
-export const getServerSideProps = AuthGetServerSideProps(async ctx => ({
-  props: {
-    ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'user'])),
-  },
-}))
+export const getServerSideProps = AuthGetServerSideProps()
 
 export default User

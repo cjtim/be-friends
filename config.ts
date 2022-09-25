@@ -7,6 +7,9 @@ export const config = {
     storageApiKey: '',
     projectId: '',
   },
+  auth: {
+    POST_update: '/api/v1/auth/me',
+  },
   cookies: {
     token: 'authToken',
     previousPage: 'previousPage',

@@ -3,15 +3,16 @@ import ButtonLink from 'components/global/ButtonLink'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import TextLink from 'components/global/TextLink'
-import PetsTable from 'components/pets/PetsTable'
 import { config } from 'config'
 import { Pet } from 'interfaces/Pet'
 import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import dynamic from 'next/dynamic'
 import { UserProps } from 'pages/_app'
+
+const PetTableList = dynamic(() => import('components/pets/PetsTable'), { ssr: false })
 
 interface Props {
   shelter: User
@@ -40,7 +41,7 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets }) =>
       </Stack>
     </Stack>
 
-    <Stack>{pets ? <PetsTable pets={pets} /> : 'Empty pets'}</Stack>
+    <Stack>{pets ? <PetTableList pets={pets} /> : 'Empty pets'}</Stack>
   </PageLayout>
 )
 
@@ -58,9 +59,8 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
   })
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
-      shelter,
-      pets,
+      shelter: shelter || [],
+      pets: pets || [],
     },
   }
 })

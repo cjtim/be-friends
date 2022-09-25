@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react'
+import { Avatar, Flex, Img, Text } from '@chakra-ui/react'
 import Table from 'components/global/Table'
 import TextLink from 'components/global/TextLink'
 import { internalPages } from 'config'
@@ -12,22 +12,34 @@ interface Props {
 const columns: Column<User>[] = [
   {
     accessor: 'name',
-    Header: <Text>Name</Text>,
+    Header: <Text>ชื่อผู้ใช้งาน</Text>,
     Cell: ({ row }: CellProps<User>) => (
-      <TextLink
-        title={row.original.name}
-        text={row.original.name}
-        to={`${internalPages.shelters.index}/${row.original.id}`}
-      />
+      <Flex alignItems="center" gap={2}>
+        {row.original &&
+          (row.original.picture_url ? (
+            <Img src={row.original.picture_url || ''} borderRadius="full" width="10" />
+          ) : (
+            <Avatar borderRadius="full" width="10" height="10" />
+          ))}
+        <TextLink
+          title={row.original.name}
+          text={row.original.name}
+          to={`${internalPages.shelters.index}/${row.original.id}`}
+        />
+      </Flex>
     ),
   },
   {
     accessor: 'description',
-    Header: <Text>Description</Text>,
+    Header: <Text>รายละเอียด</Text>,
   },
   {
     accessor: 'email',
-    Header: <Text>Email</Text>,
+    Header: <Text>อีเมล</Text>,
+  },
+  {
+    accessor: 'phone',
+    Header: <Text>เบอร์โทรศัพท์</Text>,
   },
 ]
 

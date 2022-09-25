@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import { Badge, Box, Flex, Image, Stack } from '@chakra-ui/react'
+import { Box, Flex, Image, Stack } from '@chakra-ui/react'
 import TextLink from 'components/global/TextLink'
+import PetStatusTag from 'components/pets/PetStatusTag'
 import { internalPages } from 'config'
 import { Pet } from 'interfaces/Pet'
 
@@ -23,12 +24,10 @@ const PetMiniDetailCard: React.FC<Props> = ({ id, name, status, description, pic
 
     <Stack p="6">
       <Flex gap={2} alignItems="baseline">
-        <Badge borderRadius="full" px="2" colorScheme="teal">
-          {status}
-        </Badge>
         <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
           <TextLink text={name || 'no name'} to={`${internalPages.pets.index}/${id}`} key={id + name} title={name} />
         </Box>
+        <PetStatusTag status={status} />
       </Flex>
       <Box color="gray.500" fontWeight="semibold" letterSpacing="wide" fontSize="xs" textTransform="uppercase" ml="2">
         {description}

@@ -13,7 +13,7 @@ import { SubmitHandler } from 'react-hook-form'
 const UserUpdate: NextPage<UserProps> = ({ user }) => {
   const router = useRouter()
   const onSubmitRegister: SubmitHandler<User> = async values => {
-    await axios.post<string>(config.login.POST_line_register, values)
+    await axios.post<string>(config.auth.POST_update, values)
     router.back()
   }
 
