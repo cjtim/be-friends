@@ -9,6 +9,7 @@ import { Pet } from 'interfaces/Pet'
 import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
+import { ParseDateTime } from 'libs/date'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import { UserProps } from 'pages/_app'
@@ -18,15 +19,16 @@ const PetTableList = dynamic(() => import('components/pets/PetsTable'), { ssr: f
 interface Props {
   shelter: User
   pets: Pet[]
+  createdAt: string
 }
 
-const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets }) => (
+const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, createdAt }) => (
   <PageLayout title={`Shelter: ${shelter?.name}`}>
     <Navbar user={user} />
     <Center flexDir="column" p={4}>
       <Stack>
         {/* LINE1 */}
-        <Flex w="container.xl" alignItems="center">
+        <Flex w="container.xl" alignItems="center" gap={2}>
           <UserImg user={shelter} />
           <Heading>{shelter?.name}</Heading>
           <Flex marginLeft="auto">
@@ -35,18 +37,27 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets }) =>
             </ButtonLink>
           </Flex>
         </Flex>
-
-        {/* DETAILS */}
+        DETAILS
         <Stack>
-          <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`Email: ${shelter.email}` || '-'} />
-          <Text>Phone: {shelter.phone || '-'}</Text>
-          <Text>
-            <>Joined when: {shelter.created_at}</>
-          </Text>
+          <Flex>
+            <Text>อีเมล </Text>
+            <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
+          </Flex>
+
+          <Flex>
+            <Text>โทรศัพท์ </Text>
+            <Text color="gray"> {shelter.phone || '-'}</Text>
+          </Flex>
+
+          <Text>เป็นสมาชิกเมื่อ {createdAt}</Text>
+        </Stack>
+        {/* TABLE */}
+        <Stack w="container.xl">
+          <Text fontWeight="bold">สัตว์เลี้ยงของผู้ใช้นี้</Text>
+          {pets ? <PetTableList pets={pets} /> : 'ไม่พบสัตว์เลี้ยงของผู้ใช้นี้'}
         </Stack>
       </Stack>
     </Center>
-    {pets ? <PetTableList pets={pets} /> : 'Empty pets'}
   </PageLayout>
 )
 
@@ -64,8 +75,9 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
   })
   return {
     props: {
-      shelter: shelter || [],
+      shelter: shelter || {},
       pets: pets || [],
+      createdAt: ParseDateTime(shelter.created_at),
     },
   }
 })
