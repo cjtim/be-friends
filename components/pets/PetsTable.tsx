@@ -29,13 +29,13 @@ const columns: Column<Pet>[] = [
     Cell: ({ row }: CellProps<Pet>) => <PetStatusTag status={row.original.status} />,
   },
   {
+    accessor: 'description',
+    Header: <Text>รายละเอียด</Text>,
+  },
+  {
     accessor: 'created_at',
     Header: <Text>ลงทะเบียนเมื่อ</Text>,
     Cell: ({ row }: CellProps<Pet>) => <>{ParseDateTime(row.original.created_at)}</>,
-  },
-  {
-    accessor: 'description',
-    Header: <Text>รายละเอียด</Text>,
   },
 ]
 

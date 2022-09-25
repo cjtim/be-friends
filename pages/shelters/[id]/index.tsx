@@ -1,8 +1,9 @@
-import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import { Button, Center, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import ButtonLink from 'components/global/ButtonLink'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import TextLink from 'components/global/TextLink'
+import UserImg from 'components/global/UserImg'
 import { config } from 'config'
 import { Pet } from 'interfaces/Pet'
 import { User } from 'interfaces/User'
@@ -22,26 +23,30 @@ interface Props {
 const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets }) => (
   <PageLayout title={`Shelter: ${shelter?.name}`}>
     <Navbar user={user} />
-    <Stack p={4}>
-      <Flex>
-        <Heading>{shelter?.name}</Heading>
-        <Flex marginLeft="auto">
-          <ButtonLink href={`/shelters/${shelter.id}`}>
-            <Button>Contact</Button>
-          </ButtonLink>
-        </Flex>
-      </Flex>
-
+    <Center flexDir="column" p={4}>
       <Stack>
-        <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`Email: ${shelter.email}` || '-'} />
-        <Text>Phone: {shelter.phone || '-'}</Text>
-        <Text>
-          <>Joined when: {shelter.created_at}</>
-        </Text>
-      </Stack>
-    </Stack>
+        {/* LINE1 */}
+        <Flex w="container.xl" alignItems="center">
+          <UserImg user={shelter} />
+          <Heading>{shelter?.name}</Heading>
+          <Flex marginLeft="auto">
+            <ButtonLink href={`/shelters/${shelter.id}`}>
+              <Button>Contact</Button>
+            </ButtonLink>
+          </Flex>
+        </Flex>
 
-    <Stack>{pets ? <PetTableList pets={pets} /> : 'Empty pets'}</Stack>
+        {/* DETAILS */}
+        <Stack>
+          <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`Email: ${shelter.email}` || '-'} />
+          <Text>Phone: {shelter.phone || '-'}</Text>
+          <Text>
+            <>Joined when: {shelter.created_at}</>
+          </Text>
+        </Stack>
+      </Stack>
+    </Center>
+    {pets ? <PetTableList pets={pets} /> : 'Empty pets'}
   </PageLayout>
 )
 

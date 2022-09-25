@@ -58,7 +58,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
             <TextLink text="หน้าแรก" to={internalPages.index} />
             <TextLink text="ค้นหาเพื่อนคู่ใจ" to={internalPages.findPets} />
-            <TextLink text="ศูนย์พักพิงสัตว์" to={internalPages.shelters.index} />
+            <TextLink text="สถานสงเคราะห์สัตว์" to={internalPages.shelters.index} />
             <TextLink text="เกี่ยวกับเรา" to={internalPages.about} />
           </HStack>
         </Center>
@@ -90,13 +90,13 @@ const Navbar: React.FC<Props> = ({ user }) => {
                   <MenuItem textDecoration="none">บัญชีของฉัน</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.pets.myPet} passHref>
-                  <MenuItem textDecoration="none">สัตว์เลี้ยงของฉัน</MenuItem>
+                  <MenuItem textDecoration="none">จัดการสัตว์เลี้ยงที่ถูกประกาศ</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.user.liked} passHref>
                   <MenuItem textDecoration="none">ถูกใจ</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.user.interested} passHref>
-                  <MenuItem textDecoration="none">รับเลี้ยง</MenuItem>
+                  <MenuItem textDecoration="none">สัตว์ที่อุปการะ</MenuItem>
                 </NextLink>
                 <NextLink href={internalPages.user.logout} passHref>
                   <MenuItem textDecoration="none">ออกจากระบบ</MenuItem>

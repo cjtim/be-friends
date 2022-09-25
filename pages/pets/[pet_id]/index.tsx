@@ -1,11 +1,13 @@
 import { StarIcon } from '@chakra-ui/icons'
-import { Avatar, Box, Button, Divider, Flex, Heading, Img, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, Heading, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
 import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import StaticMap from 'components/global/StaticMap'
+import TextLink from 'components/global/TextLink'
+import UserImg from 'components/global/UserImg'
 import PetStatusTag from 'components/pets/PetStatusTag'
-import { config } from 'config'
+import { config, internalPages } from 'config'
 import { Pet } from 'interfaces/Pet'
 import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
@@ -19,13 +21,13 @@ import { UserProps } from 'pages/_app'
 interface Props {
   pet: Pet
   shelter: User
+  createdAt?: string
 }
 
-const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter }) => {
+const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt }) => {
   const router = useRouter()
   const isLiked = pet?.liked?.find(userId => userId === user?.id)
   const isInterested = pet?.interested?.find(userId => userId === user?.id)
-  const createdAt = ParseDateTime(pet.created_at)
   const onClickLike = async () => {
     if (isLiked) {
       await axios.delete(config.like.DELETE_delete.replace(':pet_id', pet.id.toString()))
@@ -82,12 +84,8 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter }) => {
           <Divider />
 
           <Flex gap={2} alignItems="center">
-            {shelter && shelter.picture_url ? (
-              <Img src={shelter.picture_url || ''} borderRadius="full" width="12" />
-            ) : (
-              <Avatar borderRadius="full" width="12" />
-            )}
-            <Text fontWeight="bold">{shelter.name}</Text>
+            <UserImg user={shelter} />
+            <TextLink text={shelter.name} to={`${internalPages.shelters.index}/${shelter.id}`} title={shelter.name} />
           </Flex>
           <Divider />
           <Stack>
@@ -124,6 +122,7 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
       pet,
       shelter,
+      createdAt: ParseDateTime(pet.created_at),
     },
   }
 })

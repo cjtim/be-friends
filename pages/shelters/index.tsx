@@ -18,9 +18,11 @@ interface Props extends UserProps {
 
 const SheltersPage: NextPage<Props> = ({ user, shelters }) => {
   const router = useRouter()
+  const includeUser = router.query.include_user
+  const title = includeUser ? 'สถานสงเคราะห์สัตว์ และผู้ใข้ทั่วไป' : 'สถานสงเคราะห์สัตว์'
 
-  const toggleIncludeUser = (includeUser: boolean) => {
-    if (includeUser) {
+  const toggleIncludeUser = (newIncludeUser: boolean) => {
+    if (newIncludeUser) {
       router.query.include_user = 'true'
     } else {
       delete router.query.include_user
@@ -29,12 +31,12 @@ const SheltersPage: NextPage<Props> = ({ user, shelters }) => {
   }
 
   return (
-    <PageLayout title="สถานสงเคราะห์">
+    <PageLayout title={title}>
       <Navbar user={user} />
 
       <Container minW="container.lg">
         <Center py={2} gap={2} flexDir="column">
-          <Heading>สถานสงเคราะห์</Heading>
+          <Heading>{title}</Heading>
           <Flex gap={2} alignItems="center">
             <Text>แสดงบัญชีผู้ใช้ทั่วไป</Text>
             <Switch
