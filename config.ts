@@ -41,6 +41,7 @@ export const config = {
   },
   interest: {
     GET_list: `/api/v1/interest`,
+    GET_byPetId: `/api/v1/interest`, // params pet_id
     POST_add: `/api/v1/interest/:pet_id`,
     DELETE_delete: `/api/v1/interest/:pet_id`,
   },

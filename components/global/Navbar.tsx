@@ -89,15 +89,20 @@ const Navbar: React.FC<Props> = ({ user }) => {
                 <NextLink href={internalPages.user.index} passHref>
                   <MenuItem textDecoration="none">บัญชีของฉัน</MenuItem>
                 </NextLink>
-                <NextLink href={internalPages.pets.myPet} passHref>
-                  <MenuItem textDecoration="none">จัดการสัตว์เลี้ยงที่ถูกประกาศ</MenuItem>
-                </NextLink>
-                <NextLink href={internalPages.user.liked} passHref>
-                  <MenuItem textDecoration="none">ถูกใจ</MenuItem>
-                </NextLink>
-                <NextLink href={internalPages.user.interested} passHref>
-                  <MenuItem textDecoration="none">สัตว์ที่อุปการะ</MenuItem>
-                </NextLink>
+                {user.is_org ? (
+                  <NextLink href={internalPages.pets.myPet} passHref>
+                    <MenuItem textDecoration="none">จัดการสัตว์เลี้ยง</MenuItem>
+                  </NextLink>
+                ) : (
+                  <>
+                    <NextLink href={internalPages.user.liked} passHref>
+                      <MenuItem textDecoration="none">ถูกใจ</MenuItem>
+                    </NextLink>
+                    <NextLink href={internalPages.user.interested} passHref>
+                      <MenuItem textDecoration="none">สัตว์ที่อุปการะ</MenuItem>
+                    </NextLink>
+                  </>
+                )}
                 <NextLink href={internalPages.user.logout} passHref>
                   <MenuItem textDecoration="none">ออกจากระบบ</MenuItem>
                 </NextLink>

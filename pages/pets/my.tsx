@@ -1,8 +1,10 @@
-import { Center, Heading } from '@chakra-ui/react'
+import { BellIcon } from '@chakra-ui/icons'
+import { Button, Center, Heading } from '@chakra-ui/react'
+import ButtonLink from 'components/global/ButtonLink'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import PetsTable from 'components/pets/PetsTable'
-import { config } from 'config'
+import { config, internalPages } from 'config'
 import { Pet } from 'interfaces/Pet'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
@@ -20,6 +22,13 @@ const MyPetHome: NextPage<UserProps & Props> = ({ user, pets }) => (
 
     <Center flexDir="column" p="4" gap={4}>
       <Heading>สัตว์เลี้ยงของฉัน</Heading>
+      <Center py={2}>
+        <ButtonLink href={internalPages.pets.new} isExternal>
+          <Button colorScheme="brand" color="white" leftIcon={<BellIcon />}>
+            เพิ่มสัตว์เลี้ยง
+          </Button>
+        </ButtonLink>
+      </Center>
       <PetsTable pets={pets} />
     </Center>
   </PageLayout>

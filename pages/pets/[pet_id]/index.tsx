@@ -1,5 +1,6 @@
 import { StarIcon } from '@chakra-ui/icons'
 import { Box, Button, Divider, Flex, Heading, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
+import ButtonLink from 'components/global/ButtonLink'
 import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
@@ -22,9 +23,10 @@ interface Props {
   pet: Pet
   shelter: User
   createdAt?: string
+  interestedUsers: User[]
 }
 
-const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt }) => {
+const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt, interestedUsers }) => {
   const router = useRouter()
   const isLiked = pet?.liked?.find(userId => userId === user?.id)
   const isInterested = pet?.interested?.find(userId => userId === user?.id)
@@ -62,14 +64,23 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
             <Heading>{pet.name} </Heading>
             <PetStatusTag status={pet.status} />
             <Flex marginLeft="auto" gap={4}>
-              <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
-                {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
-              </Button>
-              <Tooltip label="เมื่อรับอุปการะแล้วจะไม่สามารถยกเลิกได้" hasArrow>
-                <Button colorScheme="yellow" onClick={onClickInterested} isDisabled={Boolean(isInterested)}>
-                  {isInterested ? 'อยู่ในกระบวนการพิจารณาการอุปการะ' : 'สนใจรับอุปการะ'}
-                </Button>
-              </Tooltip>
+              {user?.is_org && user?.id === pet.user_id && (
+                <ButtonLink href={`/pets/${pet.id}/update`}>
+                  <Button colorScheme="red">แก้ไขข้อมูล</Button>
+                </ButtonLink>
+              )}
+              {!user?.is_org && (
+                <>
+                  <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
+                    {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
+                  </Button>
+                  <Tooltip label="เมื่อรับอุปการะแล้วจะไม่สามารถยกเลิกได้" hasArrow>
+                    <Button colorScheme="yellow" onClick={onClickInterested} isDisabled={Boolean(isInterested)}>
+                      {isInterested ? 'อยู่ในกระบวนการพิจารณาการอุปการะ' : 'สนใจรับอุปการะ'}
+                    </Button>
+                  </Tooltip>
+                </>
+              )}
             </Flex>
           </Flex>
 
@@ -101,6 +112,13 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
           </Flex>
         </Stack>
       </Flex>
+
+      {/* PET ADMIN AREA */}
+      {user?.is_org && user?.id === pet.user_id && (
+        <Stack borderRadius="2xl">
+          <Heading>ผู้ที่สนใจสัตว์ {JSON.stringify(interestedUsers)}</Heading>
+        </Stack>
+      )}
     </PageLayout>
   )
 }
@@ -117,12 +135,21 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
       Cookie: ctx.req.headers.cookie || '',
     },
   })
+  const { data: interestedUsers } = await axios.get<User[]>(config.interest.GET_byPetId, {
+    headers: {
+      Cookie: ctx.req.headers.cookie || '',
+    },
+    params: {
+      pet_id: pet.id,
+    },
+  })
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
       pet,
       shelter,
       createdAt: ParseDateTime(pet.created_at),
+      interestedUsers: interestedUsers || [],
     },
   }
 })
