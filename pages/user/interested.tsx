@@ -1,13 +1,14 @@
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
-import PetsTable from 'components/pets/PetsTable'
 import { config } from 'config'
 import { Interested } from 'interfaces/interested'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import dynamic from 'next/dynamic'
 import { UserProps } from 'pages/_app'
+
+const InterestedTable = dynamic(() => import('components/pets/InterestedTable'), { ssr: false })
 
 interface Props {
   pets: Interested[]
@@ -17,7 +18,7 @@ const UserInterestedPage: NextPage<UserProps & Props> = ({ user, pets }) => (
   <PageLayout title="Interested pets">
     <Navbar user={user} />
 
-    <PetsTable pets={pets} />
+    <InterestedTable pets={pets} />
   </PageLayout>
 )
 
@@ -29,7 +30,6 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
   })
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
       pets: pets || [],
     },
   }

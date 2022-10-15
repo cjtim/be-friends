@@ -5,10 +5,12 @@ import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import StaticMap from 'components/global/StaticMap'
+import Table from 'components/global/Table'
 import TextLink from 'components/global/TextLink'
 import UserImg from 'components/global/UserImg'
 import PetStatusTag from 'components/pets/PetStatusTag'
 import { config, internalPages } from 'config'
+import { InterestedUser } from 'interfaces/interested'
 import { Pet } from 'interfaces/Pet'
 import { User } from 'interfaces/User'
 import { AuthGetServerSideProps } from 'libs/auth'
@@ -18,12 +20,13 @@ import { GetServerSidePropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
+import { Column } from 'react-table'
 
 interface Props {
   pet: Pet
   shelter: User
   createdAt?: string
-  interestedUsers: User[]
+  interestedUsers: InterestedUser[]
 }
 
 const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt, interestedUsers }) => {
@@ -116,7 +119,16 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
       {/* PET ADMIN AREA */}
       {user?.is_org && user?.id === pet.user_id && (
         <Stack borderRadius="2xl">
-          <Heading>ผู้ที่สนใจสัตว์ {JSON.stringify(interestedUsers)}</Heading>
+          <Heading>ผู้ที่สนใจสัตว์</Heading>
+          <Table
+            columns={
+              [
+                { accessor: 'name', Header: 'Name' },
+                { accessor: 'step', Header: 'Step' },
+              ] as Column<InterestedUser>[]
+            }
+            data={interestedUsers}
+          />
         </Stack>
       )}
     </PageLayout>
@@ -135,7 +147,7 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
       Cookie: ctx.req.headers.cookie || '',
     },
   })
-  const { data: interestedUsers } = await axios.get<User[]>(config.interest.GET_byPetId, {
+  const { data: interestedUsers } = await axios.get<InterestedUser[]>(config.interest.GET_byPetId, {
     headers: {
       Cookie: ctx.req.headers.cookie || '',
     },
