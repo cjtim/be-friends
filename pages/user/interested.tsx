@@ -1,3 +1,4 @@
+import { Center, Heading } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { config } from 'config'
@@ -18,7 +19,10 @@ const UserInterestedPage: NextPage<UserProps & Props> = ({ user, pets }) => (
   <PageLayout title="Interested pets">
     <Navbar user={user} />
 
-    <InterestedTable pets={pets} />
+    <Center flexDir="column" gap={2} p={4}>
+      <Heading>สัตว์ที่รับอุปการะ</Heading>
+      <InterestedTable pets={pets} />
+    </Center>
   </PageLayout>
 )
 
