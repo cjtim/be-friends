@@ -14,7 +14,7 @@ const User: NextPage<UserProps> = ({ user }) => {
   return (
     <PageLayout title={t('navbar.profile')}>
       <Navbar user={user} />
-      <Center h="80vh">{user && <UserInfo user={user} />}</Center>
+      <Center>{user && <UserInfo user={user} />}</Center>
     </PageLayout>
   )
 }

@@ -1,7 +1,7 @@
-import { Button, Center, Flex, Heading, Stack, Text } from '@chakra-ui/react'
-import ButtonLink from 'components/global/ButtonLink'
+import { Center, Flex, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
+import StaticMap from 'components/global/StaticMap'
 import TextLink from 'components/global/TextLink'
 import UserImg from 'components/global/UserImg'
 import { config } from 'config'
@@ -31,26 +31,32 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, crea
         <Flex w="container.xl" alignItems="center" gap={2}>
           <UserImg user={shelter} />
           <Heading>{shelter?.name}</Heading>
-          <Flex marginLeft="auto">
-            <ButtonLink href={`/shelters/${shelter.id}`}>
-              <Button>Contact</Button>
-            </ButtonLink>
-          </Flex>
         </Flex>
         DETAILS
-        <Stack>
-          <Flex>
-            <Text>อีเมล </Text>
+        <Flex>
+          <SimpleGrid columns={2} spacing={1}>
+            <Text>อีเมล</Text>
             <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
-          </Flex>
 
-          <Flex>
             <Text>โทรศัพท์ </Text>
             <Text color="gray"> {shelter.phone || '-'}</Text>
-          </Flex>
+            <Text>Facebook </Text>
+            <Text color="gray"> {shelter.phone || '-'}</Text>
+            <Text>Line</Text>
+            <Text color="gray"> {shelter.phone || '-'}</Text>
+            <Text>Website </Text>
+            <Text color="gray"> {shelter.phone || '-'}</Text>
 
-          <Text>เป็นสมาชิกเมื่อ {createdAt}</Text>
-        </Stack>
+            <Text>เป็นสมาชิกเมื่อ </Text>
+            <Text color="gray">{createdAt}</Text>
+          </SimpleGrid>
+
+          {shelter.lat && shelter.lng && (
+            <Flex w="xl" h="sm" marginLeft="auto">
+              <StaticMap lat={shelter.lat} lng={shelter.lng} />
+            </Flex>
+          )}
+        </Flex>
         {/* TABLE */}
         <Stack w="container.xl">
           <Text fontWeight="bold">สัตว์เลี้ยงของผู้ใช้นี้</Text>
