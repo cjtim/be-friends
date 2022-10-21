@@ -1,5 +1,5 @@
 import { Tag, TagProps } from '@chakra-ui/react'
-import { Interested } from 'interfaces/interested'
+import { Interested, InterestedStep } from 'interfaces/interested'
 
 interface Props {
   step: Interested['step']
@@ -7,15 +7,15 @@ interface Props {
 
 const colorMap = (status: Interested['step']): TagProps => {
   switch (status) {
-    case 'PENDING':
+    case InterestedStep.PENDING:
       return {
         colorScheme: 'blue',
       }
-    case 'REVIEWING':
+    case InterestedStep.REVIEWING:
       return {
         colorScheme: 'yellow',
       }
-    case 'ADOPED':
+    case InterestedStep.ADOPED:
       return {
         colorScheme: 'green',
       }

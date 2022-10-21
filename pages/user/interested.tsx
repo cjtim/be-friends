@@ -2,7 +2,7 @@ import { Center, Heading } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { config } from 'config'
-import { Interested } from 'interfaces/interested'
+import { InterestedPet } from 'interfaces/interested'
 import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
@@ -12,7 +12,7 @@ import { UserProps } from 'pages/_app'
 const InterestedTable = dynamic(() => import('components/pets/InterestedTable'), { ssr: false })
 
 interface Props {
-  pets: Interested[]
+  pets: InterestedPet[]
 }
 
 const UserInterestedPage: NextPage<UserProps & Props> = ({ user, pets }) => (
@@ -27,7 +27,7 @@ const UserInterestedPage: NextPage<UserProps & Props> = ({ user, pets }) => (
 )
 
 export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSidePropsContext) => {
-  const { data: pets } = await axios.get<Interested[]>(config.interest.GET_list, {
+  const { data: pets } = await axios.get<InterestedPet[]>(config.interest.GET_list, {
     headers: {
       Cookie: ctx.req.headers.cookie || '',
     },
