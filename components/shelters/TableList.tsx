@@ -25,6 +25,7 @@ const columns: Column<User>[] = [
           title={row.original.name}
           text={row.original.name}
           to={`${internalPages.shelters.index}/${row.original.id}`}
+          showIcon
         />
       </Flex>
     ),

@@ -1,4 +1,4 @@
-import { Center } from '@chakra-ui/react'
+import { Center, Heading } from '@chakra-ui/react'
 import { AxiosResponse } from 'axios'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
@@ -41,7 +41,8 @@ const PetUpdate: NextPage<UserProps & Props> = ({ user, pet, tags }) => {
   return (
     <PageLayout title={`Update pet - ${pet.name}`}>
       <Navbar user={user} />
-      <Center>
+      <Center flexDir="column" gap={2} p={4}>
+        <Heading>แก้ไขข้อมูลสัตว์เลี้ยง</Heading>
         <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} defaultValues={pet} isUpdate />
       </Center>
     </PageLayout>

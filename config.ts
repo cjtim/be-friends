@@ -23,16 +23,16 @@ export const config = {
     POST_line_login: `/api/v1/auth/login`,
   },
   pet: {
-    GET_list: '/api/v1/pet',
-    GET_my: '/api/v1/pet/my',
-    GET_details: '/api/v1/pet/:pet_id',
-    POST_create: '/api/v1/pet',
-    PUT_update: '/api/v1/pet',
-    POST_img: '/api/v1/pet/img',
+    GET_list: '/api/v1/pet', // Anyone - list pets maps
+    GET_my: '/api/v1/pet/my', // Shelter - list pets
+    GET_details: '/api/v1/pet/:pet_id', // Loggedin user - pet details
+    POST_create: '/api/v1/pet', // Shelter - create pet
+    PUT_update: '/api/v1/pet', // Shelter - update pet
+    POST_img: '/api/v1/pet/img', // Shelter - add pet image
   },
   shelter: {
-    GET_list: '/api/v1/shelter',
-    GET_details: '/api/v1/shelter/:id',
+    GET_list: '/api/v1/shelter', // Loggedin user = Shelter list
+    GET_details: '/api/v1/shelter/:id', // Loggedin user - Shelter details
   },
   like: {
     GET_list: '/api/v1/like',
@@ -43,6 +43,7 @@ export const config = {
     GET_list: `/api/v1/interest`,
     GET_byPetId: `/api/v1/interest`, // params pet_id
     POST_add: `/api/v1/interest/:pet_id`,
+    PUT_update: `/api/v1/interest/:pet_id`,
     DELETE_delete: `/api/v1/interest/:pet_id`,
   },
   tag: {

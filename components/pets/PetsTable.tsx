@@ -37,6 +37,16 @@ const columns: Column<Pet>[] = [
     Header: <Text>ลงทะเบียนเมื่อ</Text>,
     Cell: ({ row }: CellProps<Pet>) => <>{ParseDateTime(row.original.created_at)}</>,
   },
+  {
+    accessor: 'interested',
+    Header: <Text>สนใจอุปถัมภ์</Text>,
+    Cell: ({ row }: CellProps<Pet>) => <>{row.original.interested.length || 0} คน</>,
+  },
+  {
+    accessor: 'liked',
+    Header: <Text>ถูกใจ</Text>,
+    Cell: ({ row }: CellProps<Pet>) => <>{row.original.liked.length || 0} คน</>,
+  },
 ]
 
 const PetsTable: React.FC<Props> = ({ pets }) => <Table data={pets} columns={columns} />

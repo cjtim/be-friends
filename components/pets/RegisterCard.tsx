@@ -1,6 +1,17 @@
 import { Pet, PetRegister } from 'interfaces/Pet'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Box, FormControl, FormLabel, Input, FormErrorMessage, Button, BoxProps, Flex, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Button,
+  BoxProps,
+  Flex,
+  Stack,
+  Textarea,
+} from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import SelectLocationMap from 'components/global/SelectLocationMap'
 import { Select } from 'chakra-react-select'
@@ -56,7 +67,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValue
             {/* Description */}
             <FormControl isInvalid={Boolean(errors.description)}>
               <FormLabel htmlFor="description">{t('register.description')}</FormLabel>
-              <Input id="description" placeholder={t('register.description')} {...register('description')} />
+              <Textarea id="description" placeholder={t('register.description')} {...register('description')} />
               <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
             </FormControl>
             {/* Image */}

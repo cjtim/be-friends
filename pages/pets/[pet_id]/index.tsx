@@ -1,13 +1,13 @@
 import { StarIcon } from '@chakra-ui/icons'
-import { Box, Button, Divider, Flex, Heading, Stack, Tag, Text, Tooltip } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, Heading, Stack, Tag, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import ButtonLink from 'components/global/ButtonLink'
 import Gallery from 'components/global/Gallery'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import StaticMap from 'components/global/StaticMap'
-import Table from 'components/global/Table'
 import TextLink from 'components/global/TextLink'
 import UserImg from 'components/global/UserImg'
+import InterestedModal from 'components/interested/InterestedModal'
 import PetStatusTag from 'components/pets/PetStatusTag'
 import { config, internalPages } from 'config'
 import { InterestedUser } from 'interfaces/interested'
@@ -20,7 +20,6 @@ import { GetServerSidePropsContext, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
-import { Column } from 'react-table'
 
 interface Props {
   pet: Pet
@@ -50,6 +49,9 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
     }
     router.replace(router.asPath)
   }
+
+  const interestedDisclosure = useDisclosure()
+
   return (
     <PageLayout title={`Pet ${pet?.name}`}>
       <Navbar user={user} />
@@ -68,12 +70,18 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
             <PetStatusTag status={pet.status} />
             <Flex marginLeft="auto" gap={4}>
               {user?.is_org && user?.id === pet.user_id && (
-                <ButtonLink href={`/pets/${pet.id}/update`}>
-                  <Button colorScheme="red">แก้ไขข้อมูล</Button>
-                </ButtonLink>
+                <Flex gap={2}>
+                  <Button colorScheme="blue" onClick={interestedDisclosure.onOpen}>
+                    ผู้ที่สนใจสัตว์
+                    <InterestedModal {...interestedDisclosure} interestedUsers={interestedUsers} />
+                  </Button>
+                  <ButtonLink href={`/pets/${pet.id}/update`}>
+                    <Button colorScheme="red">แก้ไขข้อมูล</Button>
+                  </ButtonLink>
+                </Flex>
               )}
               {!user?.is_org && (
-                <>
+                <Flex>
                   <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
                     {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
                   </Button>
@@ -82,7 +90,7 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
                       {isInterested ? 'อยู่ในกระบวนการพิจารณาการอุปการะ' : 'สนใจรับอุปการะ'}
                     </Button>
                   </Tooltip>
-                </>
+                </Flex>
               )}
             </Flex>
           </Flex>
@@ -99,7 +107,12 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
 
           <Flex gap={2} alignItems="center">
             <UserImg user={shelter} />
-            <TextLink text={shelter.name} to={`${internalPages.shelters.index}/${shelter.id}`} title={shelter.name} />
+            <TextLink
+              text={shelter.name}
+              to={`${internalPages.shelters.index}/${shelter.id}`}
+              title={shelter.name}
+              showIcon
+            />
           </Flex>
           <Divider />
           <Stack>
@@ -115,22 +128,6 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
           </Flex>
         </Stack>
       </Flex>
-
-      {/* PET ADMIN AREA */}
-      {user?.is_org && user?.id === pet.user_id && (
-        <Stack borderRadius="2xl">
-          <Heading>ผู้ที่สนใจสัตว์</Heading>
-          <Table
-            columns={
-              [
-                { accessor: 'name', Header: 'Name' },
-                { accessor: 'step', Header: 'Step' },
-              ] as Column<InterestedUser>[]
-            }
-            data={interestedUsers}
-          />
-        </Stack>
-      )}
     </PageLayout>
   )
 }
