@@ -5,8 +5,11 @@ import { User } from './User'
 // eslint-disable-next-line no-shadow
 export enum InterestedStep {
   PENDING = 'ได้รับข้อมูลแล้ว',
-  REVIEWING = 'กำลังตรวจสอบข้อมูล และติดต่อกลับ',
-  ADOPED = 'เสร็จสิ้น',
+  SCREENING = 'กำลังตรวจสอบข้อมูล และติดต่อกลับ',
+  CONFIRMATION = 'ยืนยันรับอุปการะ',
+
+  FAILED = 'คุณสมบัติไม่ผ่าน',
+  PICKEDUP = 'เสร็จสิ้นการอุปการะ',
 }
 
 export interface Interested {
@@ -17,8 +20,10 @@ export interface Interested {
 
 export const InterestedSteps: InterestedStep[] = [
   InterestedStep.PENDING,
-  InterestedStep.REVIEWING,
-  InterestedStep.ADOPED,
+  InterestedStep.SCREENING,
+  InterestedStep.CONFIRMATION,
+  InterestedStep.FAILED,
+  InterestedStep.PICKEDUP,
 ]
 
 export interface InterestedPet extends Interested, Pet {}

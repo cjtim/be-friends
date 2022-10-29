@@ -71,7 +71,7 @@ const UserInfo: React.FC<Props> = ({ user }) => (
         <Text>{user?.is_org ? 'สถานสงเคราะห์สัตว์' : 'ผู้ใช้งานทั่วไป'}</Text>
       </GridItem>
     </Grid>
-    {user.lat && user.lng && (
+    {user.is_org && user.lat && user.lng && (
       <Flex w="xl" h="xl">
         <StaticMap lat={user.lat} lng={user.lng} />
       </Flex>

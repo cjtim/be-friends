@@ -11,7 +11,7 @@ const colorMap = (status: Status): TagProps => {
       return {
         colorScheme: 'blue',
       }
-    case Status.PENDING:
+    case Status.REVIEWING:
       return {
         colorScheme: 'yellow',
       }

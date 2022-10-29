@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-shadow
 export enum Status {
-  NEW = 'new',
-  PENDING = 'pending',
-  ADOPED = 'adoped',
+  NEW = 'NEW',
+  REVIEWING = 'กำลังตรวจสอบข้อมูล',
+  ADOPED = 'เสร็จสิ้น',
 }
 
-export const statues = [Status.NEW, Status.PENDING, Status.ADOPED]
+export const statues = [Status.NEW, Status.REVIEWING, Status.ADOPED]

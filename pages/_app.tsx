@@ -9,6 +9,7 @@ import { config } from 'config'
 import Cookies from 'js-cookie'
 import axios from 'libs/axios'
 import { useRouter } from 'next/router'
+import UserInfoRequiredPopup from 'components/login/UserInfoRequiredPopup'
 
 export interface UserProps {
   user?: User | undefined
@@ -60,6 +61,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       {loading && <Progress size="xs" isIndeterminate />}
+      {user && <UserInfoRequiredPopup user={user} />}
       <Component {...pageProps} user={user} />
     </ChakraProvider>
   )

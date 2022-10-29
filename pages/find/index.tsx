@@ -9,6 +9,7 @@ import { useTranslation } from 'next-i18next'
 import { Pet } from 'interfaces/Pet'
 import axios from 'libs/axios'
 import { config } from 'config'
+import { Status } from 'interfaces/status'
 
 interface Props extends UserProps {
   pets: Pet[]
@@ -52,7 +53,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
-      pets: pets || [],
+      pets: pets.filter(pet => pet.status === Status.NEW) || [],
     },
   }
 }

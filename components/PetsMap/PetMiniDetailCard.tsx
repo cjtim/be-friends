@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
-import { Box, Flex, Image, Stack } from '@chakra-ui/react'
+import { Box, Flex, Image, Stack, Tag } from '@chakra-ui/react'
 import TextLink from 'components/global/TextLink'
-import PetStatusTag from 'components/pets/PetStatusTag'
 import { internalPages } from 'config'
 import { Pet } from 'interfaces/Pet'
 
@@ -9,7 +8,7 @@ interface Props extends Pet {
   onClick: () => void
 }
 
-const PetMiniDetailCard: React.FC<Props> = ({ id, name, status, description, picture_urls, onClick }) => (
+const PetMiniDetailCard: React.FC<Props> = ({ id, name, description, picture_urls, tags, onClick }) => (
   <Flex maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
     <Image
       src={
@@ -27,7 +26,12 @@ const PetMiniDetailCard: React.FC<Props> = ({ id, name, status, description, pic
         <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
           <TextLink text={name || 'no name'} to={`${internalPages.pets.index}/${id}`} key={id + name} title={name} />
         </Box>
-        <PetStatusTag status={status} />
+        {/* <PetStatusTag status={status} /> */}
+      </Flex>
+      <Flex gap={1}>
+        {tags?.map(tag => (
+          <Tag key={tag.id}>{tag.name}</Tag>
+        ))}
       </Flex>
       <Box color="gray.500" fontWeight="semibold" letterSpacing="wide" fontSize="xs" textTransform="uppercase" ml="2">
         {description}
