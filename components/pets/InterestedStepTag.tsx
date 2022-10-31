@@ -11,11 +11,19 @@ const colorMap = (status: Interested['step']): TagProps => {
       return {
         colorScheme: 'blue',
       }
-    case InterestedStep.REVIEWING:
+    case InterestedStep.SCREENING:
       return {
         colorScheme: 'yellow',
       }
-    case InterestedStep.ADOPED:
+    case InterestedStep.CONFIRMATION:
+      return {
+        colorScheme: 'green',
+      }
+    case InterestedStep.FAILED:
+      return {
+        colorScheme: 'red',
+      }
+    case InterestedStep.PICKEDUP:
       return {
         colorScheme: 'green',
       }

@@ -6,10 +6,10 @@ import { User } from './User'
 export enum InterestedStep {
   PENDING = 'ได้รับข้อมูลแล้ว',
   SCREENING = 'กำลังตรวจสอบข้อมูล และติดต่อกลับ',
-  CONFIRMATION = 'ยืนยันรับอุปการะ',
+  CONFIRMATION = 'ยืนยันรับอุปถัมภ์',
 
   FAILED = 'คุณสมบัติไม่ผ่าน',
-  PICKEDUP = 'เสร็จสิ้นการอุปการะ',
+  PICKEDUP = 'เสร็จสิ้นการอุปถัมภ์',
 }
 
 export interface Interested {

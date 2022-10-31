@@ -85,9 +85,9 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
                   <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
                     {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
                   </Button>
-                  <Tooltip label="เมื่อรับอุปการะแล้วจะไม่สามารถยกเลิกได้" hasArrow>
+                  <Tooltip label="เมื่อรับอุปถัมภ์แล้วจะไม่สามารถยกเลิกได้" hasArrow>
                     <Button colorScheme="yellow" onClick={onClickInterested} isDisabled={Boolean(isInterested)}>
-                      {isInterested ? 'อยู่ในกระบวนการพิจารณาการอุปการะ' : 'สนใจรับอุปการะ'}
+                      {isInterested ? 'อยู่ในกระบวนการพิจารณาการอุปถัมภ์' : 'สนใจรับอุปถัมภ์'}
                     </Button>
                   </Tooltip>
                 </Flex>

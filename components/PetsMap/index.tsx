@@ -59,10 +59,10 @@ const Map: React.FC<Props> = ({ markers }) => {
 
   return (
     <Flex w="100vw" h="90vh">
-      <Box w="20%" overflowY="scroll">
+      <Box w="25%" overflowY="scroll">
         {onClicks && markers?.map((marker, idx) => <marker.SideContent key={marker.name} onClick={onClicks[idx]} />)}
       </Box>
-      <Box id={id} w="79%" />
+      <Box id={id} w="74%" />
     </Flex>
   )
 }

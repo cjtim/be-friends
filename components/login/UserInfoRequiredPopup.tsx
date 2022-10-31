@@ -20,14 +20,16 @@ const UserInfoRequiredPopup: React.FC<Props> = ({ user }) => {
     router.reload()
   }
 
-  return user.phone ? (
+  const { is_org: isOrg, phone, lat } = user
+
+  return (isOrg ? lat && phone : phone) ? (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <></>
   ) : (
     <Modal isOpen onClose={onClose} size="6xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>แก้ไขบัญชี</ModalHeader>
+        <ModalHeader>โปรดใส่เบอร์โทรที่สามารถติดต่อได้</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <UserUpdateCard user={user} onSubmitRegister={handleSave} />

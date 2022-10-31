@@ -99,7 +99,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
                       <MenuItem textDecoration="none">ถูกใจ</MenuItem>
                     </NextLink>
                     <NextLink href={internalPages.user.interested} passHref>
-                      <MenuItem textDecoration="none">สัตว์ที่อุปการะ</MenuItem>
+                      <MenuItem textDecoration="none">สัตว์ที่อุปถัมภ์</MenuItem>
                     </NextLink>
                   </>
                 )}

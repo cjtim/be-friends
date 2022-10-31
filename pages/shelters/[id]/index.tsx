@@ -32,19 +32,12 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, crea
           <UserImg user={shelter} />
           <Heading>{shelter?.name}</Heading>
         </Flex>
-        DETAILS
         <Flex>
-          <SimpleGrid columns={2} spacing={1}>
+          <SimpleGrid columns={2} spacing={1} h="1">
             <Text>อีเมล</Text>
             <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
 
             <Text>โทรศัพท์ </Text>
-            <Text color="gray"> {shelter.phone || '-'}</Text>
-            <Text>Facebook </Text>
-            <Text color="gray"> {shelter.phone || '-'}</Text>
-            <Text>Line</Text>
-            <Text color="gray"> {shelter.phone || '-'}</Text>
-            <Text>Website </Text>
             <Text color="gray"> {shelter.phone || '-'}</Text>
 
             <Text>เป็นสมาชิกเมื่อ </Text>
