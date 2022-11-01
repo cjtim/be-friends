@@ -35,6 +35,8 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, crea
               <Heading>{shelter?.name}</Heading>
             </Flex>
             <SimpleGrid columns={2} spacing={1} h="auto">
+              <Text>รายละเอียด</Text>
+              <Text>{shelter.description || '-'}</Text>
               <Text>อีเมล</Text>
               <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
 

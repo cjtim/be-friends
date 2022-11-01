@@ -40,7 +40,7 @@ const PetNewPage: NextPage<UserProps & Props> = ({ user, tags }) => {
       <Navbar user={user} />
       <Center flexDir="column" gap={2} p={4}>
         <Heading>ลงทะเบียนสัตว์เลี้ยง</Heading>
-        <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} />
+        <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} defaultValues={{ lat: user?.lat, lng: user?.lng }} />
       </Center>
     </PageLayout>
   )

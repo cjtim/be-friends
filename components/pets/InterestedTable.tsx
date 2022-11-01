@@ -3,7 +3,7 @@ import Table from 'components/global/Table'
 import TextLink from 'components/global/TextLink'
 import { internalPages } from 'config'
 import { InterestedPet } from 'interfaces/interested'
-import { ParseDateTime } from 'libs/date'
+// import { ParseDateTime } from 'libs/date'
 import { CellProps, Column } from 'react-table'
 import InterestedStepTag from './InterestedStepTag'
 
@@ -32,11 +32,11 @@ const columns: Column<InterestedPet>[] = [
     accessor: 'description',
     Header: <Text>รายละเอียด</Text>,
   },
-  {
-    accessor: 'created_at',
-    Header: <Text>ลงทะเบียนเมื่อ</Text>,
-    Cell: ({ row }: CellProps<InterestedPet>) => <>{ParseDateTime(row.original.created_at)}</>,
-  },
+  // {
+  //   accessor: 'created_at',
+  //   Header: <Text>ลงทะเบียนเมื่อ</Text>,
+  //   Cell: ({ row }: CellProps<InterestedPet>) => <>{ParseDateTime(row.original.created_at)}</>,
+  // },
 ]
 
 const InterestedTable: React.FC<Props> = ({ pets }) => <Table data={pets} columns={columns} />

@@ -81,7 +81,7 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
                 </Flex>
               )}
               {!user?.is_org && (
-                <Flex>
+                <Flex gap={2}>
                   <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
                     {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
                   </Button>
@@ -121,7 +121,7 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
           </Stack>
           <Divider />
 
-          <Text>พบเมื่อ {createdAt}</Text>
+          <Text>ลงทะเบียนเมื่อ {createdAt}</Text>
 
           <Flex w="100%" h="100%">
             <StaticMap lat={pet.lat} lng={pet.lng} />

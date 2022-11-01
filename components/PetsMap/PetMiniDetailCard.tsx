@@ -16,8 +16,9 @@ const PetMiniDetailCard: React.FC<Props> = ({ id, name, description, picture_url
         'https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png'
       }
       alt={name}
-      w="24"
-      h="24"
+      w="32"
+      h="auto"
+      objectFit="cover"
       onClick={onClick}
     />
 

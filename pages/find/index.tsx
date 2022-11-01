@@ -53,7 +53,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale || 'us', ['common', 'pet'])),
-      pets: pets.filter(pet => pet.status === Status.NEW) || [],
+      pets: pets?.filter(pet => pet.status === Status.NEW) || [],
     },
   }
 }
