@@ -28,21 +28,23 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, crea
     <Center flexDir="column" p={4}>
       <Stack>
         {/* LINE1 */}
-        <Flex w="container.xl" alignItems="center" gap={2}>
-          <UserImg user={shelter} />
-          <Heading>{shelter?.name}</Heading>
-        </Flex>
         <Flex>
-          <SimpleGrid columns={2} spacing={1} h="1">
-            <Text>อีเมล</Text>
-            <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
+          <Stack>
+            <Flex alignItems="center" gap={2}>
+              <UserImg user={shelter} />
+              <Heading>{shelter?.name}</Heading>
+            </Flex>
+            <SimpleGrid columns={2} spacing={1} h="auto">
+              <Text>อีเมล</Text>
+              <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
 
-            <Text>โทรศัพท์ </Text>
-            <Text color="gray"> {shelter.phone || '-'}</Text>
+              <Text>โทรศัพท์ </Text>
+              <Text color="gray"> {shelter.phone || '-'}</Text>
 
-            <Text>เป็นสมาชิกเมื่อ </Text>
-            <Text color="gray">{createdAt}</Text>
-          </SimpleGrid>
+              <Text>เป็นสมาชิกเมื่อ </Text>
+              <Text color="gray">{createdAt}</Text>
+            </SimpleGrid>
+          </Stack>
 
           {shelter.lat && shelter.lng && (
             <Flex w="xl" h="sm" marginLeft="auto">
