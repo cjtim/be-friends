@@ -36,16 +36,17 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
     <Box w="sm" h="md" borderRadius="xl" borderColor="black" border="1px" {...boxProps}>
       <form onSubmit={handleSubmit(onSubmitLogin)}>
         <Center gap={4} flexDir="column" p={4}>
-          <Text fontWeight="bold">เข้าสู่ระบบผู้ใช้ทั่วไป</Text>
+          <Text fontWeight="bold">{t('login2')}</Text>
           <LineLoginButton w="2xs" onClick={onClickLineLogin} />
           <Divider />
 
-          <Text fontWeight="bold">เจ้าหน้าที่สถานสงเคราะห์สัตว์</Text>
+          <Text fontWeight="bold">{t('login')}</Text>
           <FormControl isInvalid={Boolean(errors.email)} isRequired>
             <FormLabel htmlFor="Email">{t('email')}</FormLabel>
             <Input
               id="email"
               placeholder={t('email')}
+              defaultValue="test-preview@gmail.com"
               {...register('email', {
                 required: 'This is required',
                 minLength: { value: 2, message: 'Minimum length should be 2' },
@@ -60,6 +61,7 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
               id="password"
               placeholder={t('password')}
               type="password"
+              defaultValue="test"
               {...register('password', {
                 required: 'This is required',
                 minLength: { value: 1, message: 'Minimum length should be 1' },
@@ -71,10 +73,10 @@ const LoginCard: React.FC<Props> = ({ onClickLineLogin, onSubmitLogin, ...boxPro
 
           <Flex gap={4}>
             <ButtonLink href={internalPages.user.register}>
-              <Button variant="brandSolid">ลงทะเบียน</Button>
+              <Button variant="brandSolid">{t('register')}</Button>
             </ButtonLink>
             <Button variant="brandOutline" isLoading={isSubmitting} type="submit">
-              เข้าสู่ระบบ
+              {t('login')}
             </Button>
           </Flex>
         </Center>

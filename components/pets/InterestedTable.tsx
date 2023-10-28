@@ -14,7 +14,7 @@ interface Props {
 const columns: Column<InterestedPet>[] = [
   {
     accessor: 'name',
-    Header: <Text>ชื่อ</Text>,
+    Header: <Text>Name</Text>,
     Cell: ({ row }: CellProps<InterestedPet>) => (
       <TextLink
         title={row.original.name}
@@ -25,18 +25,13 @@ const columns: Column<InterestedPet>[] = [
   },
   {
     accessor: 'step',
-    Header: <Text>สถานะ</Text>,
+    Header: <Text>Status</Text>,
     Cell: ({ row }: CellProps<InterestedPet>) => <InterestedStepTag step={row.original.step} />,
   },
   {
     accessor: 'description',
-    Header: <Text>รายละเอียด</Text>,
+    Header: <Text>Description</Text>,
   },
-  // {
-  //   accessor: 'created_at',
-  //   Header: <Text>ลงทะเบียนเมื่อ</Text>,
-  //   Cell: ({ row }: CellProps<InterestedPet>) => <>{ParseDateTime(row.original.created_at)}</>,
-  // },
 ]
 
 const InterestedTable: React.FC<Props> = ({ pets }) => <Table data={pets} columns={columns} />

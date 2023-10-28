@@ -21,6 +21,7 @@ import { internalPages } from 'config'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 import { UserProps } from 'pages/_app'
+import { useTranslation } from 'next-i18next'
 import TextLink from './TextLink'
 import Logo from './Logo'
 import ButtonLink from './ButtonLink'
@@ -33,6 +34,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
   const { pathname, asPath, query, locale, push } = useRouter()
   const icon = useColorModeValue(<SunIcon />, <MoonIcon />)
   const lang = { en: '🇺🇸', th: '🇹🇭' }
+  const { t } = useTranslation('common')
 
   const handleLangChange = () => {
     switch (locale) {
@@ -56,10 +58,10 @@ const Navbar: React.FC<Props> = ({ user }) => {
 
         <Center w={['30vw', '30vw', '2xs']}>
           <HStack spacing={[0, 0, 4]} shouldWrapChildren flexDir={['column', 'column', 'row']}>
-            <TextLink text="หน้าแรก" to={internalPages.index} />
-            <TextLink text="ค้นหาเพื่อนคู่ใจ" to={internalPages.findPets} />
-            <TextLink text="สถานสงเคราะห์สัตว์" to={internalPages.shelters.index} />
-            <TextLink text="เกี่ยวกับเรา" to={internalPages.about} />
+            <TextLink text={t('navbar.home')} to={internalPages.index} />
+            <TextLink text={t('navbar.findPets')} to={internalPages.findPets} />
+            <TextLink text={t('navbar.shelters')} to={internalPages.shelters.index} />
+            <TextLink text={t('navbar.about')} to={internalPages.about} />
           </HStack>
         </Center>
         {/* <Divider orientation="vertical" h="4vh" borderColor={color} /> */}
@@ -73,7 +75,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
         >
           {user === undefined ? (
             <ButtonLink href={internalPages.user.login}>
-              <Button variant="brandSolid">เข้าสู่ระบบ</Button>
+              <Button variant="brandSolid">{t('navbar.login')}</Button>
             </ButtonLink>
           ) : (
             <Menu>
@@ -87,24 +89,24 @@ const Navbar: React.FC<Props> = ({ user }) => {
               </MenuButton>
               <MenuList>
                 <NextLink href={internalPages.user.index} passHref>
-                  <MenuItem textDecoration="none">บัญชีของฉัน</MenuItem>
+                  <MenuItem textDecoration="none">{t('profile.my')}</MenuItem>
                 </NextLink>
                 {user.is_org ? (
                   <NextLink href={internalPages.pets.myPet} passHref>
-                    <MenuItem textDecoration="none">จัดการสัตว์เลี้ยง</MenuItem>
+                    <MenuItem textDecoration="none">{t('profile.managepet')}</MenuItem>
                   </NextLink>
                 ) : (
                   <>
                     <NextLink href={internalPages.user.liked} passHref>
-                      <MenuItem textDecoration="none">ถูกใจ</MenuItem>
+                      <MenuItem textDecoration="none">{t('profile.like')}</MenuItem>
                     </NextLink>
                     <NextLink href={internalPages.user.interested} passHref>
-                      <MenuItem textDecoration="none">สัตว์ที่อุปถัมภ์</MenuItem>
+                      <MenuItem textDecoration="none">{t('profile.adopt')}</MenuItem>
                     </NextLink>
                   </>
                 )}
                 <NextLink href={internalPages.user.logout} passHref>
-                  <MenuItem textDecoration="none">ออกจากระบบ</MenuItem>
+                  <MenuItem textDecoration="none">{t('profile.logout')}</MenuItem>
                 </NextLink>
               </MenuList>
             </Menu>

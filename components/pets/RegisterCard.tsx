@@ -90,7 +90,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValue
             </FormControl>
             {/* Tags */}
             <FormControl isInvalid={Boolean(errors.tag_ids)}>
-              <FormLabel htmlFor="tag_ids">หมวดหมู่</FormLabel>
+              <FormLabel htmlFor="tag_ids">Categories</FormLabel>
               <Select
                 isMulti
                 {...register('tag_ids')}
@@ -110,7 +110,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValue
             {/* Status */}
             {isUpdate && (
               <FormControl isInvalid={Boolean(errors.status)} isRequired>
-                <FormLabel htmlFor="status">สถานะ</FormLabel>
+                <FormLabel htmlFor="status">Statue</FormLabel>
                 <Select
                   options={statues.map(s => ({ label: s, value: s }))}
                   defaultValue={{
@@ -127,7 +127,7 @@ const PetRegisterCard: React.FC<Props> = ({ onSubmitRegister, tags, defaultValue
             )}
 
             <Button colorScheme="brand" isLoading={isSubmitting} type="submit" mt={4}>
-              {isUpdate ? 'แก้ไขข้อมูล' : 'ลงทะเบียนสัตว์'}
+              {isUpdate ? 'Update' : 'Register'}
             </Button>
           </Stack>
 

@@ -11,6 +11,7 @@ import { AuthGetServerSideProps } from 'libs/auth'
 import axios from 'libs/axios'
 import { ParseDateTime } from 'libs/date'
 import { GetServerSidePropsContext, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dynamic from 'next/dynamic'
 import { UserProps } from 'pages/_app'
 
@@ -35,15 +36,15 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, crea
               <Heading>{shelter?.name}</Heading>
             </Flex>
             <SimpleGrid columns={2} spacing={1} h="auto">
-              <Text>รายละเอียด</Text>
+              <Text>Description</Text>
               <Text>{shelter.description || '-'}</Text>
-              <Text>อีเมล</Text>
+              <Text>Email</Text>
               <TextLink title={shelter.email} to={`mailto:${shelter.email}`} text={`${shelter.email}` || '-'} />
 
-              <Text>โทรศัพท์ </Text>
+              <Text>Phone </Text>
               <Text color="gray"> {shelter.phone || '-'}</Text>
 
-              <Text>เป็นสมาชิกเมื่อ </Text>
+              <Text>Member since </Text>
               <Text color="gray">{createdAt}</Text>
             </SimpleGrid>
           </Stack>
@@ -56,8 +57,8 @@ const ShelterDetails: NextPage<UserProps & Props> = ({ user, shelter, pets, crea
         </Flex>
         {/* TABLE */}
         <Stack w="container.xl">
-          <Text fontWeight="bold">สัตว์เลี้ยงของผู้ใช้นี้</Text>
-          {pets ? <PetTableList pets={pets} /> : 'ไม่พบสัตว์เลี้ยงของผู้ใช้นี้'}
+          <Text fontWeight="bold">Pets</Text>
+          {pets ? <PetTableList pets={pets} /> : 'No pet registered under this user'}
         </Stack>
       </Stack>
     </Center>
@@ -81,6 +82,7 @@ export const getServerSideProps = AuthGetServerSideProps(async (ctx: GetServerSi
       shelter: shelter || {},
       pets: pets || [],
       createdAt: ParseDateTime(shelter.created_at),
+      ...(await serverSideTranslations(ctx.locale || 'us', ['index', 'common'])),
     },
   }
 })

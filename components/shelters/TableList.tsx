@@ -12,7 +12,7 @@ interface Props {
 const columns: Column<User>[] = [
   {
     accessor: 'name',
-    Header: <Text>ชื่อผู้ใช้งาน</Text>,
+    Header: <Text>Name</Text>,
     Cell: ({ row }: CellProps<User>) => (
       <Flex alignItems="center" gap={2}>
         {row.original &&
@@ -32,15 +32,15 @@ const columns: Column<User>[] = [
   },
   {
     accessor: 'description',
-    Header: <Text>รายละเอียด</Text>,
+    Header: <Text>Description</Text>,
   },
   {
     accessor: 'email',
-    Header: <Text>อีเมล</Text>,
+    Header: <Text>Email</Text>,
   },
   {
     accessor: 'phone',
-    Header: <Text>เบอร์โทรศัพท์</Text>,
+    Header: <Text>Phone</Text>,
   },
 ]
 

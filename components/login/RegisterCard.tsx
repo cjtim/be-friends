@@ -27,7 +27,7 @@ const RegisterCard: React.FC<Props> = ({ onSubmitRegister, ...boxProps }) => {
 
   return (
     <Stack w="sm" borderRadius="xl" borderColor="black" border="1px" alignItems="center" p={4} {...boxProps}>
-      <Text fontWeight="bold">ลงทะเบียนสถานสงเคราะห์</Text>
+      <Text fontWeight="bold">{t('register')}</Text>
       <form onSubmit={handleSubmit(onSubmitRegister)}>
         <Center gap={4} flexDir="column" p={4}>
           <FormControl isInvalid={Boolean(errors.name)} isRequired>

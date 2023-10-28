@@ -2,7 +2,7 @@ import { Center, Container, Heading } from '@chakra-ui/react'
 import Navbar from 'components/global/Navbar'
 import PageLayout from 'components/global/PageLayout'
 import { config } from 'config'
-
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { User } from 'interfaces/User'
 import axios from 'libs/axios'
 import { GetServerSidePropsContext, NextPage } from 'next'
@@ -19,7 +19,7 @@ interface Props extends UserProps {
 const SheltersPage: NextPage<Props> = ({ user, shelters }) => {
   const router = useRouter()
   const includeUser = router.query.include_user
-  const title = includeUser ? 'สถานสงเคราะห์สัตว์ และผู้ใข้ทั่วไป' : 'สถานสงเคราะห์สัตว์'
+  const title = includeUser ? 'Shelters and Indivitual profile' : 'Shelters'
 
   // const toggleIncludeUser = (newIncludeUser: boolean) => {
   //   if (newIncludeUser) {
@@ -60,6 +60,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       shelters: shelters || [],
+      ...(await serverSideTranslations(ctx.locale || 'us', ['index', 'common'])),
     },
   }
 }

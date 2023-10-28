@@ -8,5 +8,12 @@
     "profile": "Profile",
     "logout": "Logout",
     "login": "Login"
+  },
+  "profile": {
+    "my": "My profile",
+    "managepet": "Manage pets",
+    "like": "Like",
+    "adopt": "Adoption",
+    "logout": "Logout"
   }
 }

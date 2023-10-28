@@ -18,7 +18,7 @@ const UserUpdate: NextPage<UserProps> = ({ user }) => {
   }
 
   return (
-    <PageLayout title="แก้ไขบัญชี">
+    <PageLayout title="Update account">
       <Navbar user={user} />
 
       <Center h="80vh">{user && <UserUpdateCard user={user} onSubmitRegister={onSubmitRegister} />}</Center>

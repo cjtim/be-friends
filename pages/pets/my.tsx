@@ -19,15 +19,15 @@ interface Props {
 }
 
 const MyPetHome: NextPage<UserProps & Props> = ({ user, pets }) => (
-  <PageLayout title="สัตว์เลี้ยงของฉัน">
+  <PageLayout title="My pets">
     <Navbar user={user} />
 
     <Center flexDir="column" p="4" gap={4}>
-      <Heading>สัตว์เลี้ยงของฉัน</Heading>
+      <Heading>My Pets</Heading>
       <Center py={2}>
         <ButtonLink href={internalPages.pets.new} isExternal>
           <Button colorScheme="brand" color="white" leftIcon={<AddIcon />}>
-            เพิ่มสัตว์เลี้ยง
+            Register pet
           </Button>
         </ButtonLink>
       </Center>
