@@ -14,7 +14,6 @@ const UserInfoRequiredPopup: React.FC<Props> = ({ user }) => {
   const router = useRouter()
   const onClose = () => {}
   const handleSave: SubmitHandler<User> = async (values: User) => {
-    console.log(values.phone)
     await axios.post<string>(config.auth.POST_update, values)
 
     router.reload()

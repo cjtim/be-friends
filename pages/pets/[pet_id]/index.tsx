@@ -72,18 +72,18 @@ const PetDetails: NextPage<UserProps & Props> = ({ user, pet, shelter, createdAt
               {user?.is_org && user?.id === pet.user_id && (
                 <Flex gap={2}>
                   <Button colorScheme="blue" onClick={interestedDisclosure.onOpen}>
-                    ผู้ที่สนใจสัตว์
+                    Adoption list
                     <InterestedModal {...interestedDisclosure} interestedUsers={interestedUsers} />
                   </Button>
                   <ButtonLink href={`/pets/${pet.id}/update`}>
-                    <Button colorScheme="red">แก้ไขข้อมูล</Button>
+                    <Button colorScheme="red">Update details</Button>
                   </ButtonLink>
                 </Flex>
               )}
               {!user?.is_org && (
                 <Flex gap={2}>
                   <Button colorScheme="blue" onClick={onClickLike} leftIcon={<StarIcon />}>
-                    {isLiked ? 'ยกเลิกถูกใจ' : 'ถูกใจ'}
+                    {isLiked ? 'Unlike' : 'like'}
                   </Button>
                   <Tooltip label="เมื่อรับอุปถัมภ์แล้วจะไม่สามารถยกเลิกได้" hasArrow>
                     <Button colorScheme="yellow" onClick={onClickInterested} isDisabled={Boolean(isInterested)}>

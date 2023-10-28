@@ -29,7 +29,7 @@ const UserLikedPage: NextPage<UserProps & Props> = ({ user, pets }) => {
       <Navbar user={user} />
 
       <Center flexDir="column" gap={2} p={4}>
-        <Heading>สัตว์ที่ถูกใจ</Heading>
+        <Heading>Liked</Heading>
         <PetsStatusTable pets={pets} onClickUnlike={onClickUnlike} />
       </Center>
     </PageLayout>

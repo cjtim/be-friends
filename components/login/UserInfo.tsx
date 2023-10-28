@@ -22,13 +22,13 @@ const UserInfo: React.FC<Props> = ({ user }) => (
           <Flex gap={4}>
             <ButtonLink href="/user/update">
               <Button colorScheme="green" variant="outline">
-                เเก้ไขข้อมูล
+                Update account
               </Button>
             </ButtonLink>
             {user.is_org && (
               <ButtonLink href="/user/password">
                 <Button colorScheme="red" variant="outline">
-                  เปลี่ยนรหัสผ่าน
+                  Change password
                 </Button>
               </ButtonLink>
             )}

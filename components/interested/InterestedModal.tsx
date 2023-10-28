@@ -25,17 +25,17 @@ const InterestedModal: React.FC<Props> = ({ interestedUsers: originalInterestedU
     <Modal isOpen={isOpen || false} onClose={onClose as () => void} size="full">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>ผู้ที่สนใจสัตว์</ModalHeader>
+        <ModalHeader>Interested</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Table
             columns={
               [
-                { accessor: 'name', Header: 'ชื่อ' },
-                { accessor: 'phone', Header: 'โทรศัพท์' },
+                { accessor: 'name', Header: 'Name' },
+                { accessor: 'phone', Header: 'Phone' },
                 {
                   accessor: 'step',
-                  Header: 'สถานะ',
+                  Header: 'Status',
                   Cell: ({ row }: CellProps<InterestedUser>) => (
                     <Select
                       focusBorderColor="green.500"

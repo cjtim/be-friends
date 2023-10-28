@@ -14,7 +14,7 @@ interface Props {
 const columns: Column<Pet>[] = [
   {
     accessor: 'name',
-    Header: <Text>ชื่อ</Text>,
+    Header: <Text>Name</Text>,
     Cell: ({ row }: CellProps<Pet>) => (
       <TextLink
         title={row.original.name}
@@ -25,26 +25,26 @@ const columns: Column<Pet>[] = [
   },
   {
     accessor: 'status',
-    Header: <Text>สถานะ</Text>,
+    Header: <Text>Status</Text>,
     Cell: ({ row }: CellProps<Pet>) => <PetStatusTag status={row.original.status} />,
   },
   {
     accessor: 'description',
-    Header: <Text>รายละเอียด</Text>,
+    Header: <Text>Description</Text>,
   },
   {
     accessor: 'created_at',
-    Header: <Text>ลงทะเบียนเมื่อ</Text>,
+    Header: <Text>Register since</Text>,
     Cell: ({ row }: CellProps<Pet>) => <>{ParseDateTime(row.original.created_at)}</>,
   },
   {
     accessor: 'interested',
-    Header: <Text>สนใจอุปถัมภ์</Text>,
+    Header: <Text>Interested</Text>,
     Cell: ({ row }: CellProps<Pet>) => <>{row.original.interested.length || 0} คน</>,
   },
   {
     accessor: 'liked',
-    Header: <Text>ถูกใจ</Text>,
+    Header: <Text>Liked</Text>,
     Cell: ({ row }: CellProps<Pet>) => <>{row.original.liked.length || 0} คน</>,
   },
 ]

@@ -42,7 +42,7 @@ const PetUpdate: NextPage<UserProps & Props> = ({ user, pet, tags }) => {
     <PageLayout title={`Update pet - ${pet.name}`}>
       <Navbar user={user} />
       <Center flexDir="column" gap={2} p={4}>
-        <Heading>แก้ไขข้อมูลสัตว์เลี้ยง</Heading>
+        <Heading>Update details</Heading>
         <PetRegisterCard onSubmitRegister={onSubmit} tags={tags} defaultValues={pet} isUpdate />
       </Center>
     </PageLayout>

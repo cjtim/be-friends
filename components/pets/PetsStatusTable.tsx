@@ -18,7 +18,7 @@ const PetsStatusTable: React.FC<Props> = ({ pets, onClickUnlike }) => {
   const columns: Column<Pet>[] = [
     {
       accessor: 'name',
-      Header: <Text>ชื่อ</Text>,
+      Header: <Text>Name</Text>,
       Cell: ({ row }: CellProps<Pet>) => (
         <TextLink
           title={row.original.name}
@@ -29,16 +29,16 @@ const PetsStatusTable: React.FC<Props> = ({ pets, onClickUnlike }) => {
     },
     {
       accessor: 'status',
-      Header: <Text>สถานะ</Text>,
+      Header: <Text>Status</Text>,
       Cell: ({ row }: CellProps<Pet>) => <PetStatusTag status={row.original.status} />,
     },
     {
       accessor: 'description',
-      Header: <Text>รายละเอียด</Text>,
+      Header: <Text>Description</Text>,
     },
     {
       accessor: 'created_at',
-      Header: <Text>ลงทะเบียนเมื่อ</Text>,
+      Header: <Text>Register since</Text>,
       Cell: ({ row }: CellProps<Pet>) => <>{ParseDateTime(row.original.created_at)}</>,
     },
     {
@@ -46,7 +46,7 @@ const PetsStatusTable: React.FC<Props> = ({ pets, onClickUnlike }) => {
       id: 'button-action',
       Cell: ({ row }: CellProps<Pet>) => (
         <Button colorScheme="blue" leftIcon={<StarIcon />} onClick={() => onClickUnlike(row.original.id)}>
-          ยกเลิกถูกใจ
+          Unlike
         </Button>
       ),
     },
